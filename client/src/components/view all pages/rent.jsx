@@ -46,13 +46,13 @@ const Rent =() => {
             </div>
 
         </div> */}
-        <div className='flex flex-col gap-1 '>
+        <div className='flex flex-col gap-1  justify-center '>
             <div className='flex justify-center mt-[5px]'>
                 <h2 className='text-sm font-medium w-fit bg-blue-400 px-[30px] py-[20] rounded'>Renting Cars</h2>
                 {/* <Link href={"/search"}
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
             </div>
-            <div className='ml-[10px] gap-8 flex flex-wrap mb-1'>
+            <div className='ml-[60px] gap-8 flex flex-wrap mb-1'>
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found

@@ -39,7 +39,7 @@ const Sellall = () => {
                 {/* <Link href={"/search"}
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
             </div>
-            <div className='gap-4 flex flex-wrap mb-1'>
+            <div className='ml-[60px] gap-4 flex flex-wrap mb-1'>
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found

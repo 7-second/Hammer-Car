@@ -40,7 +40,7 @@ function Profile ({ currentUser }) {
 
     return (
         <>
-        <Header/>
+  
         <main className='w-full md:px-12 p-6 flex flex-col gap-3 bg-white'>
 
             <div className='relative w-full'>

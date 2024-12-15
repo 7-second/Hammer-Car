@@ -3,6 +3,7 @@ import axios from "axios"
 import { BiLogOut } from "react-icons/bi"
 import { GoHomeFill } from "react-icons/go"
 import { Link, useNavigate } from "react-router-dom";
+import { FaCarSide } from "react-icons/fa";
 import Drawer1 from "../Drawer/Drawer"
 
 
@@ -30,14 +31,18 @@ function Header() {
             <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
 
 
-                <div className="flex items-center justify-between">
-                    <Drawer1 />
+                <div className="flex items-center justify-between gap-11">
+                <div className="h-fit  flex top-0 -mb-2 pb-4 absolute">
+                
+                <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
+                </div>
+                <Drawer1 />
+                    
                     <div>
 
                         {!currentUser
-                            ? <Link to={"/signIn"} className="btn__bg py-1 px-3 text-xs rounded-md"
-                            >
-                                Sign-in
+                            ? <Link to={"/signIn"} className=" text-white bg-blue-400 font-serif   px-2 py-1 rounded-md">
+                                LogIn
                             </Link>
                             : (
                                 <div className="flex gap-3 items-center">
@@ -100,9 +105,17 @@ function Header() {
             {/* Large Screen */}
             <header className='hidden md:flex flex-col p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
 
+                <div className="h-fit  flex top-0 -mb-6 -mt-4 pb-4">
+                    <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
+                </div>
+                <div className="flex items-center justify-evenly">
+                    <div className="d">
 
-                <div className="flex items-center justify-between">
-                    <Drawer1 />
+                        <Drawer1 />
+                    </div>
+
+
+
 
                     <div className="flex justify-center w-full">
 
@@ -119,11 +132,9 @@ function Header() {
                     </div>
 
                     <div>
-
+                                  
                         {!currentUser
-                            ? <Link to={"/signIn"} className="btn__bg py-1 px-3 text-xs rounded-md"
-                            >
-                                Sign-in
+                            ? <Link to={"/signIn"} className=" text-white bg-blue-400 font-serif font-bold rounded-md px-3 py-2 ">LogIn
                             </Link>
                             : (
                                 <div className="flex gap-3 items-center">
@@ -145,9 +156,9 @@ function Header() {
                                             <img
                                                 src={`${currentUser?.profilePicture}`}
                                                 alt="Profile"
-                                                width={20}
-                                                height={20}
-                                                className="!w-8 !h-8 rounded-full object-cover" />
+                                                width={80}
+                                                height={70}
+                                                className="!w-16 !h-10 rounded-full object-cover" />
                                         </Link>
 
                                     }
