@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 // import Link from 'next/link'
 import { BiLoader } from 'react-icons/bi';
 import axios from 'axios';
-import Header from '../Header/header';
+import Header from '../Header';
 import Sell from '../Car card/sellcard';
 // import { Cars } from '@/helper';
 

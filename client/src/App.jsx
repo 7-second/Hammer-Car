@@ -11,12 +11,12 @@ import Profile from "./components/profile/profile";
 import EditProfile from "./components/profile/edit-profile";
 import Rent from "./components/view all pages/rent";
 import Sellall from "./components/view all pages/Sell";
-import Header from "./components/Header/header";
 import AdminSignUp from "../Admin/form/admin-sign-up";
 import AdminHome from "../Admin/Admin home/home";
 import OrgProfile from "../organization/component/OrgProfile";
 import OrgHeader from "../organization/component/orgHeader";
 import OrgHome from "../organization/component/orgHome"
+import Header from "./components/Header";
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
 // import Search from "./Pages/Search/search"
