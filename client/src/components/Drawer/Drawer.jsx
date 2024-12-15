@@ -26,7 +26,7 @@ function DDrawer() {
   const closeDrawerLeft = () => setOpenLeft(false);
 
   const handleLogout = () => {
-    navigate("/signIn")
+    navigate("/")
     localStorage.clear("users_data")
   }
 
