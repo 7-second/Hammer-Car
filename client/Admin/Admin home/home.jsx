@@ -65,7 +65,6 @@ function AdminHome() {
     };
 
 
-
     return (
         <>
             <article className="w-full h-[70vh] flex items-center justify-center">
@@ -121,7 +120,7 @@ function AdminHome() {
                         <p>
                             Have an account? {" "}
                             <Link to={"/signIn"}
-                               
+
                                 className="text-blue-500">Sign In</Link>
                         </p>
                     </div>
