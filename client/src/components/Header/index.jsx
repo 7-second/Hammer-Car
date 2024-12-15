@@ -66,7 +66,7 @@ function Header() {
 
                                     }
                                     <div onClick={handleLogout}>
-                                        <BiLogOut onClick={() => { }}
+                                        <BiLogOut
                                             className="text-3xl p-1 bg-slate-100 text-red-500 hover:bg-red-300 hover:text-white cursor-pointer border rounded-md" />
                                     </div>
 

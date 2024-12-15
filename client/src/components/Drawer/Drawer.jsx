@@ -1,19 +1,16 @@
-import Logo from "../Logo/logo";
 import { RxHamburgerMenu } from "react-icons/rx";
-import logoimg from "../../../public/images/hamer.png"
-import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import noprofile from "../../../public/images/noprofile.png"
 import { Button, Drawer, IconButton, Typography } from "@mui/material";
 import { FaTelegram } from "react-icons/fa";
 import { BsFillTelephoneForwardFill } from "react-icons/bs";
-import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 
 
 function DDrawer() {
+
+  const navigate = useNavigate()
 
   // Get user
   let currentUser
@@ -29,8 +26,8 @@ function DDrawer() {
   const closeDrawerLeft = () => setOpenLeft(false);
 
   const handleLogout = () => {
-    localStorage.clear("users_data")
     navigate("/signIn")
+    localStorage.clear("users_data")
   }
 
   return <>
