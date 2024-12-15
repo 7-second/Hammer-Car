@@ -30,7 +30,7 @@ function DDrawer() {
 
   const handleLogout = () => {
     localStorage.clear("users_data")
-    navigate("/")
+    navigate("/signIn")
   }
 
   return <>
@@ -137,12 +137,10 @@ function DDrawer() {
           </Typography>
           {currentUser &&
             <div className="m-[20px]">
-              <button className=" flex w-full justify-center text-3xl p-1 bg-slate-100 text-red-500 hover:bg-red-300 hover:text-white cursor-pointer border rounded-md">
-                <div onClick={handleLogout}>
-                  <BiLogOut onClick={() => { }} />
-                </div>
-              </button>
-
+              <div onClick={handleLogout}
+                className=" flex w-full justify-center text-3xl p-1 bg-slate-100 text-red-500 hover:bg-red-300 hover:text-white cursor-pointer border rounded-md">
+                <BiLogOut />
+              </div>
             </div>
           }
         </Drawer>
