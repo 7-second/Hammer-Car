@@ -37,9 +37,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/admin/signup" element={<AdminSignUp />} />
+        <Route path="/" element={<Home />} />
 
         <Route path="/" element={<UserLayout />}>
-          <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/View-all-rent" element={<Rent />} />
@@ -47,7 +47,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<OrganizationLayout />}>
-          <Route path="/profile" element={<OrgProfile/>} />
+          <Route path="/profile" element={<OrgProfile />} />
           <Route path="/orghome" element={<OrgHome />} />
         </Route>
 
@@ -68,10 +68,10 @@ function UserLayout() {
   let currentUser
   const user = localStorage.getItem("users_data")
   if (user) {
-      currentUser = JSON.parse(user)
+    currentUser = JSON.parse(user)
   }
 
-  if( currentUser && currentUser.role!=="user")
+  if (currentUser && currentUser.role !== "user")
     return null
 
   return (
@@ -89,10 +89,10 @@ function OrganizationLayout() {
   let currentUser
   const user = localStorage.getItem("org_data")
   if (user) {
-      currentUser = JSON.parse(user)
+    currentUser = JSON.parse(user)
   }
 
-  if (currentUser && currentUser.role!=="user")
+  if (currentUser && currentUser.role !== "user")
     return null
   return (
     <div className="flex flex-col gap-12">

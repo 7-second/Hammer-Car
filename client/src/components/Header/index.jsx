@@ -27,7 +27,7 @@ function Header() {
         <>
 
             {/* Mobile */}
-            <header className='flex flex-col md:hidden p-5 gap-1  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
 
 
                 <div className="flex items-center justify-between">
@@ -98,7 +98,7 @@ function Header() {
 
 
             {/* Large Screen */}
-            <header className='hidden md:flex flex-col p-5 gap-1  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='hidden md:flex flex-col p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
 
 
                 <div className="flex items-center justify-between">

@@ -37,41 +37,38 @@ const Rentedcars = () => {
     return (
         <>
 
-    
-       
-        <div className='flex flex-col gap-1 pb-[10px]'>
-            <div className='flex '>
-                <h2 className='text-sm font-medium'>Renting Cars</h2>
-                <button className='ml-[500px] underline'>
-                <Link to={'/View-all-rent'} > View All</Link>
-                   
-                </button>
 
-                {/* <Link href={"/search"}
+
+            <div className='flex flex-col gap-1 pb-[10px]'>
+                <div className='flex justify-between'>
+                    <h2 className='text-sm font-medium'>Renting Cars</h2>
+                    <Link to={'/View-all-rent'} className='underline'> View All</Link>
+
+                    {/* <Link href={"/search"}
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
-            </div>
-            <div className='gap-4 flex overflow-x-auto mb-1'>
-                {cars?.length === 0 ? (
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        No Car Found
-                    </div>
-                ) :
-                    cars?.map((car) => (
-                        <Rent
-                            key={car._id}
-                            car={car}
-                        />
-                    ))
-                }
-                {loading &&
+                </div>
+                <div className='gap-4 flex overflow-x-auto w-full mb-1'>
+                    {cars?.length === 0 ? (
+                        <div className='h-48 flex items-center justify-center w-full'>
+                            No Car Found
+                        </div>
+                    ) :
+                        cars?.map((car) => (
+                            <Rent
+                                key={car._id}
+                                car={car}
+                            />
+                        ))
+                    }
+                    {loading &&
 
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                }
+                        <div className='h-48 flex items-center justify-center w-full'>
+                            <BiLoader className='animate-spin' size={30} />
+                        </div>
+                    }
 
+                </div>
             </div>
-        </div>
         </>)
 
 }

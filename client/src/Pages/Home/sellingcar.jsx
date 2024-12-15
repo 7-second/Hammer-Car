@@ -33,9 +33,9 @@ const Sellingcars = () => {
 
     return (
         <div className='flex flex-col gap-1'>
-            <div className='flex '>
+            <div className='flex justify-between px-5'>
                 <h2 className='text-sm font-medium text-bold'>Cars for sell</h2>
-                <button className='ml-[500px] underline'><Link to={"/View-all-sell"}>View All</Link></button>
+                <Link to={"/View-all-sell"} className='underline'>View All</Link>
                 
 
                 {/* <Link href={"/search"}

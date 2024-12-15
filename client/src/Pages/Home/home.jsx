@@ -7,28 +7,28 @@ import Sell from "./sellingcar"
 
 function Home() {
   return <>
-  
+    <Header />
 
     <div className="mt-[20px]">
       <Hero />
     </div>
 
     <div className="mt-[20px]">
-    <hr  />
+      <hr />
     </div>
 
-    <div className="mt-[5px] shadow-lg ">
+    <div className="p-5 shadow-lg ">
       <Rentedcars />
     </div>
 
     <div className="mt-[10x]">
-    <hr  />
+      <hr />
     </div>
 
-    <div className="mt-[10px]">
-    <Sell />
+    <div className="py-5">
+      <Sell />
     </div>
-    
+
 
 
 
