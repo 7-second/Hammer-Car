@@ -40,10 +40,10 @@ const SignIn = () => {
 
             if (response?.data?.role === "organization") {
                 navigate("/orghome")
-                localStorage.setItem("org_data", JSON.stringify(response?.data))
+                localStorage.setItem("organization_data", JSON.stringify(response?.data))
             } else if (response?.data?.role === "mechanic") {
                 navigate("/")
-                localStorage.setItem("mech_data", JSON.stringify(response?.data))
+                localStorage.setItem("mechanic_data", JSON.stringify(response?.data))
             }else if (response?.data?.role === "admin") {
                 navigate("/adminhome")
                 localStorage.setItem("admin_data", JSON.stringify(response?.data))
@@ -51,6 +51,7 @@ const SignIn = () => {
                 navigate("/")
                 localStorage.setItem("users_data", JSON.stringify(response?.data))
             }
+            toast.success("Login SuccessFully")
 
 
         } catch (error) {
