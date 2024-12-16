@@ -1,7 +1,7 @@
 
 function AdminHeader(){
     let currentAdmin
-    const admin=localStorage.GetItem("admin_data")
+    const admin=localStorage.GetItem("users_data")
     if(admin){
         currentAdmin=JSON.parse(admin)
     }
