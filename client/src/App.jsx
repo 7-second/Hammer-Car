@@ -6,6 +6,8 @@ import SignIn from "../src/components/forms/sign-in"
 import SignUp from "./components/forms/sign-up"
 
 import AddCar from "../src/Pages/Add_cars/Add";
+import SuperHome from "../super Admin/superHome";
+import SuperForm from "../super Admin/superForm";
 import AddCarForm from "../src/Pages/Add_cars/Add";
 import Profile from "./components/profile/profile";
 import EditProfile from "./components/profile/edit-profile";
@@ -18,6 +20,7 @@ import OrgHeader from "../organization/component/orgHeader";
 import OrgHome from "../organization/component/orgHome"
 import Header from "./components/Header";
 import AdminHeader from "../Admin/component/AdminHeader";
+import AdminForm from "../Admin/form/admin-sign-up";
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
 // import Search from "./Pages/Search/search"
@@ -53,8 +56,12 @@ function App() {
         </Route>
 
         <Route path="/" element={<AdminLayout />}>
-           <Route path="adminhome" element={<AdminHome />} />
+           <Route path="/adminhome" element={<AdminHome />} />
+           <Route path="/adimnform" element={<AdminForm />} />
         </Route >
+
+        <Route path="superhome" element={<SuperHome />} />
+        <Route path="/superform" element={<SuperForm/>} />
 
       </Routes>
     </BrowserRouter>

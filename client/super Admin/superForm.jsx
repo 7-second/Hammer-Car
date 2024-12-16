@@ -1,3 +1,4 @@
+"use client"
 
 import { useState } from "react";
 
@@ -9,9 +10,16 @@ import { useForm } from "react-hook-form"
 
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from 'react-hot-toast';
+
+// interface IFormInput {
+//     email: string
+//     username: string
+//     password: string
+// }
 
 
-function AdminForm() {
+function SuperHome() {
 
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false);
@@ -26,8 +34,10 @@ function AdminForm() {
                 await axios.post(`${import.meta.env.VITE_API_BASE_URL}auth/register`, userData)
 
             toast.success("Register Success")
-            if (response.status === 201)
-                toast.success("Register Success")
+            if (response.status === 201) 
+                toast.success("ADMIN REGISTERD SUCCESSfully")
+
+
         } catch (error) {
 
             if (error.response.status === 409) {
@@ -109,27 +119,25 @@ function AdminForm() {
                                 required: "Role is required"
                             })}
                             className="w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md">
-                            <option value="organization">Organization</option>
-                            <option value="mechanic">Mechanic</option>
+                            <option value="admin">Admin</option>
                         </select>
                         {errors.carType && <p className='text-red-500 text-xs'>{errors.role.message}</p>}
                     </div>
-
 
                     <div className="flex flex-col gap-2 pt-4">
                         <input
                             disabled={isLoading}
                             type="submit"
-                            value={"ADD USER"}
+                            value={"ADD ADMIN"}
                             className="btn__bg px-6 py-1 bg-blue-500 uppercase rounded-md text-orangered-500 disabled:bg-white hover:bg-sky-700 active:bg-violet-700" />
 
-                      
+                       
                     </div>
                     <Toaster position="top-center" />
                 </form>
-            </article >
+            </article>
         </>
     )
 }
 
-export default AdminForm
+export default SuperHome

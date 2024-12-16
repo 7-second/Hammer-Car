@@ -41,7 +41,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 app.get('/', (_, res) => {
-    res.send('Hello, World! this is from Car-rental...');
+    res.send('Hello, World! this is from Hammer cars...');
 });
 
 //Routes
