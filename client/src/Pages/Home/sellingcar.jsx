@@ -42,12 +42,12 @@ const Sellingcars = () => {
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
             </div>
             <div className='gap-8 flex flex-wrap mb-1 ml-[50px]'>
-                {cars?.length === 0 ? (
+                {/* {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
                     </div>
-                ) :
-                    cars?.map((car) => (
+                ) : */}
+                    {cars?.map((car) => (
                         <Sell
                             key={car._id}
                             car={car}

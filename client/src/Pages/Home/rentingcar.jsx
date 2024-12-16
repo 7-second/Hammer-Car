@@ -48,18 +48,18 @@ const Rentedcars = () => {
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
                 </div>
                 <div className='gap-4 flex overflow-x-auto w-full mb-1'>
-                    {cars?.length === 0 ? (
+                    {/* {cars?.length === 0 ? (
                         <div className='h-48 flex items-center justify-center w-full'>
-                            No Car Found
-                        </div>
-                    ) :
-                        cars?.map((car) => (
+                          
+                        </div> */}
+                    
+                       {cars?.map((car) => (
                             <Rent
                                 key={car._id}
                                 car={car}
                             />
-                        ))
-                    }
+                      ) )}
+                      
                     {loading &&
 
                         <div className='h-48 flex items-center justify-center w-full'>

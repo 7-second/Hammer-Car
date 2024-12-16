@@ -17,6 +17,7 @@ import OrgProfile from "../organization/component/OrgProfile";
 import OrgHeader from "../organization/component/orgHeader";
 import OrgHome from "../organization/component/orgHome"
 import Header from "./components/Header";
+import AdminHeader from "../Admin/component/AdminHeader";
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
 // import Search from "./Pages/Search/search"
@@ -50,6 +51,10 @@ function App() {
           <Route path="/profile" element={<OrgProfile />} />
           <Route path="/orghome" element={<OrgHome />} />
         </Route>
+
+        <Route path="/" element={<AdminLayout />}>
+           <Route path="adminhome" element={<AdminHome />} />
+        </Route >
 
       </Routes>
     </BrowserRouter>
@@ -102,4 +107,18 @@ function OrganizationLayout() {
       </main>
     </div>
   );
+}
+
+function AdminLayout(){
+  return(
+    <div className="">
+    <AdminHeader />
+    <main>
+      <Outlet />
+    </main>
+  </div>
+  );
+
+ 
+
 }
