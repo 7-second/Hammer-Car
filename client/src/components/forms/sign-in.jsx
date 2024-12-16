@@ -46,7 +46,7 @@ const SignIn = () => {
                 localStorage.setItem("mech_data", JSON.stringify(response?.data))
             }else if (response?.data?.role === "admin") {
                 navigate("/adminhome")
-                localStorage.setItem("mech_data", JSON.stringify(response?.data))
+                localStorage.setItem("admin_data", JSON.stringify(response?.data))
             } else {
                 navigate("/")
                 localStorage.setItem("users_data", JSON.stringify(response?.data))
