@@ -6,7 +6,7 @@ function DashBoard() {
   return (
     <>
       <div className=" h-fit flex  mt-[10px]">
-        <div className="w-[400px] h-fit flex flex-wrap justify-center pr-3 pb-2 gap-3 shadow-lg">
+        <div className="hidden md:flex w-[400px] h-fit flex-wrap justify-center pr-3 pb-2 gap-3 shadow-lg">
 
           <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
             <div className="w-[150px] h-[100px]">
@@ -119,15 +119,13 @@ function DashBoard() {
         </div> 
         <div className="mt-[30px] h-fit flex justify-center ml-[20px]">
 
-<div className="w-[300px]  h-[200px] shadow-2xl " >
+<div className="w-[330px]  h-[200px] shadow-2xl flex flex-col items-center justify-center " >
     <div className="flex justify-center">
 
     <h1 className="font-bold text-blue-600">
         Organization Verification
     </h1>
-    </div>
-    
-     
+    </div>   
 
 <PieChart 
 series={[
