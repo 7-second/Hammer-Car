@@ -160,7 +160,7 @@ function OrgHeader() {
 
             </header >
 
-            <Or/>
+           
         </>
     )
 }
