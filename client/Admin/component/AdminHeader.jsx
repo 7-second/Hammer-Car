@@ -89,7 +89,7 @@ function AdminHeader() {
 
 
             {/* Large Screen */}
-            <header className='hidden md:flex flex-col p-5 gap-1 bg-white  justify-between sticky z-50 top-0'>
+            <header className='hidden md:flex flex-col p-5 gap-1 bg-white rounded-3xl  justify-between sticky z-50 top-2 shadow-lg mx-[20px]'>
 
                 <div className="h-fit  flex top-0 -mb-6 -mt-4 pb-4">
                     <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
