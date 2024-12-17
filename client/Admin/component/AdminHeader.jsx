@@ -27,11 +27,11 @@ function AdminHeader() {
         <>
 
             {/* Mobile */}
-            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 '>
+            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg mx-10 rounded-xl '>
 
 
                 <div className="flex items-center justify-between gap-11">
-                <div className="h-fit  flex top-0 -mb-2 pb-4 absolute">
+                <div className="h-fit  flex top-0 -mb-2 pb-4 ">
                 
                 <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
                 </div>
@@ -39,7 +39,7 @@ function AdminHeader() {
                     <div>
 
                        
-                                <div className="flex gap-3 items-center">
+                                <div className="flex gap-3 justify-end">
 
                                     <div className="flex justify-center">
                                         <h1 className="text-black">
