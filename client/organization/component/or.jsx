@@ -1,9 +1,10 @@
 
 
-function OrgHome(){
-    return(
-    <>
-   <div className="bg-gray-100 text-gray-800">
+
+
+function Or() {
+  return (
+    <div className="bg-gray-100 text-gray-800">
       {/* Navbar */}
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="container mx-auto flex justify-between items-center p-4">
@@ -89,9 +90,9 @@ function OrgHome(){
         </div>
       </section>
     </div>
- </> 
-)
+  );
 }
+
 function CarCard({ title, price, rent, image }) {
   return (
     <div className="bg-gray-50 shadow-lg rounded-lg overflow-hidden">
@@ -108,7 +109,10 @@ function CarCard({ title, price, rent, image }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default OrgHome
+export default Or;
+
+
+

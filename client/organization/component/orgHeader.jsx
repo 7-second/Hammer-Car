@@ -4,6 +4,7 @@ import { BiLogOut } from "react-icons/bi"
 import { GoHomeFill } from "react-icons/go"
 import { Link, useNavigate } from "react-router-dom";
 import OrgDrawer from "./OrgDrawer";
+import Or from "./or";
 
 
 
@@ -30,7 +31,7 @@ function OrgHeader() {
             {/* Mobile */}
             <header className='flex flex-col md:hidden p-5 gap-1  justify-between sticky z-50 top-0 shadow-lg'>
                 <div className="">
-                <OrgDrawer />
+                
                 </div>
                 <div className="flex flex-row items-center justify-between">
                     
@@ -39,10 +40,10 @@ function OrgHeader() {
 
                  <div className="mt-[10px]">
                      <ul className="flex flex-row gap-[20px]">
-                         <button className="text-blue-400 flex font-bold text-sm md:text-base"><Link to="/"> Home</Link></button>
-                         <button className="font-bold text-sm md:text-base"><Link to="/View-all-rent">Rent</Link></button>
-                         <button className="font-bold text-sm md:text-base"><Link to="/View-all-sell">Sell</Link></button>
-                         <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
+    
+                         <button className="font-bold text-sm md:text-base">All for Rent</button>
+                         <button className="font-bold text-sm md:text-base">All for Sale</button>
+            
 
                      </ul>
                  </div>
@@ -55,7 +56,7 @@ function OrgHeader() {
                             <div className="flex justify-center">
                                 <h1 className="text-black">
                                     <Link to={"/profile"}>
-                                        {currentUser.username}
+                                        {/* {currentUser.username} */}
 
                                     </Link>
 
@@ -105,11 +106,9 @@ function OrgHeader() {
 
                         <div className="mt-[10px]">
                             <ul className="flex flex-row gap-[20px]">
-                                <button className="text-blue-400 flex font-bold text-sm md:text-base"><Link to="/"> Home</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/View-all-rent">Rent</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/View-all-sell">Sell</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
-
+                            <button className="font-bold text-sm md:text-base"><Link to="">All for Rent</Link></button>
+                            <button className="font-bold text-sm md:text-base"><Link to="">All for Sale</Link></button>
+            
                             </ul>
                         </div>
 
@@ -123,7 +122,7 @@ function OrgHeader() {
                                     <div className="flex justify-center">
                                         <h1 className="text-black">
                                             <Link to={"/profile"}>
-                                                {currentUser.username}
+                                                {/* {currentUser.username} */}
 
                                             </Link>
 
@@ -160,6 +159,8 @@ function OrgHeader() {
 
 
             </header >
+
+            <Or/>
         </>
     )
 }
