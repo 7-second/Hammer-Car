@@ -126,10 +126,16 @@ function DDrawer() {
           <h3 className="text-orange-500 ml-[40px]">Contact Hammer's</h3>
           <Typography >
             <div className="flex flex-col gap-1 mt-[20px] -ml-[50px items-center">
-              <Button ><FaTelegram />Telegram</Button>
-              <Button ><FaFacebook />Instagram</Button>
-              <Button ><FaTelegram />FaceBook</Button>
-              <Button ><BsFillTelephoneForwardFill />0985434363</Button>
+              <Button ><FaTelegram />
+              
+             <a href="https://t.me/+251943094426">
+             Telegram
+              </a> </Button>
+              <Button ><FaFacebook />
+              <a href="https://www.instagram.com/itzcute_hanuni?igsh=dzVjMWhvcGxxcmg1">Instagram</a> </Button>
+              <Button ><FaTelegram />
+              <a href="https://www.facebook.com/biniyam.gossa.5">FaceBook</a> </Button>
+              <Button ><BsFillTelephoneForwardFill /><a href="tel:+251985434363">0985434363</a></Button>
             </div>
           </Typography>
           {currentUser &&

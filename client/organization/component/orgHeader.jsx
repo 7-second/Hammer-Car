@@ -29,7 +29,7 @@ function OrgHeader() {
         <>
 
             {/* Mobile */}
-            <header className='flex flex-col md:hidden p-5 gap-1  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-5 top-0 shadow-lg'>
                 <div className="">
                 
                 </div>
@@ -55,10 +55,7 @@ function OrgHeader() {
 
                             <div className="flex justify-center">
                                 <h1 className="text-black">
-                                    <Link to={"/profile"}>
                                         {/* {currentUser.username} */}
-
-                                    </Link>
 
                                 </h1>
 
@@ -66,14 +63,14 @@ function OrgHeader() {
                             {
                                 currentUser?.profilePicture &&
                                 //@ts-ignore
-                                <Link to={`/`}>
+
                                     <img
                                         src={`${currentUser?.profilePicture}`}
                                         alt="Profile"
                                         width={20}
                                         height={20}
                                         className="!w-8 !h-8 rounded-full object-cover" />
-                                </Link>
+
 
                             }
                             <div onClick={handleLogout}>
@@ -96,7 +93,7 @@ function OrgHeader() {
 
 
             {/* Large Screen */}
-            <header className='hidden md:flex flex-col p-5 gap-1  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='hidden md:flex flex-col p-5 gap-1 bg-white justify-between sticky  top-0 shadow-lg'>
 
 
                 <div className="flex items-center justify-between">
