@@ -1,12 +1,16 @@
 import CountUp from "react-countup"
+import * as React from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
 
 
 function DashBoard(){
     return (
         <>
+  <div className="flex flex-col w-full">
+
         {/* for small screen */}
-        <div className="hidden md:flex flex-row mt-8 flex-wrap  justify-evenly">
-             <div className="w-[200px] shadow-2xl rounded-md">
+        <div className="hidden md:flex flex-row mt-8 flex-wrap  justify-evenly shadow-2xl shadow-emerald-700 pb-4">
+             <div className="w-[200px] shadow-2xl rounded-md bg-pink-500 shadow-yellow-500">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://www.svgrepo.com/show/125995/multiple-users-silhouette.svg" alt="Users" />
@@ -61,7 +65,7 @@ function DashBoard(){
                  </div>
                  </div>
 
-                 <div className="w-[200px] shadow-2xl rounded-md  mt-[20px]">
+                 <div className="w-[200px] shadow-2xl rounded-md  mt-[20px] bg-green-400">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://www.svgrepo.com/show/67847/sale-car.svg" alt="sale cars" />
@@ -75,7 +79,7 @@ function DashBoard(){
 
 
                   {/* for higher screen */}
-                  <div className="md:hidden flex flex-row mt-8 flex-wrap  justify-evenly">
+                  <div className="md:hidden flex flex-row mt-8 flex-wrap  justify-evenly shadow-2xl shadow-green-400 ">
              <div className="w-[150px] shadow-2xl rounded-md">
                 <img 
                 className="w-fit h-[200px]"
@@ -149,6 +153,38 @@ function DashBoard(){
 
 
         </div>
+
+    <div className="mt-[30px] flex justify-center">
+
+            <div className="w-[300px]  h-[200px] shadow-2xl " >
+                <div className="flex justify-center">
+
+                <h1 className="font-bold text-blue-600">
+                    Organization Verification
+                </h1>
+                </div>
+                
+                 
+
+     <PieChart 
+      series={[
+        {
+          data: [
+            { id: 0, value: 10, label: 'Aprove Request' },
+            { id: 1, value: 15, label: 'Aproved' },
+            { id: 2, value: 20, label: 'Not Aproved' },
+          ],
+        },
+      ]}
+      width={400}
+      height={200} />
+
+                </div>
+ 
+ 
+            </div>
+        </div>
+        
         
         </>
     )

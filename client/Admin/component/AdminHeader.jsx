@@ -27,7 +27,7 @@ function AdminHeader() {
         <>
 
             {/* Mobile */}
-            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 '>
 
 
                 <div className="flex items-center justify-between gap-11">
@@ -74,7 +74,7 @@ function AdminHeader() {
                         <ul className="flex flex-row gap-[20px]">
                             <button className="text-blue-400 flex font-bold text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
                             <button className="font-bold text-sm md:text-base"><Link to="/adminform">Add Users</Link></button>
-                            <button className="font-bold text-sm md:text-base"><Link to="/View-all-sell">Sell</Link></button>
+                            <button className="font-bold text-sm md:text-base"><Link to="/mechanics">Mechanics</Link></button>
                             <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
 
                         </ul>
@@ -89,7 +89,7 @@ function AdminHeader() {
 
 
             {/* Large Screen */}
-            <header className='hidden md:flex flex-col p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg'>
+            <header className='hidden md:flex flex-col p-5 gap-1 bg-white  justify-between sticky z-50 top-0'>
 
                 <div className="h-fit  flex top-0 -mb-6 -mt-4 pb-4">
                     <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
@@ -99,9 +99,9 @@ function AdminHeader() {
 
                         <div className="mt-[10px]">
                             <ul className="flex flex-row gap-[20px]">
-                                <button className="text-blue-400 flex font-bold text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
+                                <button className="text-blue-400 flex  text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
                                 <button className="font-bold text-sm md:text-base"><Link to="/adimnform">Add Users</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/View-all-sell">Sell</Link></button>
+                                <button className="font-bold text-sm md:text-base"><Link to="/mechanics">Mechanics</Link></button>
                                 <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
 
                             </ul>
