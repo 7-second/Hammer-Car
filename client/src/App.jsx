@@ -57,7 +57,7 @@ function App() {
 
         <Route path="/" element={<AdminLayout />}>
            <Route path="/adminhome" element={<AdminHome />} />
-           <Route path="/adimnform" element={<AdminForm />} />
+           <Route path="/adminform" element={<AdminForm />} />
         </Route >
 
         <Route path="superhome" element={<SuperHome />} />

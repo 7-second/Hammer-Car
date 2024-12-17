@@ -100,7 +100,7 @@ function AdminHeader() {
                         <div className="mt-[10px]">
                             <ul className="flex flex-row gap-[20px]">
                                 <button className="text-blue-400 flex  text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/adimnform">Add Users</Link></button>
+                                <button className="font-bold text-sm md:text-base"><Link to="/adminform">Add Users</Link></button>
                                 <button className="font-bold text-sm md:text-base"><Link to="/mechanics">Mechanics</Link></button>
                                 <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
 

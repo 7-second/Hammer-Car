@@ -181,7 +181,7 @@ height={200} />
 
 
 </div>   
- <div className="flex flex-wrap justify-evenly mt-[10px]">
+ <div className="flex flex-wrap justify-evenly mt-[10px] shadow-2xl">
   
              <div className="w-[150px] shadow-2xl rounded-md">
                 <img 
