@@ -180,7 +180,9 @@ height={200} />
     </div>
 
 
-</div>     
+</div>   
+ <div className="flex flex-wrap justify-evenly mt-[10px]">
+  
              <div className="w-[150px] shadow-2xl rounded-md">
                 <img 
                 className="w-fit h-[200px]"
@@ -249,6 +251,7 @@ height={200} />
                  </div>
                  
                  </div>
+        </div> 
                  
 
                    
