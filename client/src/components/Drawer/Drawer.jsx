@@ -78,7 +78,7 @@ function DDrawer() {
                 </Typography>
               </Link>
               : (
-                <div className="flex gap-3 items-center">
+                <div className="flex flex-row gap-3 items-center">
 
                   {
                     currentUser?.profilePicture &&
@@ -89,20 +89,13 @@ function DDrawer() {
                         alt="Profile"
                         width={20}
                         height={20}
-                        className="!w-[70px] !h-[67px] rounded-full object-cover" />
+                        className="!w-[70px] !h-[67px] ml-[70px] rounded-full object-cover" />
                     </Link>
                   }
-
                 </div>
-
-
-              )
-            }
-
-
-
+              ) }
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mr-[50px]">
             <h1 className="text-black">
               <Link to={"/profile"}>
                 {currentUser?.username}
