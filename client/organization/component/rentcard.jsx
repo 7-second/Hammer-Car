@@ -7,11 +7,10 @@ import { MdPeople } from "react-icons/md";
 // import CarDetails from './car-details';
 import { useState } from 'react';
 import { CiHeart } from 'react-icons/ci';
-import CarDetails from "../car detail/carDetail";
 // import EditCar from './profile/edit-car';
 
 
-const Rent = ({ variant, car }) => {
+const OrgRent = ({ variant, car }) => {
 
     let [isOpen, setIsOpen] = useState(false)
     function openModal() {
@@ -57,7 +56,7 @@ const Rent = ({ variant, car }) => {
                         <div className={`${variant === "allCars" && "justify-end mb-5 flex-col md:flex-row"} flex flex-row md:justify-between  gap-3`}>
                             <div className='text__medium flex items-center gap-1 '>
                                 <FaGasPump />
-                                <span>{car?.fuelCapacity}</span>
+                                <span>{car?.fuelCapacity}L</span>
                             </div>
                             <div className='text__medium flex items-center gap-1 '>
                                 <GiSteeringWheel />
@@ -82,11 +81,11 @@ const Rent = ({ variant, car }) => {
                     </button>
 
                     {/* Car Details Dialog  */}
-                    <CarDetails
+                    {/* {<CarDetails
                                 car={car}
                                 variant={variant}
                                 isOpen={isOpen}
-                                setIsOpen={setIsOpen} /> 
+                                setIsOpen={setIsOpen} /> } */}
                 </div>
             </section >
 
@@ -94,4 +93,4 @@ const Rent = ({ variant, car }) => {
     )
 }
 
-export default Rent
+export default OrgRent

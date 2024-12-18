@@ -1,76 +1,92 @@
+import Rent from "../../src/components/Car card/rentCard";
+import OrgRent from "./rentcard";
 
+function OrgHome() {
+  const carTypes = ["LUXURY", "TRUCK", "SEDAN", "CONVERTIBLE", "SPORTS", "WAGONS"];
 
-function OrgHome(){
-    return(
+  return (
     <>
-   <div className="bg-gray-100 text-gray-800">
+    <div className="bg-gray-50">
+      {/* Header */}
+      {/* <header className="bg-yellow-400 p-4 shadow-md">
+        <div className="flex justify-between items-center px-6">
+          <h1 className="text-2xl font-bold text-gray-800">HARRIER</h1>
+          <nav className="flex space-x-6 text-gray-700">
+            <a href="#" className="hover:text-black">Home</a>
+            <a href="#" className="hover:text-black">Listing</a>
+            <a href="#" className="hover:text-black">Compare</a>
+            <a href="#" className="hover:text-black">Contact</a>
+          </nav>
+          <button className="bg-gray-800 text-white px-4 py-2 rounded">Login</button>
+        </div>
+      </header> */}
 
       {/* Hero Section */}
-      
-       
-        <div >
-             <img
-              className="h-[200px]"
-             src="https://ik.imagekit.io/dwtrkflc4/1_NtAdH0c29.png?updatedAt=1686577675728" alt="" />
-          <a
-            href="#cars"
-            className="bg-blue-600 hover:bg-blue-500  py-2 px-6 rounded-full text-blue-400"
-          >
-            Explore Cars
-          </a>
+      <section className="relative  ">
+        <img
+          src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjthIyeHvmjXTv-c-fgLwC77CpJtXoCnIL2I6btSJhkLiIhwjWxmKkpGCGNF76qJtSpeovxD64Vk2chdjBOgK1Wneq0lhAEB6DxB5YjHsa5aGQOoQfm4ygQ0cNTEh9t1SWrrzRoL2Ul-xCR/s1600-rw/CAR-WALLPAPER-1920x1080.jpg"
+          alt="Yellow Car"
+          className="w-full h-52 object-cover opacity-70 relative"
+        />
+        <div className="d">
+          <h1 className="text-yellow-500 absolute mt-[200px]">your organization</h1>
         </div>
-      
+       
+      </section>
 
-      {/* Cars Section */}
-      <section id="cars" className="py-12 bg-white">
-        <div className="container mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-8 text-blue-500">Our Featured Cars</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Car Card 1 */}
-            <CarCard
-              title="Luxury Sports Car"
-              price="$90,000"
-              rent="$500/day"
-              image="https://png.pngtree.com/background/20230823/original/pngtree-sleek-white-hybrid-coupe-sports-car-concept-on-white-background-3d-picture-image_4792860.jpg"
-            />
-            {/* Car Card 2 */}
-            <CarCard
-              title="Comfortable Sedan"
-              price="$40,000"
-              rent="$200/day"
-              image="https://www.hdwallpapers.in/download/adro_ford_mustang_coupe_car_white_background_4k_hd_cars-HD.jpg"
-            />
-            {/* Car Card 3 */}
-            <CarCard
-              title="Family SUV"
-              price="$50,000"
-              rent="$250/day"
-              image="https://media.cdn-jaguarlandrover.com/api/v2/images/55880/w/680.jpg"
-            />
+      {/* Main Content */}
+      <div className="flex justify-center px-8 mt-8">
+       
+        {/* Car Types Section */}
+        <div className="flex flex-wrap justify-around bg-yellow-700 p-6 rounded-lg w-2/3">
+          {carTypes.map((type, index) => (
+            <div key={index} className="text-center m-2">
+              <img
+                src="https://via.placeholder.com/100x50"
+                alt={type}
+                className="mx-auto mb-2"
+              />
+              <p className="font-bold text-gray-700">{type}</p>
+            </div>
+          ))}
           </div>
+      </div>
+
+      {/* Featured Offers Section */}
+      <section className="flex justify-between px-8 py-6 mt-8 bg-white">
+        <div className="w-1/2 p-4 bg-gray-100 rounded">
+          <h3 className="font-bold text-lg mb-2">Limited Offer</h3>
+          <p>At amazing discounts.</p>
+        </div>
+        <div className="w-1/2 p-4 bg-gray-100 rounded ml-4">
+          <h3 className="font-bold text-lg mb-2">Smart Interior: Sports Car</h3>
+          <p>Stylish interiors for your dream car.</p>
         </div>
       </section>
     </div>
- </> 
-)
-}
-function CarCard({ title, price, rent, image }) {
-  return (
-    <div className="bg-gray-50 shadow-lg rounded-lg overflow-hidden">
+    <hr className="mt-2" />
+    <h1 className="flex items-center justify-center pb-4 text-3xl font-serif font-bold text-blue-500">Our Feature Cars For Rent</h1>
+    <div className="w-full flex flex-wrap gap-6 !mr-16">
 
-
-<img src={image} alt={title} className="w-full h-48 object-cover" />
-      <div className="p-4">
-        <h4 className="text-xl font-bold mb-2">{title}</h4>
-        <p className="text-gray-600">
-          Price: {price} | Rent: {rent}
-        </p>
-        <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500">
-          Buy Now
-        </button>
-      </div>
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
+  <OrgRent />
     </div>
-  )
+    </>
+  );
 }
 
-export default OrgHome
+export default OrgHome;
