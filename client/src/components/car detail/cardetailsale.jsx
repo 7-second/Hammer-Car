@@ -155,7 +155,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
                                 type="button"
                                 className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                               >
-                                Buy Now
+                                Rent Now
                                 <Toaster position="top-center" />
                               </button>
                            

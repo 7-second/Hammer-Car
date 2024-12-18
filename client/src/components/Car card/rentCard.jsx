@@ -7,8 +7,7 @@ import { MdPeople } from "react-icons/md";
 // import CarDetails from './car-details';
 import { useState } from 'react';
 import { CiHeart } from 'react-icons/ci';
-import CarDetails from "../car detail/carDetail";
-import CarDetailrent from "../car detail/carDetail";
+import CarDetailrent from "../car detail/carDetailrent";
 // import EditCar from './profile/edit-car';
 
 

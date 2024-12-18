@@ -184,7 +184,7 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
                   {/* Close Button */}
                   <button
                     onClick={closeModal}
-                    className="absolute bg-white rounded-full px-3 py-1.5 font-bold text-sm top-3 right-3"
+                    className="absolute bg-red-500 rounded-full px-3 py-1.5 font-bold text-sm top-3 right-3"
                   >
                     X
                   </button>
