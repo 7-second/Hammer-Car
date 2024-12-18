@@ -18,7 +18,7 @@ const ArrayStar = ({ rating }) => {
   );
 };
 
-const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
+const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
   let currentUser;
   const user = localStorage.getItem("users_data");
   if (user) {
@@ -145,7 +145,7 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
                         <div>
                           <p className="text-md">
                             ETB {car?.price}
-                            <sub className="text-xs">/day</sub>
+                            <sub className="text-xs"></sub>
                           </p>
                         </div>
                         <div className="">
@@ -155,7 +155,7 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
                                 type="button"
                                 className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                               >
-                                Rent Now
+                                Buy Now
                                 <Toaster position="top-center" />
                               </button>
                            
@@ -166,7 +166,7 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
                               onClick={openRentModal}
                               className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                             >
-                              Rent Now
+                              Buy Now
                             </button>
                           )}
                         </div>
@@ -198,4 +198,4 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
   );
 };
 
-export default CarDetailrent;
+export default CarDetailsale;

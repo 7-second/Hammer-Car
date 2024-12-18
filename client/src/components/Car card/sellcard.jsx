@@ -7,6 +7,7 @@ import { MdPeople } from "react-icons/md";
 // import CarDetails from './car-details';
 import { useState } from 'react';
 import { CiHeart } from 'react-icons/ci';
+import CarDetailsale from "../car detail/cardetailsale";
 // import EditCar from './profile/edit-car';
 
 
@@ -81,11 +82,11 @@ const Sell = ({ variant, car }) => {
                     </button>
 
                     {/* Car Details Dialog  */}
-                    {/* {<CarDetails
+                    <CarDetailsale 
                                 car={car}
                                 variant={variant}
                                 isOpen={isOpen}
-                                setIsOpen={setIsOpen} /> } */}
+                                setIsOpen={setIsOpen} /> 
                 </div>
             </section >
 

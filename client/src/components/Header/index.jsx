@@ -50,7 +50,7 @@ function Header() {
 
                                     <div className="flex justify-center">
                                         <h1 className="text-black">
-                                            <Link to={"/profile"}>
+                                            <Link to={"/profile"} >
                                                 {currentUser.username}
 
                                             </Link>
