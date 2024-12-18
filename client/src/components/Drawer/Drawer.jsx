@@ -1,7 +1,7 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState } from "react";
 import { Button, Drawer, IconButton, Typography } from "@mui/material";
-import { FaTelegram } from "react-icons/fa";
+import { FaInstagram, FaTelegram } from "react-icons/fa";
 import { BsFillTelephoneForwardFill } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ function DDrawer() {
   }
 
   return <>
-    <div className="flex  justify-between items-center w-fit">
+    <div className="flex  justify-between items-start w-fit">
       <div className="flex items-center">
         <Button onClick={openDrawerLeft} className=" !bg-blue-200 rounded"><RxHamburgerMenu />Menu</Button>
         <Drawer
@@ -40,7 +40,7 @@ function DDrawer() {
           onClose={closeDrawerLeft}
           className="p-4"
         >
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex  justify-between">
             <Typography variant="h5">
               <div className='font-bold text-xl text-blue-500 whitespace-nowrap ml-[10px] pr-[100px]'>
                 <span className='text-orange-500 '>Hammer</span>
@@ -68,11 +68,11 @@ function DDrawer() {
               </svg>
             </IconButton>
           </div>
-          <div className="flex justify-center ">
+          <div className="flex justify-Start ">
             {!currentUser
               ? <Link to={"/signIn"} className="btn__bg py-1 px-3 text-xs text-white rounded-md">
                 <Typography color="gray" className="mb-8 pr-4 font-normal mr-[20px]">
-                  <div className=" font-normal ml-[70px] mt-[10px]">
+                  <div className=" font-normal ml-[50px] mt-[10px]">
                     <Button variant="contained">Login</Button>
                   </div>
                 </Typography>
@@ -115,7 +115,9 @@ function DDrawer() {
 
 
           <hr className="mt-[30px] mx-[20px] bg-blue-500" />
-          <div className="flex flex-col gap-1 mt-[30px] ml-[50px] items-start">
+<div className="flex flex-col justify-center">
+
+          <div className="flex flex-col gap-1 mt-[30px] ml-[40px] items-start">
             <Button >
               <Link to={"/organization"}>Organization</Link>
 
@@ -124,20 +126,33 @@ function DDrawer() {
           </div>
           <hr className="mt-[30px] mx-[20px] bg-blue-500" />
           <h3 className="text-orange-500 ml-[40px]">Contact Hammer's</h3>
+          
           <Typography >
-            <div className="flex flex-col gap-1 mt-[20px] -ml-[50px items-center">
-              <Button ><FaTelegram />
-              
-             <a href="https://t.me/+251943094426">
-             Telegram
-              </a> </Button>
-              <Button ><FaFacebook />
-              <a href="https://www.instagram.com/itzcute_hanuni?igsh=dzVjMWhvcGxxcmg1">Instagram</a> </Button>
-              <Button ><FaTelegram />
-              <a href="https://www.facebook.com/biniyam.gossa.5">FaceBook</a> </Button>
-              <Button ><BsFillTelephoneForwardFill /><a href="tel:+251985434363">0985434363</a></Button>
+            <div className="flex flex-col items-start ml-[50px] mt-[10px]">
+
+            <div className="flex flex-row items-center">
+            <label htmlFor="">  <FaTelegram />   </label> 
+            <Button ><a href="https://t.me/+251943094426">Abdulaziz</a> </Button>
             </div>
-          </Typography>
+
+            <div className="flex flex-row items-center">
+            <label htmlFor="">  <FaInstagram/>   </label> 
+            <Button ><a href="https://www.instagram.com/itzcute_hanuni?igsh=dzVjMWhvcGxxcmg1">Hanan</a> </Button>
+            </div>
+
+            
+            <div className="flex flex-row items-center">
+            <label htmlFor="">  <FaFacebook/>   </label> 
+            <Button ><a href="https://www.facebook.com/biniyam.gossa.5">Biniyam</a> </Button>
+            </div>
+
+            <div className="flex flex-row items-center">
+            <label htmlFor="">  <BsFillTelephoneForwardFill/>   </label> 
+            <Button ><a href="tel:+251985434363">Bruk</a> </Button>
+            </div>
+            </div>
+            
+            </Typography>
           {currentUser &&
             <div className="m-[20px]">
               <div onClick={handleLogout}
@@ -146,9 +161,14 @@ function DDrawer() {
               </div>
             </div>
           }
+</div>
+
+         
+          
         </Drawer>
 
       </div>
+      
 
     </div>
 

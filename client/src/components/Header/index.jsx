@@ -4,7 +4,8 @@ import { BiLogOut } from "react-icons/bi"
 import { GoHomeFill } from "react-icons/go"
 import { Link, useNavigate } from "react-router-dom";
 import { FaCarSide } from "react-icons/fa";
-import Drawer1 from "../Drawer/Drawer"
+import DDrawer from "../Drawer/Drawer";
+
 
 
 
@@ -36,7 +37,7 @@ function Header() {
                 
                 <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
                 </div>
-                <Drawer1 />
+                <DDrawer />
                     
                     <div>
 
@@ -111,7 +112,7 @@ function Header() {
                 <div className="flex items-center justify-evenly">
                     <div className="d">
 
-                        <Drawer1 />
+                        <DDrawer />
                     </div>
 
 
