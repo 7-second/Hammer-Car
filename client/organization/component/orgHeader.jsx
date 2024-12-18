@@ -41,8 +41,9 @@ function OrgHeader() {
                  <div className="mt-[10px]">
                      <ul className="flex flex-row gap-[20px]">
     
-                         <button className="font-bold text-sm md:text-base">All for Rent</button>
-                         <button className="font-bold text-sm md:text-base">All for Sale</button>
+                         <button className="font-bold text-sm md:text-base">Rental List </button>
+                         <button className="font-bold text-sm md:text-base">Sale List</button>
+                         <button className="font-bold text-sm md:text-base"><Link to="/addcar">Add Cars</Link></button>
             
 
                      </ul>
@@ -103,8 +104,9 @@ function OrgHeader() {
 
                         <div className="mt-[10px]">
                             <ul className="flex flex-row gap-[20px]">
-                            <button className="font-bold text-sm md:text-base"><Link to="">All for Rent</Link></button>
-                            <button className="font-bold text-sm md:text-base"><Link to="">All for Sale</Link></button>
+                            <button className="font-bold text-sm md:text-base">Rental List </button>
+                           <button className="font-bold text-sm md:text-base">Sale List</button>
+                          <button className="font-bold text-sm md:text-base"><Link to="/addcar">Add Cars</Link></button>
             
                             </ul>
                         </div>

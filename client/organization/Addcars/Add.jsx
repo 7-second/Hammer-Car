@@ -13,7 +13,9 @@ import { VscLoading } from 'react-icons/vsc';
 
 const addCarSchema = Z.object({
   carTitle: Z.string().min(1, { message: 'Title Required' }),
-  carType: Z.enum(["Sport", "SUV", "MPV", "Sedan", "Coupe", "Hatchback"])
+  carModel: Z.enum(["Corolla", "Vitz", "Yaris", "Hilux", "LandCruiser", "Rav4", "Camry","HyundaiAccent", "HyundaiSanta","Dzire","Swift","Alto",
+    "Sunny","Patrol","Navara","XTrail","Fit","Civic","Fit","Lancer","Pajero","Outlander","Jetta","Passat","Golf"
+  ])
     .refine(val => val.length > 0, { message: 'Type Required' }),
     cartype: Z.enum([ "rent", "sell"])
     .refine(val => val.length > 0, { message: 'Type Required' }),
@@ -25,6 +27,10 @@ const addCarSchema = Z.object({
   location: Z.string().min(1, { message: 'Location Required' }),
   fuelCapacity: Z.string().min(1, { message: "Fuel Capacity Required" }),
   description: Z.string().min(1, { message: 'Description Required' }),
+  CarBrand: Z.string().min(1,{message:'Car Brand Required'}),
+  Year:Z.string().min(1,{message:'Car Year is Required'}),
+  Cc:Z.string().min(1,{message:'Car CC required'}),
+  Engin:Z.string().min(1,{message:'car Engine is reqired'}),
   images: Z.array(Z.string()).optional(),
 });
 
@@ -83,37 +89,115 @@ const AddCarForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-3 p-4'>
-      <div className='leading-3'>
-        <h3 className='text-sm font-semibold'>Add a Car for Rent </h3>
-        <span className='text__medium'>please enter your car info</span>
+      className='flex flex-col -mt-4 gap-3 p-4'>
+      <div className='leading-3 flex flex-col items-center justify-center bg-blue-400 h-fit rounded-lg pb-4'>
+        <h3 className='text-sm font-semibold'>Add a Car </h3>
+        <span className='text__medium text-white'>please enter your car info</span>
       </div>
       <h1 className='text-md text-blue-500 font-normal'>Car info</h1>
       <div className='grid md:grid-cols-2 gap-3 md:gap-x-6 gap-y-8 p-2'>
+       
         <div className='flex flex-col gap-1'>
-          <label className='text-xs font-bold'>Car Title</label>
-          <input
-            {...register('carTitle')}
-            className='bg-[#f1f1f1] p-2 outline-none text-sm rounded-md'
-            placeholder='Your Title' />
-          {errors.carTitle && <p className='text-red-500 text-xs'>{errors.carTitle.message}</p>}
-        </div>
-        <div className='flex flex-col gap-1'>
-          <label className='text-xs font-bold'>Car Type</label>
+          <label className='text-xs font-bold'>Car Brand</label>
           <select
-            {...register('carType')}
+            {...register('carBrand')}
             className="w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md">
             <option value="">select</option>
-            <option value="Sport">Sport</option>
-            <option value="SUV">SUV</option>
-            <option value="MPV">MPV</option>
-            <option value="Sedan">Sedan</option>
-            <option value="Coupe">Coupe</option>
-            <option value="Hatchback">Hatchback</option>
+            <option value="Toyota">Toyota</option>
+            <option value="Hyundai">Hyundai</option>
+            <option value="Suzuki">Suzuki</option>
+            <option value="Nissan">Nissan</option>
+            <option value="Volswagen">Volswagen</option>
+            <option value="Byd">Byd</option>
+            <option value="Lifan">Lifan</option>
+            <option value="Jetour">Jetour</option>
+            <option value="Honda">Honda</option>
+            <option value="LandRover">LandRover</option>
+            <option value="SinoTruck">SinoTruck</option>
+            <option value="Mitsubishi">Mitsubishi</option>
+            <option value="Chery">Chery</option>
           </select>
-          {errors.carType && <p className='text-red-500 text-xs'>{errors.carType.message}</p>}
-
+          {errors.carBrand && <p className='text-red-500 text-xs'>{errors.carBrand.message}</p>}
+             
         </div>
+
+        <div className='flex flex-col gap-1'>
+          <label className='text-xs font-bold'>Car Model</label>
+          <select
+            {...register('carModel')}
+            className="w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md">
+            <option value="">select</option>
+            <option value="Corolla">Corolla</option>
+            <option value="Yaris">Yaris</option>
+            <option value="Vitz">Vitz</option>
+            <option value="Hilux">Hilux</option>
+            <option value="LandCruiser">LandCruiser</option>
+            <option value="Rav4">Rav4</option>
+            <option value="Camry">Camry</option>
+            <option value="HyundaiAccent">Hyundai Accent</option>
+            <option value="HyundaiSanta">Hyundai Santa</option>
+            <option value="Dzire">Dzire</option>
+            <option value="Swift">Swift</option>
+            <option value="Alto">Alto</option>
+            <option value="Sunny">Sunny</option>
+            <option value="Patrol">Patrol</option>
+            <option value="Navara">Navara</option>
+            <option value="XTrail">X-Trail</option>
+            <option value="Fit">Fit</option>
+            <option value="Lancer">Lancer</option>
+            <option value="Pajero">Pajero</option>
+            <option value="Outlander">Out lander</option>
+            <option value="Jetta">Jetta</option>
+            <option value="Passat">Passat</option>
+            <option value="Golf">Golf</option>
+          </select>
+          {errors.carModel && <p className='text-red-500 text-xs'>{errors.carModel.message}</p>}
+             
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <label className='text-xs font-bold'>Engin Type</label>
+          <select
+            {...register('Engine')}
+            className="w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md">
+            <option value="">select</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Electric">Electric</option>
+            <option value="Gas">Gas</option>
+          </select>
+          {errors.Engine && <p className='text-red-500 text-xs'>{errors.Engine.message}</p>}
+             
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <label className='text-xs font-bold'>Horse Power</label>
+          <select
+            {...register('Engine')}
+            className="w-full bg-[#f1f1f1] p-2 outline-none text-sm rounded-md">
+            <option value="">select</option>
+            <option value="800">800CC</option>
+            <option value="1000">1000CC</option>
+            <option value="1200">1200CC</option>
+            <option value="1500">1500CC</option>
+            <option value="1800">1800CC</option>
+            <option value="2000">2000CC</option>
+            <option value="2500">2500CC</option>
+            <option value="2800">2800CC</option>
+            <option value="3000">3000CC</option>
+            <option value="3200">3200CC</option>
+            <option value="3500">3500CC</option>
+            <option value="4400">4400CC</option>
+            <option value="5000">5000CC</option>
+            <option value="6000">6000CC</option>
+            <option value="6500">6500CC</option>
+            <option value="8000">8000CC</option>
+          </select>
+          {errors.Engine && <p className='text-red-500 text-xs'>{errors.Engine.message}</p>}
+             
+        </div>
+
+        
 
         <div className='flex flex-col gap-1'>
           <label className='text-xs font-bold'>Car Type</label>
@@ -214,7 +298,7 @@ const AddCarForm = () => {
           onChange={handleFileChange}
         />
       </div>
-      <div className='mt-6 flex flex-col gap-2 items-end'>
+      <div className='mt-6 flex flex-col gap-2 items-center'>
         <button
           disabled={isLoading}
           type="submit"

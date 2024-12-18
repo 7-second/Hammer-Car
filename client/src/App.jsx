@@ -5,10 +5,9 @@ import Home from "./Pages/Home/home"
 import SignIn from "../src/components/forms/sign-in"
 import SignUp from "./components/forms/sign-up"
 
-import AddCar from "../src/Pages/Add_cars/Add";
 import SuperHome from "../super Admin/superHome";
 import SuperForm from "../super Admin/superForm";
-import AddCarForm from "../src/Pages/Add_cars/Add";
+import AddCarForm from "../organization/Addcars/Add";
 import Profile from "./components/profile/profile";
 import EditProfile from "./components/profile/edit-profile";
 import Rent from "./components/view all pages/rent";
@@ -53,6 +52,7 @@ function App() {
         <Route path="/" element={<OrganizationLayout />}>
           <Route path="/profile" element={<OrgProfile />} />
           <Route path="/orghome" element={<OrgHome />} />
+          <Route path="/addcar"  element={<AddCarForm />} />
         </Route>
 
         <Route path="/" element={<AdminLayout />}>

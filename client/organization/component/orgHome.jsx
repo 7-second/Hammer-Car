@@ -53,7 +53,7 @@ function OrgHome() {
       </div>
 
       {/* Featured Offers Section */}
-      <section className="flex justify-between px-8 py-6 mt-8 bg-white">
+      {/* <section className="flex justify-between px-8 py-6 mt-8 bg-white">
         <div className="w-1/2 p-4 bg-gray-100 rounded">
           <h3 className="font-bold text-lg mb-2">Limited Offer</h3>
           <p>At amazing discounts.</p>
@@ -62,11 +62,11 @@ function OrgHome() {
           <h3 className="font-bold text-lg mb-2">Smart Interior: Sports Car</h3>
           <p>Stylish interiors for your dream car.</p>
         </div>
-      </section>
+      </section> */}
     </div>
     <hr className="mt-2" />
-    <h1 className="flex items-center justify-center pb-4 text-3xl font-serif font-bold text-blue-500">Our Feature Cars For Rent</h1>
-    <div className="w-full flex flex-wrap gap-6 !mr-16">
+    <h1 className="text-xl flex md:flex items-center justify-center pb-4 text-3xl font-serif font-bold text-blue-500">Our Feature Cars For Rent</h1>
+    <div className="flex justify-center md:w-full flex flex-wrap gap-6 mr-16">
 
   <OrgRent />
   <OrgRent />
