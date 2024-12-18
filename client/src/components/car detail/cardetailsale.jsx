@@ -25,7 +25,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
     currentUser = JSON.parse(user);
     
   }
-  toast.error("Login First")
+
   
 
   const [isRentOpen, setIsRentOpen] = useState(false);
@@ -156,7 +156,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
                                 className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                               >
                                 Rent Now
-                                <Toaster position="top-center" />
+                                
                               </button>
                            
                             </Link>

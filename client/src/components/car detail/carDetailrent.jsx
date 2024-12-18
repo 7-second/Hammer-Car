@@ -25,7 +25,7 @@ const CarDetailrent = ({ car, variant, isOpen, setIsOpen }) => {
     currentUser = JSON.parse(user);
     
   }
-  toast.error("Login First")
+  
   
 
   const [isRentOpen, setIsRentOpen] = useState(false);
