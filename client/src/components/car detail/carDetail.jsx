@@ -76,7 +76,7 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }) => {
                             <div key={index} className="relative w-full h-full">
                               <img
                                 src={
-                                  car?.images?.[index + 1]?.url || "cover.jpg"
+                                  car?.images?.[1]?.url || "cover.jpg"
                                 }
                                 alt="Car Thumbnail"
                                 className="w-full h-full object-cover rounded-md"
@@ -102,7 +102,7 @@ const CarDetails = ({ car, variant, isOpen, setIsOpen }) => {
                       </p>
 
                       {/* Car Details */}
-                      <div className="mt-3 grid grid-cols-2 gap-2 md:gap-9">
+                      <div className="mt-3 grid grid-cols-2 gap-16 md:gap-12">
                         <div className="flex flex-col gap-1">
                           <div className="flex justify-between">
                             <p>Car Type</p>
