@@ -61,7 +61,7 @@ export const updateCar = async (req, res, next) => {
 }
 
 export const addCar = async (req, res, next) => {
-    const { carTitle, cartype, carType, price, fuelCapacity, transmission, location, peoplecapacity, description } = req.body;
+    const { carTitle, cartype, carModel, price, fuelCapacity,Engine,CarBrand,Cc,Year, transmission, location, peoplecapacity, description } = req.body;
     // owner,
     if (req.files === undefined || req.files.length === 0) {
         return res.status(400).json({ message: "Failed to upload images try again" });
@@ -78,7 +78,11 @@ export const addCar = async (req, res, next) => {
             // owner,
             const newCar = await Car.create({
                 carTitle,
-                carType,
+                CarBrand,
+                carModel,
+                Engine,
+                Year,
+                Cc,
                 price,
                 peoplecapacity,
                 transmission,
@@ -86,7 +90,7 @@ export const addCar = async (req, res, next) => {
                 fuelCapacity,
                 description,
                 cartype,
-                images: imageIds
+                // images: imageIds
 
             });
 

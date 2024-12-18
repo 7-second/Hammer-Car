@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Rent"
         }],
+
+        sale: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "sale"
+        }],
     },
     { timestamps: true }
 );

@@ -5,14 +5,55 @@ const Transmission = {
     Manual: "Manual"
 }
 
-const CarType = {
-    Sport: "Sport",
-    SUV: "SUV",
-    MPV: "MPV",
-    Sedan: "Sedan",
-    Coupe: "Coupe",
-    Hatchback: "Hatchback"
+const carModel = {
+    Corolla:"Corolla",
+    Yaris:"Yaris",
+    Vitz:"Vitz",
+    Hilux:"Hilux",
+    LandCruiser:"LandCruiser",
+    Rav4:"Rav4",
+    Camry:"Camry",
+    HyundaiAccent:"HyundaiAccent",
+    HyundaiSanta:"HyundaiSanta",
+    Dzire:"Dzire",
+    Swift:"Swift",
+    Alto:"Alto",
+    Sunny:"Sunny",
+    Patrol:"Patrol",
+    Navara:"Navara",
+    XTrail:"XTrail",
+    Fit:"Fit",
+    Civic:"Civic",
+    Fit:"Fit",
+    Lancer:"Lancer",
+    Pajero:"Pajero",
+    Outlander:"Outlander",
+    Jetta:"Jetta",
+    Passat:"Passat",
+    Golf:"Golf",
+}
 
+const CarBrand={
+    Toyota:"Toyota",
+    Hyundai:"Hyundai",
+    Suzuki:"Suzuki",
+    volkswagen:"Volswagen",
+    Nissan:"Nissan",
+    Byd:"Byd",
+    Lifan:"Lifan",
+    Jetour:"Jetour",
+    Honda:"Honda",
+    LandRover:"LandRover",
+    SinoTruck:"SinoTruck",
+    chery:"Chery",
+    Mitsubishi:"Mitsubishi"
+}
+
+const Engine={
+    Diesel:"Diesel",
+    Petrol:"Petrol",
+    Electric:"Electric",
+    Gas:"Gas",
 }
 
 const Cartype = {
@@ -39,10 +80,10 @@ const carSchema = new mongoose.Schema(
             required: true,
             enum: Object.values(Cartype),
         },
-        carType: {
+        carModel: {
             type: String,
             required: true,
-            enum: Object.values(CarType),
+            enum: Object.values(carModel),
         },
         price: {
             type: Number,
@@ -51,6 +92,9 @@ const carSchema = new mongoose.Schema(
         peoplecapacity: {
             type: Number,
             required: true,
+        },
+        CarBrand:{
+            type: String
         },
         transmission: {
             type: String,
@@ -67,6 +111,16 @@ const carSchema = new mongoose.Schema(
         description: {
             type: String,
         },
+        Year: {
+            type:Number
+        },
+        Engine: {
+            type:String
+        },
+        Cc: {
+            type:String
+        },
+
         images: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Image"

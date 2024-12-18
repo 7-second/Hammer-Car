@@ -15,8 +15,7 @@ const addCarSchema = Z.object({
   carTitle: Z.string().min(1, { message: 'Title Required' }),
   carModel: Z.enum(["Corolla", "Vitz", "Yaris", "Hilux", "LandCruiser", "Rav4", "Camry","HyundaiAccent", "HyundaiSanta","Dzire","Swift","Alto",
     "Sunny","Patrol","Navara","XTrail","Fit","Civic","Fit","Lancer","Pajero","Outlander","Jetta","Passat","Golf"
-  ])
-    .refine(val => val.length > 0, { message: 'Type Required' }),
+  ]).refine(val => val.length > 0, { message: 'Model Required' }),
     cartype: Z.enum([ "rent", "sell"])
     .refine(val => val.length > 0, { message: 'Type Required' }),
 
@@ -62,7 +61,7 @@ const AddCarForm = () => {
   };
 
   const onSubmit = async (data) => {
-
+    
     const formData = new FormData()
 
     // Handle form submission here 
@@ -75,7 +74,9 @@ const AddCarForm = () => {
       setIsLoading(true)
       await axios.post(`${import.meta.env.VITE_API_BASE_URL}car/add-car`, formData)
       toast.success("Car Registered SuccessFully")
+      console.log(formData)
       reset()
+     
     } catch (error) {
       toast.error("Errror happen")
       console.log(error)
@@ -222,7 +223,7 @@ const AddCarForm = () => {
           {errors.price && <p className='text-red-500 text-xs'>{errors.price.message}</p>}
         </div>
         <div className='flex flex-col gap-1'>
-          <label className='text-xs font-bold'>ppeople Capacity</label>
+          <label className='text-xs font-bold'>people Capacity</label>
           <input
             {...register('peoplecapacity')}
             type="number"
@@ -302,9 +303,11 @@ const AddCarForm = () => {
         <button
           disabled={isLoading}
           type="submit"
-          className={`flex items-center justify-center ${isLoading ? "bg-gray-500" : "bg-blue-500"} py-2 px-5 text-xs font-medium text-white rounded-md min-w-32 max-w-32`}>
+          className={`flex items-center focus:bg-purple-500 justify-center ${isLoading ? "bg-gray-500" : "bg-blue-500"} py-2 px-5 text-xs font-medium text-white rounded-md min-w-32 max-w-32`}>
           {isLoading ? <VscLoading /> : "Register Car"}
+          
         </button>
+        
         {/* {!userID &&
                     <p className='text-red-500 text-sm animate-bounce'>Login First</p>
                 } */}
