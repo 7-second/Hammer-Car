@@ -6,17 +6,19 @@ function DashBoard() {
   return (
     <>
       <div className=" h-fit flex  mt-[10px]">
-        <div className="hidden md:flex w-[400px] h-fit flex-wrap justify-center pr-3 pb-2 gap-3 shadow-lg">
 
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+        <div className="hidden md:flex w-full h-fit flex-wrap justify-center pr-3 pb-2 gap-3 ">
+
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300 ">
+            <div >
               <img
-                className=""
+                className="items-center flex justify-center"
                 src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png"
                 alt=""
+                width={50}
               />
             </div>
-            <div className="w-full flex justify-evenly">
+            <div className="w-full flex justify-evenly gap-16 mx-2">
               <div className="d">
                 <CountUp start={0} end={20000} />
               </div>
@@ -26,10 +28,11 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+            <div className="w-[200px] flex justify-center">
               <img
-                className=""
+              width={50}
+                className="items-center flex justify-center"
                 src="https://cdn-icons-png.flaticon.com/512/3985/3985222.png"
                 alt=""
               />
@@ -44,12 +47,13 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-2xl rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+            <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.freepik.com/512/15894/15894068.png"
                 alt=""
+                width={70}
               />
             </div>
             <div className="w-full flex justify-evenly">
@@ -61,12 +65,14 @@ function DashBoard() {
               </div>
             </div>
           </div>
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+            <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://www.svgrepo.com/show/280336/car.svg"
                 alt=""
+                width={80}
+                height={100}
               />
             </div>
             <div className="w-full flex justify-evenly">
@@ -79,12 +85,13 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+            <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.flaticon.com/512/8566/8566110.png"
                 alt=""
+                width={80}
               />
             </div>
             <div className="w-full flex justify-evenly">
@@ -97,12 +104,13 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="w-[250px] h-[150px] flex flex-col items-center justify-center shadow-lg rounded-3xl">
-            <div className="w-[150px] h-[100px]">
+          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+            <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.flaticon.com/512/6428/6428512.png"
                 alt=""
+                width={80}
               />
             </div>
             <div className="w-full flex justify-evenly">
@@ -116,8 +124,8 @@ function DashBoard() {
           </div>
           <div className="mt-[30px] h-fit flex justify-center ml-[20px]">
 
-<div className="w-[330px]  h-[200px] shadow-2xl flex flex-col items-center justify-center " >
-    <div className="flex justify-center">
+<div className="w-[330px]  h-[200px] shadow-2xl rounded-lg flex flex-col items-center justify-center " >
+    <div className="">
 
     <h1 className="font-bold text-blue-600">
         Organization Verification
@@ -181,7 +189,7 @@ height={200} />
 
 
 </div>   
- <div className="flex flex-wrap justify-evenly mt-[10px] shadow-2xl">
+ <div className="flex flex-wrap justify-evenly mt-[10px] ">
   
              <div className="w-[150px] shadow-2xl rounded-md">
                 <img 
@@ -194,7 +202,7 @@ height={200} />
                  </div>
                  </div>
 
-                 <div className="w-[150px] shadow-2xl rounded-md">
+                 <div className="w-[150px]  rounded-md">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://cdn-icons-png.flaticon.com/512/3985/3985222.png" alt="Organizations" />
@@ -205,7 +213,7 @@ height={200} />
                  </div>
                  </div>
 
-                 <div className=" w-[150px] shadow-2xl rounded-md mt-[20px]">
+                 <div className=" w-[150px]  rounded-md mt-[20px]">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://cdn-icons-png.freepik.com/512/15894/15894068.png" alt="Mechanics" />
@@ -216,7 +224,7 @@ height={200} />
                  </div>
                  </div>
 
-                 <div className="w-[150px] shadow-2xl rounded-md  mt-[20px]">
+                 <div className="w-[150px] s rounded-md  mt-[20px]">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://www.svgrepo.com/show/280336/car.svg" 
@@ -229,7 +237,7 @@ height={200} />
                  </div>
                  </div>
 
-                 <div className="w-[150px] shadow-2xl rounded-md  mt-[20px]">
+                 <div className="w-[150px]  rounded-md  mt-[20px]">
                 <img 
                 className="w-fit h-[200px]"
                 src="https://cdn-icons-png.flaticon.com/512/8566/8566110.png" alt="Rented Cars" />

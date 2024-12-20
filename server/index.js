@@ -1,25 +1,26 @@
 import express from 'express';
-import cors from "cors"
-import dotenv from "dotenv"
-dotenv.config()
+import cors from 'cors';
 import mongoose from 'mongoose';
-import multer from "multer"
-import { v2 as cloudinary } from "cloudinary"
-import { CloudinaryStorage } from "multer-storage-cloudinary"
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import multer from 'multer';
+import authRouter from './router/auth.router.js';
+import userRouter from './router/user.router.js';
+import rentRouter from './router/rent.router.js';
+import sellRouter from './router/sell.router.js';
+import carRouter from './router/car.router.js';
+import dotenv from 'dotenv';
 
-import authRouter from "./router/auth.router.js"
-import userRouter from "./router/user.router.js"
-import rentRouter from "./router/rent.router.js"
-import sellRouter from "./router/sell.router.js"
-import carRouter from "./router/car.router.js"
+// Load environment variables
+dotenv.config();
 
-//Init server
+// Init server
 const app = express();
 
 // Middleware
-app.use(express.json())
+app.use(express.json());
+app.use(cors());
 
-app.use(cors())
 // Configure Cloudinary
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -31,9 +32,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'car-rental', // The folder in your Cloudinary account where the audio files will be stored
+        folder: 'car-rental', // The folder in your Cloudinary account where the images will be stored
         resource_type: 'auto',
-        allowed_formats: ['jpg', 'png', 'gif', 'bmp', 'webp', 'svg', 'tiff', 'ico', 'jpeg' , 'jfif'], // Add common image formats
+        allowed_formats: ['jpg', 'png', 'gif', 'bmp', 'webp', 'svg', 'tiff', 'ico', 'jpeg', 'jfif'], // Add common image formats
         transformation: [{ width: 500, height: 500, crop: 'limit' }]
     },
 });
@@ -44,25 +45,15 @@ app.get('/', (_, res) => {
     res.send('Hello, World! this is from Hammer cars...');
 });
 
-//Routes
-app.use("/auth", authRouter)
-app.use("/car", (req, res, next) => {
-    upload.array("images", 5)(req, res, (err) => {
-        if (err) {
-            console.log(err, "car images upload err")
-            return next("Format not allowed"); // Pass the error to the next middleware
-        }
-        next();
-    });
-}, carRouter);
-
-app.use("/rent", rentRouter)
-app.use("/sell", sellRouter)
-
-app.use("/user", upload.fields([
+// Routes
+app.use('/auth', authRouter);
+app.use('/user', upload.fields([
     { name: 'profilePicture', maxCount: 1 },
     { name: 'coverPicture', maxCount: 1 }
 ]), userRouter);
+app.use('/rent', rentRouter);
+app.use('/sell', sellRouter);
+app.use('/car', upload.array('images', 5), carRouter);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
@@ -72,4 +63,4 @@ mongoose.connect(process.env.MONGO_URI)
     })
     .catch((err) => {
         console.log("DB connection Error: ", err)
-    })
+    });

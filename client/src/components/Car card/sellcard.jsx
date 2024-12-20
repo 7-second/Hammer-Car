@@ -42,7 +42,7 @@ const Sell = ({ variant, car }) => {
 
                     </div>
                 </div>
-                <p className='text-orange-400 '>{car?.carTitle}</p>
+                <p className='text-orange-400 '>{car?.CarModel}</p>
 
                 <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                     <div className='-my-2  px-2 relative w-64 h[80px]'>

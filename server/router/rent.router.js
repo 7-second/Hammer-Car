@@ -1,7 +1,8 @@
-import express from "express"
-import { rentCar } from "../handler/rent.controller.js"
-const router = express.Router()
+import express from "express";
+import { rents } from "../handler/rent.controller.js";
 
-router.post("/", rentCar)
+const router = express.Router();
 
-export default router
+router.get("/", rents);
+
+export default router;

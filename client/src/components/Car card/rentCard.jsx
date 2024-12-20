@@ -27,22 +27,23 @@ const Rent = ({ variant, car }) => {
             <section className='w-full h-[290px] min-w-56 p-4 rounded-lg  bg-white shadow-2xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between gap-2'>
-                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.carType}</h3>
+                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.CarModel}</h3>
                         {/* === Edit own Car */}
-                        {variant === "own" ? (
+                        {/* {variant === "own" ? (
                             <EditCar carID={car?._id} />
 
                         ) : (
-                            <button onClick={() => setHeart((prev) => !prev)}>
+                            
+                        )} */}
+                        <button onClick={() => setHeart((prev) => !prev)}>
                                 <CiHeart className={`${heart ? "hidden" : "block"} text-xl`} />
                                 <FaHeart className={`${heart ? "block" : "hidden"} text-lg text-orange-600`} />
                             </button>
-                        )}
 
 
                     </div>
                 </div>
-                <p className=''>{car?.carTitle}</p>
+                <p className=''>{car?.CarBrand}</p>
 
                 <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                     <div className='-my-2  px-2 relative w-64 h[80px]'>

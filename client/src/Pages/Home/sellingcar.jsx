@@ -10,26 +10,26 @@ import { Link } from 'react-router-dom';
 
 const Sellingcars = () => {
 
-    // Get All cars
-    const [cars, setCars] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        const getcar = async () => {
-            try {
-                setLoading(true)
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car/sell`)
-                setCars(response?.data)
-                // let getAllCars = response?.getAllCars
-            } catch (error) {
-                console.log(error);
-
-            }
-            finally { setLoading(false) }
-        }
-
-        getcar()
-    }, [])
+        const [cars, setCars] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+    
+        useEffect(() => {
+            const getcar = async () => {
+                try {
+                    setLoading(true);
+                    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}sell`);
+                    setCars(response?.data);
+                } catch (error) {
+                    console.log(error);
+                    setError(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+    
+            getcar();
+        }, []);
 
     return (
         <div className='flex flex-col gap-1'>

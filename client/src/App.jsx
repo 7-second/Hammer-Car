@@ -14,7 +14,6 @@ import Rent from "./components/view all pages/rent";
 import Sellall from "./components/view all pages/Sell";
 import AdminSignUp from "../Admin/form/admin-sign-up";
 import AdminHome from "../Admin/Admin home/home";
-import OrgProfile from "../organization/component/OrgProfile";
 import OrgHeader from "../organization/component/orgHeader";
 import OrgHome from "../organization/component/orgHome"
 import Header from "./components/Header";
@@ -50,7 +49,7 @@ function App() {
         </Route>
 
         <Route path="/" element={<OrganizationLayout />}>
-          <Route path="/profile" element={<OrgProfile />} />
+          
           <Route path="/orghome" element={<OrgHome />} />
           <Route path="/addcar"  element={<AddCarForm />} />
         </Route>

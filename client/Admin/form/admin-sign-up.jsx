@@ -80,7 +80,7 @@ function AdminForm() {
                     </div>
 
                     <div>
-                        <label>Username</label>
+                        <label>Organization Name/ Mechanic Name</label>
                         <input
                             {...register("username", {
                                 required: "Username is required"

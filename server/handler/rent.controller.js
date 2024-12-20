@@ -1,7 +1,18 @@
 import Rent from "../model/rent.model.js";
 import User from "../model/user.model.js";
+import Car from "../model/car.model.js";
 
-export const rentCar = async (req, res, next) => {
+export const rents = async (_, res, next) => {
+    try{
+        const response = await Car.find({type: "rent"}).populate("images")
+        res.status(200).json(response)
+    } catch (error) {
+        next(error)
+    }
+}
+
+
+export const rentByCar = async (req, res, next) => {
     try {
         const { car, rentedBy, pickUp, dropOff, from, to } = req.body;
 
