@@ -5,8 +5,8 @@ import Home from "./Pages/User/home"
 import SignIn from "./Pages/User/sign-in"
 import SignUp from "./Pages/User/sign-up"
 
-import SuperHome from "./Pages/Super Admin/superHome";
-import SuperForm from "./pages/super Admin/superForm";
+import SuperForm from "./Pages/super Admin/superForm";
+import SuperHome from "./Pages/super Admin/superHome";
 
 
 import Rent from "./Pages/User/components//view all pages/rent";
