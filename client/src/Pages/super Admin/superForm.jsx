@@ -19,7 +19,7 @@ import toast, { Toaster } from "react-hot-toast";
 // }
 
 
-function SuperHome() {
+function SuperForm() {
 
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false);
@@ -140,4 +140,4 @@ function SuperHome() {
     )
 }
 
-export default SuperHome
+export default SuperForm
