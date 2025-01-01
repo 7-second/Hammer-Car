@@ -42,7 +42,7 @@ const Rent = ({ variant, car }) => {
 
                     </div>
                 </div>
-                <p className='text-orange-400 font-bold font-mono'>{car?.carBrand}</p>
+                <p className='text-orange-400 font-bold font-mono'>{car?.year}</p>
 
                 <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                     <div className='-my-2  px-2 relative w-64 h[80px] flex justify-center'>
