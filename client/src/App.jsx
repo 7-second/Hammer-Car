@@ -13,7 +13,7 @@ import Rent from "./Pages/User/components//view all pages/rent";
 import Sellall from "./Pages/User/components/view all pages/Sell";
 
 import AdminHome from "./Pages/Admin/Admin home/home";
-import OrgHeader from "./pages/organization/component/orgHeader";
+import OrgHeader from "./Pages/organization/component/orgHeader";
 import OrgHome from "./Pages/organization/component/orgHome"
 import Header from "./Pages/User/components/Header/index";
 import AdminHeader from "./Pages/Admin/component/AdminHeader";

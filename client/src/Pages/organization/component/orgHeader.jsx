@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLogOut } from 'react-icons/bi';
-import { GoHomeFill } from 'react-icons/go';
 import logo from '../../../../public/logo.png';
 
 const OrgHeader = ({ currentUser }) => {
