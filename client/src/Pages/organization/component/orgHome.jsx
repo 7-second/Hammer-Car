@@ -26,7 +26,7 @@ const OrgHome = () => {
     return (
         <div className="container mx-auto p-4">
             {/* Hero Section */}
-            <div className="relative bg-cover bg-center h-96" style={{ backgroundImage: "url('https://via.placeholder.com/1200x400')" }}>
+            <div className="relative bg-cover bg-center h-96" style={{ backgroundImage: "url('https://wallpapers.com/images/hd/black-car-4k-wnfjwxcbybpwbs08.jpg')" }}>
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
                     <h1 className="text-4xl font-bold mb-4">Welcome to Car Hammer</h1>
