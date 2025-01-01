@@ -18,7 +18,7 @@ const Rent =() => {
         const getcar = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car/rent`)
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}rent`)
                 setCars(response?.data)
                 // let getAllCars = response?.getAllCars
             } catch (error) {

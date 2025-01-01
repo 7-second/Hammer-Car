@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import Sell from "../../components/Car card/sellcard"
+import Sell from "./components/Car card/sellcard"
 // import Link from 'next/link'
 import { BiLoader } from 'react-icons/bi';
 import axios from 'axios';

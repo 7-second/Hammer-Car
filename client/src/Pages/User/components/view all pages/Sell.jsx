@@ -18,7 +18,7 @@ const Sellall = () => {
         const getcar = async () => {
             try {
                 setLoading(true)
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car/sell`)
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}sell`)
                 setCars(response?.data)
                 // let getAllCars = response?.getAllCars
             } catch (error) {

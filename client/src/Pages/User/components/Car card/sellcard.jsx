@@ -27,7 +27,7 @@ const Sell = ({ variant, car }) => {
             <section className='w-full h-[290px] min-w-56 p-4 rounded-lg  bg-white shadow-2xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between gap-2'>
-                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.carType}</h3>
+                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.carBrand}</h3>
                         {/* === Edit own Car */}
                         {variant === "own" ? (
                             <EditCar carID={car?._id} />
@@ -44,11 +44,11 @@ const Sell = ({ variant, car }) => {
                 </div>
                 <p className='text-orange-400 '>{car?.CarModel}</p>
 
-                <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
-                    <div className='-my-2  px-2 relative w-64 h[80px]'>
+                <div className={`${variant === "allCars" && "flex md:flex-col "}`}>
+                    <div className='-my-2  px-2 ] w-64 h[80px]  flex items-center justify-center'>
                         {car?.images &&
                             <img src={`${car?.images ? car?.images[0]?.url : ""}`} alt="Car" fill
-                                className='object-contain h-[160px] mt-[10px]' />
+                                className='object-contain h-[160px] mt-[10px] ' />
                         }
                     </div>
                     <div className="mt-[10px]">
@@ -65,7 +65,7 @@ const Sell = ({ variant, car }) => {
                             </div>
                             <div className='text__medium flex items-center gap-1 '>
                                 <MdPeople />
-                                <span className='whitespace-nowrap'>{car?.peoplecapacity} People</span>
+                                <span className='whitespace-nowrap'>{car?.peopleCapacity} People</span>
                             </div>
                         </div>
                     </div>

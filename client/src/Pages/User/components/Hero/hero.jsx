@@ -1,5 +1,5 @@
-import nissan from "../../../public/images/nissan.png"
-import rolls from "../../../public/images/rolls-royce.png"
+import nissan from "../../../../../public/images/nissan.png"
+import rolls from "../../../../../public/images/rolls-royce.png"
 
 
 const Hero = () => {

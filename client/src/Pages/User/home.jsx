@@ -1,6 +1,5 @@
-
-import Header from "../../components/Header"
-import Hero from "../Home/hero"
+import Header from "../User/components/Header/index"
+import Hero from "../User/components/Hero/hero"
 import Rentedcars from "./rentingcar"
 import Sell from "./sellingcar"
 

@@ -1,8 +1,10 @@
 "use client"
 import { FaHeart } from "react-icons/fa6";
-import { FaGasPump } from "react-icons/fa";
+// import { FaGasPump } from "react-icons/fa";
 import { GiSteeringWheel } from "react-icons/gi";
-import { MdPeople } from "react-icons/md";
+
+
+import { FaGasPump, FaCar } from "react-icons/fa";
 // import { CarCardProps } from '@/types';
 // import CarDetails from './car-details';
 import { useState } from 'react';
@@ -27,7 +29,7 @@ const Rent = ({ variant, car }) => {
             <section className='w-full h-[290px] min-w-56 p-4 rounded-lg  bg-white shadow-2xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between gap-2'>
-                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.CarModel}</h3>
+                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.carModel}</h3>
                         {/* === Edit own Car */}
                         {/* {variant === "own" ? (
                             <EditCar carID={car?._id} />
@@ -35,18 +37,15 @@ const Rent = ({ variant, car }) => {
                         ) : (
                             
                         )} */}
-                        <button onClick={() => setHeart((prev) => !prev)}>
-                                <CiHeart className={`${heart ? "hidden" : "block"} text-xl`} />
-                                <FaHeart className={`${heart ? "block" : "hidden"} text-lg text-orange-600`} />
-                            </button>
-
+                       
+                       <p className='text-orange-400 font-bold font-mono'> { car?.transmission}</p>
 
                     </div>
                 </div>
-                <p className=''>{car?.CarBrand}</p>
+                <p className='text-orange-400 font-bold font-mono'>{car?.carBrand}</p>
 
                 <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
-                    <div className='-my-2  px-2 relative w-64 h[80px]'>
+                    <div className='-my-2  px-2 relative w-64 h[80px] flex justify-center'>
                         {car?.images &&
                             <img src={`${car?.images ? car?.images[0]?.url : ""}`} alt="Car" fill
                                 className='object-contain h-[160px] mt-[10px]' />
@@ -65,8 +64,8 @@ const Rent = ({ variant, car }) => {
                                 <span>{car?.transmission}</span>
                             </div>
                             <div className='text__medium flex items-center gap-1 '>
-                                <MdPeople />
-                                <span className='whitespace-nowrap'>{car?.peoplecapacity} People</span>
+                            <FaCar/>
+                                <span className='whitespace-nowrap'>{car?.engine} </span>
                             </div>
                         </div>
                     </div>
@@ -92,6 +91,8 @@ const Rent = ({ variant, car }) => {
             </section >
 
         </main>
+
+        
     )
 }
 

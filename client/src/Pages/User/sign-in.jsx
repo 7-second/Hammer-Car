@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import signUp from "../forms/sign-up"
+
 
 // import { useRouter } from "next/navigation";
 // import Link from "next/link";
@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 // import { useMutation } from "react-query";
 
 import toast, { Toaster } from 'react-hot-toast';
-import SignUp from "../forms/sign-up";
+
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { signIn } from "next-auth/react";

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { BiLoader } from 'react-icons/bi';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Rent from '../../components/Car card/rentCard';
+import Rent from './components/Car card/rentCard';
 // import { Cars } from '@/helper';
 
 
@@ -17,7 +17,7 @@ const Rentedcars = () => {
     useEffect(() => {
         const getcar = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}rent`);
+          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car/rent`)
                 setCars(response?.data);
             } catch (error) {
                 console.log(error);

@@ -97,7 +97,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
 
                     {/* Car Description */}
                     <section className="flex flex-col gap-3 p-2">
-                      <h2 className="text-xl font-semibold">{car?.carType}</h2>
+                      <h2 className="text-xl font-semibold">{car?.carBrand}</h2>
                       <div className="flex items-center text-xs gap-1">
                         <ArrayStar rating={Math.floor(Math.random() * 5) + 1} />
                         <span>
@@ -114,7 +114,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
                           <div className="flex justify-between">
                             <p>Car Type</p>
                             <span className="text-xs font-bold">
-                              {car?.carType}
+                              {car?.carModel}
                             </span>
                           </div>
                           <div className="flex justify-between">
@@ -128,7 +128,7 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
                           <div className="flex justify-between">
                             <p>Capacity</p>
                             <span className="text-xs font-bold">
-                              {car?.peoplecapacity} Person
+                              {car?.peopleCapacity} Person
                             </span>
                           </div>
                           <div className="flex justify-between">

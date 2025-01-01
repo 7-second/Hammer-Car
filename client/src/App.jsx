@@ -1,24 +1,25 @@
 
 // import CarRegistration from "./Pages/Add_cars/Add"
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import Home from "./Pages/Home/home"
-import SignIn from "../src/components/forms/sign-in"
-import SignUp from "./components/forms/sign-up"
+import Home from "./Pages/User/home"
+import SignIn from "./Pages/User/sign-in"
+import SignUp from "./Pages/User/sign-up"
 
-import SuperHome from "../super Admin/superHome";
-import SuperForm from "../super Admin/superForm";
-import AddCarForm from "../organization/Addcars/Add";
-import Profile from "./components/profile/profile";
-import EditProfile from "./components/profile/edit-profile";
-import Rent from "./components/view all pages/rent";
-import Sellall from "./components/view all pages/Sell";
-import AdminSignUp from "../Admin/form/admin-sign-up";
-import AdminHome from "../Admin/Admin home/home";
-import OrgHeader from "../organization/component/orgHeader";
-import OrgHome from "../organization/component/orgHome"
-import Header from "./components/Header";
-import AdminHeader from "../Admin/component/AdminHeader";
-import AdminForm from "../Admin/form/admin-sign-up";
+import SuperHome from "./Pages/Super Admin/superHome";
+import SuperForm from "./pages/super Admin/superForm";
+
+
+import Rent from "./Pages/User/components//view all pages/rent";
+import Sellall from "./Pages/User/components/view all pages/Sell";
+
+import AdminHome from "./Pages/Admin/Admin home/home";
+import OrgHeader from "./pages/organization/component/orgHeader";
+import OrgHome from "./Pages/organization/component/orgHome"
+import Header from "./Pages/User/components/Header/index";
+import AdminHeader from "./Pages/Admin/component/AdminHeader";
+import AdminForm from "./Pages/Admin/form/admin-sign-up";
+import AddCarForm from "./Pages/organization/Addcars/Add"
+
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
 // import Search from "./Pages/Search/search"
@@ -38,12 +39,12 @@ function App() {
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/admin/signup" element={<AdminSignUp />} />
+        {/* <Route path="/admin/signup" element={<AdminSignUp />} /> */}
         <Route path="/" element={<Home />} />
 
         <Route path="/" element={<UserLayout />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/Profile" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          {/* <Route path="/Profile" element={<Profile />} /> */}
           <Route path="/View-all-rent" element={<Rent />} />
           <Route path="/View-all-sell" element={<Sellall />} />
         </Route>
