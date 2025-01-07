@@ -32,14 +32,15 @@ function Header() {
       {/* Mobile */}
       <header className=" md:hidden flex flex-col w-full gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg shadow-blue-500">
         <div className="flex items-center justify-between gap-2">
-          <div className="h-fit  flex top-0 -mb-2 pb-4 absolute">
+          <div className="h-fit  flex top-0 -mb-2 pb-4 ">
+          <DDrawer />
             <span className="text-orange-500 font-serif font-bold ">
               Hammer
             </span>
             <FaCarSide />{" "}
             <h2 className="text-blue-500 font-serif font-bold ">Cars</h2>
           </div>
-          <DDrawer />
+          
 
           <div>
             {!currentUser ? (
