@@ -1,26 +1,95 @@
 import CountUp from "react-countup";
 import * as React from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 function DashBoard() {
+const [usercount ,setUsercount]=useState(0);
+const [orgcount ,setOrgcount]=useState(0);
+const [mechcount ,setMechcount]=useState(0);
+const [car ,setCar]=useState(0);
+const [rent ,setRent]=useState(0);
+const [sell ,setSell]=useState(0);
+
+const [users, setUsers] = useState([]);
+  
+const [error, setError] =useState(null);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  const getusers = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}user?role=user`
+      );
+
+      const org = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}user?role=organization`
+      );
+
+      const mech = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}user?role=mechanic`
+      );
+
+      const car = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}car`
+      );
+
+      const rent = await axios.get(
+       `${import.meta.env.VITE_API_BASE_URL}rent`
+      );
+
+      const sell = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}sell`
+       );
+
+      setUsers(response?.data);
+      setOrgcount(org?.data);
+      setMechcount(mech?.data);
+      setCar(car?.data);
+      setRent(rent?.data);
+      setSell(sell?.data);
+
+      setUsercount(response?.data.length);
+      setOrgcount(org?.data.length);
+      setMechcount(mech?.data.length);
+      setCar(car?.data.length);
+      setRent(rent?.data.length);
+      setSell(rent?.data.length);
+      
+    } catch (error) {
+      console.log(error);
+      setError(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000); // 5 seconds loading time
+    }
+  };
+
+  getusers();
+}, []);
+
+
   return (
     <>
-      <div className=" h-fit flex  mt-[10px]">
-
-        <div className="hidden md:flex w-full h-fit flex-wrap justify-center pr-3 pb-2 gap-3 ">
-
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300 ">
-            <div >
+      <div className=" h-fit flex  mt-[10px] items-center justify-center">
+        {/* for Larger screen */}
+        <div className="hidden md:flex flex-row w-full h-fit flex-wrap px-36 items-center mt-6  pb-2 gap-4 ">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300 ">
+            <div>
               <img
                 className="items-center flex justify-center"
                 src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png"
                 alt=""
-                width={50}
+                width={90}
               />
             </div>
             <div className="w-full flex justify-evenly gap-16 mx-2">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={usercount} />
               </div>
               <div className="d">
                 <h2>Users</h2>
@@ -28,10 +97,10 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
             <div className="w-[200px] flex justify-center">
               <img
-              width={50}
+                width={90}
                 className="items-center flex justify-center"
                 src="https://cdn-icons-png.flaticon.com/512/3985/3985222.png"
                 alt=""
@@ -39,7 +108,7 @@ function DashBoard() {
             </div>
             <div className="w-full flex justify-evenly">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={orgcount} />
               </div>
               <div className="d">
                 <h2>Organiztions</h2>
@@ -47,37 +116,37 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
             <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.freepik.com/512/15894/15894068.png"
                 alt=""
-                width={70}
+                width={90}
               />
             </div>
             <div className="w-full flex justify-evenly">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={mechcount} />
               </div>
               <div className="d">
                 <h2 className="font-semibold">Mechanics</h2>
               </div>
             </div>
           </div>
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
             <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://www.svgrepo.com/show/280336/car.svg"
                 alt=""
-                width={80}
+                width={90}
                 height={100}
               />
             </div>
             <div className="w-full flex justify-evenly">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={car} />
               </div>
               <div className="d">
                 <h2>Cars</h2>
@@ -85,18 +154,18 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
             <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.flaticon.com/512/8566/8566110.png"
                 alt=""
-                width={80}
+                width={90}
               />
             </div>
             <div className="w-full flex justify-evenly">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={rent} />
               </div>
               <div className="d">
                 <h2>Car for Rent</h2>
@@ -104,18 +173,18 @@ function DashBoard() {
             </div>
           </div>
 
-          <div className="rounded-lg px-[50px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
+          <div className="rounded-lg px-[30px]  h-[150px] flex flex-col items-center justify-center shadow-lg shadow-green-300">
             <div className="w-[200px] flex justify-center">
               <img
                 className=""
                 src="https://cdn-icons-png.flaticon.com/512/6428/6428512.png"
                 alt=""
-                width={80}
+                width={90}
               />
             </div>
             <div className="w-full flex justify-evenly">
               <div className="d">
-                <CountUp start={0} end={20000} />
+                <CountUp start={0} end={sell} />
               </div>
               <div className="d">
                 <h2>Cars For Sale</h2>
@@ -123,155 +192,171 @@ function DashBoard() {
             </div>
           </div>
           <div className="mt-[30px] h-fit flex justify-center ml-[20px]">
+            <div className="w-[330px]  h-[200px] shadow-2xl rounded-lg flex flex-col items-center justify-center ">
+              <div className="">
+                <h1 className="font-bold text-blue-600">
+                  Organization Verification
+                </h1>
+              </div>
 
-<div className="w-[330px]  h-[200px] shadow-2xl rounded-lg flex flex-col items-center justify-center " >
-    <div className="">
-
-    <h1 className="font-bold text-blue-600">
-        Organization Verification
-    </h1>
-    </div>   
-
-<PieChart 
-series={[
-{
-data: [
-{ id: 0, value: 10, label: 'Aprove Request' },
-{ id: 1, value: 15, label: 'Aproved' },
-{ id: 2, value: 20, label: 'Not Aproved' },
-],
-},
-]}
-width={400}
-height={200} />
-
-    </div>
-
-
-</div> 
-          
-
-        </div> 
-      
+              <PieChart
+                series={[
+                  {
+                    data: [
+                      { id: 0, value: 10, label: "Aprove Request" },
+                      { id: 1, value: 15, label: "Aproved" },
+                      { id: 2, value: 20, label: "Not Aproved" },
+                    ],
+                  },
+                ]}
+                width={400}
+                height={200}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
+      {/* for smaller screen */}
+      <div className="md:hidden flex flex-row items-center flex-wrap  justify-evenly shadow-2xl shadow-green-400 ">
+        <div className=" h-fit flex justify-center ml-[20px]"></div>
+        <div className="flex flex-wrap justify-evenly mt-[10px] ">
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <div className="">
+            <img
+              className="w-fit h-[100px]"
+              src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png"
+              alt="Users"
+            />
+            </div>
+           
+            <div className="flex justify-between items-center">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
+                All Users
+              </span>
+            </div>
+          </div>
 
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <img
+              className="w-fit h-[100px]"
+              src="https://cdn-icons-png.flaticon.com/512/3985/3985222.png"
+              alt="Organizations"
+            />
+            <div className="flex justify-evenly items-center">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
+                Organizations
+              </span>
+            </div>
+          </div>
 
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <img
+              className="w-fit h-[100px]"
+              src="https://cdn-icons-png.freepik.com/512/15894/15894068.png"
+              alt="Mechanics"
+            />
+            <div className="flex justify-evenly">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
+                Mechanics
+              </span>
+            </div>
+          </div>
 
-{/* for smaller screen */}
-                  <div className="md:hidden flex flex-row flex-wrap  justify-evenly shadow-2xl shadow-green-400 ">
-                  <div className="mt-[30px] h-fit flex justify-center ml-[20px]">
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <img
+              className="w-fit h-[100px]"
+              src="https://www.svgrepo.com/show/280336/car.svg"
+              alt="All cars"
+            />
 
-<div className="w-full  h-[200px] shadow-2xl " >
-    <div className="flex justify-center">
+            <div className="flex justify-evenly items-center">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
+                All Cars
+              </span>
+            </div>
+          </div>
 
-    <h1 className="font-bold text-blue-600">
-        Organization Verification
-    </h1>
-    </div>
-    
-     
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <img
+              className="w-fit h-[100px]"
+              src="https://cdn-icons-png.flaticon.com/512/8566/8566110.png"
+              alt="Rented Cars"
+            />
+            <div className="flex justify-between items-center">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 rounded-md text-sm font-bold">
+                cars For Rented
+              </span>
+            </div>
+          </div>
 
-<PieChart 
-series={[
-{
-data: [
-{ id: 0, value: 10, label: 'Aprove Request' },
-{ id: 1, value: 15, label: 'Aproved' },
-{ id: 2, value: 20, label: 'Not Aproved' },
-],
-},
-]}
-width={400}
-height={200} />
+          <div className="flex flex-col items-center justify-center w-[150px] h-[170px]  shadow-2xl rounded-full">
+            <img
+              className="w-fit h-[100px]"
+              src="https://cdn-icons-png.flaticon.com/512/6428/6428512.png"
+              alt="sale cars"
+            />
+            <div className=" flex justify-evenly items-center">
+              <CountUp
+                duration={5}
+                className="text-xl font-semibold ml-2"
+                end={500}
+              />
+              <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
+                Car For Sales
+              </span>
+            </div>
+          </div>
 
-    </div>
+          <div className="mt-6 w-full  h-[200px] shadow-2xl ">
+            <div className="flex justify-center">
+              <h1 className="font-bold text-blue-600">
+                Organization Verification
+              </h1>
+            </div>
 
-
-</div>   
- <div className="flex flex-wrap justify-evenly mt-[10px] ">
-  
-             <div className="w-[150px] shadow-2xl rounded-md">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png" alt="Users" />
-                   <div className='flex justify-evenly items-center'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     All Users</span>
-                 </div>
-                 </div>
-
-                 <div className="w-[150px]  rounded-md">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://cdn-icons-png.flaticon.com/512/3985/3985222.png" alt="Organizations" />
-                   <div className='flex justify-evenly items-center'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     Organizations</span>
-                 </div>
-                 </div>
-
-                 <div className=" w-[150px]  rounded-md mt-[20px]">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://cdn-icons-png.freepik.com/512/15894/15894068.png" alt="Mechanics" />
-                   <div className='flex justify-evenly'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     Mechanics</span>
-                 </div>
-                 </div>
-
-                 <div className="w-[150px] s rounded-md  mt-[20px]">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://www.svgrepo.com/show/280336/car.svg" 
-                alt="All cars" />
-
-                   <div className='flex justify-evenly items-center'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     All Cars</span>
-                 </div>
-                 </div>
-
-                 <div className="w-[150px]  rounded-md  mt-[20px]">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://cdn-icons-png.flaticon.com/512/8566/8566110.png" alt="Rented Cars" />
-                   <div className='flex justify-evenly items-center'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     cars For Rented</span>
-                 </div>
-                 </div>
-
-                 <div className="w-[150px] shadow-2xl rounded-md  mt-[20px]">
-                <img 
-                className="w-fit h-[200px]"
-                src="https://cdn-icons-png.flaticon.com/512/6428/6428512.png" alt="sale cars" />
-                   <div className='flex justify-evenly items-center'>
-                    <CountUp duration={5} className='text-xl font-semibold ml-2' end={500} />
-                     <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold" >
-                     Car For Sales</span>
-                 </div>
-                 
-                 </div>
-        </div> 
-                 
-
-                   
-
-
-
+            <PieChart 
+              style={{ width: "100%", height: "100%"  }}
+              series={[
+                {
+                  data: [
+                    { id: 0, value: 10, label: "Aprove Request" },
+                    { id: 1, value: 15, label: "Aproved" },
+                    { id: 2, value: 20, label: "Not Aproved" },
+                  ],
+                },
+              ]}
+              width={300}
+              height={200}
+            />
+          </div>
         </div>
-
-   
-
-
-
+      </div>
 
       {/* for Higher screen */}
       {/* <div className="hidden md:flex flex-wrap w-[400px] gap-[10px]   mt-8 flex-wrap ">
@@ -341,8 +426,6 @@ height={200} />
                  </div>
                  </div>
                   </div> */}
-
-      
     </>
   );
 }

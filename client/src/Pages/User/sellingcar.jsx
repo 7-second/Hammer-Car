@@ -17,14 +17,15 @@ const Sellingcars = () => {
         useEffect(() => {
             const getcar = async () => {
                 try {
-                    setLoading(true);
-                    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}sell`);
+              const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}sell`)
                     setCars(response?.data);
                 } catch (error) {
                     console.log(error);
                     setError(error);
                 } finally {
-                    setLoading(false);
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 5000); // 5 seconds loading time
                 }
             };
     
@@ -33,7 +34,7 @@ const Sellingcars = () => {
 
     return (
         <div className='flex flex-col gap-1'>
-            <div className='flex justify-between px-5'>
+            <div className='flex justify-between px-16'>
                 <h2 className='text-sm font-medium text-bold'>Cars for sell</h2>
                 <Link to={"/View-all-sell"} className='underline'>View All</Link>
                 

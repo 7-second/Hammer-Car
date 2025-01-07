@@ -4,6 +4,7 @@ import { BiLogOut } from "react-icons/bi"
 import { GoHomeFill } from "react-icons/go"
 import { Link, useNavigate } from "react-router-dom";
 import { FaCarSide } from "react-icons/fa";
+import DropDawn from "./dropeDawn";
 
 
 
@@ -27,19 +28,20 @@ function AdminHeader() {
         <>
 
             {/* Mobile */}
-            <header className='flex flex-col md:hidden p-5 gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg mx-10 rounded-xl '>
+            <header className='flex flex-col md:hidden w-full gap-1 bg-white  justify-between sticky z-50 top-0 shadow-lg  rounded-xl px-9 shadow-blue-300'>
 
 
-                <div className="flex items-center justify-between gap-11">
-                <div className="h-fit  flex top-0 -mb-2 pb-4 ">
+                <div className="flex items-center justify-evenly gap-32 ">
+                <div className="h-fit  flex top-0 -mb-2   ">
                 
-                <span className='text-orange-500 font-serif font-bold '>Hammer</span><FaCarSide /> <h2  className='text-blue-500 font-serif font-bold '>Cars</h2> 
+                <span className='text-orange-500 font-serif  '>Hammer</span><FaCarSide /> 
+                <h2  className='text-blue-500 font-serif  '>Cars</h2> 
                 </div>
               
                     <div>
 
                        
-                                <div className="flex gap-3 justify-end">
+                                <div className="flex gap-2 justify-end">
 
                                     <div className="flex justify-center">
                                         <h1 className="text-black">
@@ -68,15 +70,15 @@ function AdminHeader() {
                     </div>
                 </div>
 
-                <div className="flex justify-center w-full">
+                <div className="flex justify-center w-full gap-1">
 
                     <div className="mt-[10px]">
-                        <ul className="flex flex-row gap-[20px]">
+                        <ul className="flex flex-row gap-[20px] pb-3 items-center">
                             <button className="text-blue-400 flex font-bold text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
                             <button className="font-bold text-sm md:text-base"><Link to="/adminform">Add Users</Link></button>
-                            <button className="font-bold text-sm md:text-base"><Link to="/mechanics">Mechanics</Link></button>
-                            <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
-
+                             <button>
+                             <DropDawn />
+                                </button>
                         </ul>
                     </div>
 
@@ -101,8 +103,9 @@ function AdminHeader() {
                             <ul className="flex flex-row gap-[20px]">
                                 <button className="text-blue-400 flex  text-sm md:text-base"><Link to="/adminhome"> Dash Board</Link></button>
                                 <button className="font-bold text-sm md:text-base"><Link to="/adminform">Add Users</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/mechanics">Mechanics</Link></button>
-                                <button className="font-bold text-sm md:text-base"><Link to="/organization">Organization</Link></button>
+                                <button className="font-bold text-sm md:text-base"><Link to="/admech">Mechanics</Link></button>
+                                <button className="font-bold text-sm md:text-base"><Link to="/adorg">Organization</Link></button>
+                                <button className="font-bold text-sm md:text-base"><Link to="/aduser">Users</Link></button>
 
                             </ul>
                         </div>

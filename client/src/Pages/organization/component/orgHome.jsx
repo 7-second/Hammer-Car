@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const OrgHome = () => {
+const OrgHome = ({ currentUser }) => {
     const [cars, setCars] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const getCars = async () => {
+
+let currentUser;
+const user = localStorage.getItem("users_data");
+if (user) {
+  currentUser = JSON.parse(user);
+}
+// console.log(currentUser, "user")
+
+const handleLogout = () => {
+  localStorage.clear("users_data");
+  navigate("/");
+};
+
             try {
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
-                setCars(response?.data);
+                const allCars = response?.data;
+                const orgCars = allCars.filter(car => car.owner === currentUser);
+                setCars(orgCars);
             } catch (error) {
                 console.log(error);
                 setError(error);
@@ -21,7 +36,15 @@ const OrgHome = () => {
         };
 
         getCars();
-    }, []);
+    }, [currentUser]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
 
     return (
         <div className="container mx-auto p-4">
@@ -47,10 +70,10 @@ const OrgHome = () => {
                     {cars.length > 0 ? (
                         cars.map((car) => (
                             <div key={car._id} className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105">
-                                <img src={car.images[0]?.url} alt={car.CarModel} className="w-full h-72 object-cover" />
+                                <img src={car.images[0]?.url} alt={car.carModel} className="w-full h-72 object-cover" />
                                 <div className="p-4">
-                                    <h2 className="text-xl font-bold text-gray-800">{car.CarModel}</h2>
-                                    <p className="text-gray-600">{car.CarBrand}</p>
+                                    <h2 className="text-xl font-bold text-gray-800">{car.carModel}</h2>
+                                    <p className="text-gray-600">{car.carBrand}</p>
                                     <p className="text-gray-600">Price: {car.price}</p>
                                     <p className="text-gray-600">Location: {car.location}</p>
                                     <Link to={`/car/${car._id}`} className="text-blue-500 hover:underline mt-2 block">View Details</Link>

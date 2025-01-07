@@ -33,7 +33,7 @@ function DDrawer() {
   return <>
     <div className="flex  justify-between items-start w-fit">
       <div className="flex items-center">
-        <Button onClick={openDrawerLeft} className=" !bg-blue-200 rounded"><RxHamburgerMenu />Menu</Button>
+        <Button onClick={openDrawerLeft} className=" !bg-blue-200 rounded "><RxHamburgerMenu /></Button>
         <Drawer
           placement="left"
           open={openLeft}

@@ -33,14 +33,119 @@ const Sellall = () => {
 
     return (
         <>
-        <div className='flex flex-col gap-1'>
+        <div className='flex flex-col flex-wrap gap-1 items-center justify-center '>
             <div className='flex justify-between'>
-                <h2 className='text-sm font-medium text-bold'>Cars for sell</h2>
+                <h2 className='text-sm font-medium w-fit bg-orange-400 px-[30px] py-[20] rounded'>Cars for sell</h2>
                 {/* <Link href={"/search"}
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
             </div>
             <div className='ml-[60px] gap-4 flex flex-wrap mb-1'>
                 {cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+                
+
+                {cars?.length === 0 ? (
+                    <div className='h-48 flex items-center justify-center w-full'>
+                        No Car Found
+                    </div>
+                ) :
+                    cars?.map((car) => (
+                        <Sell
+                            key={car._id}
+                            car={car}
+                        />
+                    ))
+                }
+
+{cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found
                     </div>

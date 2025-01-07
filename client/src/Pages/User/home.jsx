@@ -16,7 +16,7 @@ function Home() {
       <hr />
     </div>
 
-    <div className="p-5 shadow-lg ">
+    <div className="p-5 shadow-lg px-16 ">
       <Rentedcars />
     </div>
 

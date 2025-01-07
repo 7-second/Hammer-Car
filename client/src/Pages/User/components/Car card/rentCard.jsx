@@ -10,15 +10,27 @@ import { FaGasPump, FaCar } from "react-icons/fa";
 import { useState } from 'react';
 import { CiHeart } from 'react-icons/ci';
 import CarDetailrent from "../car detail/carDetailrent";
+import { Link } from "react-router-dom";
 // import EditCar from './profile/edit-car';
 
 
 const Rent = ({ variant, car }) => {
+    
 
     let [isOpen, setIsOpen] = useState(false)
     function openModal() {
         setIsOpen(true)
     }
+
+
+    
+    const openImageModal = () => {
+        setImageModalIsOpen(true);
+    };
+
+    const closeImageModal = () => {
+        setImageModalIsOpen(false);
+    };
 
     const [heart, setHeart] = useState(false)
 
@@ -26,10 +38,24 @@ const Rent = ({ variant, car }) => {
         <main>
 
 
-            <section className='w-full h-[290px] min-w-56 p-4 rounded-lg  bg-white shadow-2xl'>
+            <section className='w-full h-fit min-w-56 p-4 rounded-lg  bg-white shadow-2xl'>
                 <div className='flex flex-col'>
+                           <hr />
+                           <Link to="/allorganization">
+                <div className=" w-50 h-50 object-contain flex flex-col justify-center items-center rounded-full mt-1">
+                            <img
+                              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCiZD12EU_Zm57G1wc72AaNVHGoLhQBIHPcg&s"
+                            width={50}
+                            height={50}
+                            className="rounded-full object-cover"
+                            alt="Organization" />
+                            <h3 className="text-black font-sans w-52 flex justify-center">Name of organization</h3>
+                        </div>
+                        </Link>
+                        <hr />
                     <div className='flex justify-between gap-2'>
-                        <h3 className='text-sm font-bold whitespace-nowrap text-blue-500'>{car?.carModel}</h3>
+                    
+                        <h3 className='text-lg font-bold whitespace-nowrap text-blue-500'>{car?.carModel}</h3>
                         {/* === Edit own Car */}
                         {/* {variant === "own" ? (
                             <EditCar carID={car?._id} />
@@ -38,11 +64,11 @@ const Rent = ({ variant, car }) => {
                             
                         )} */}
                        
-                       <p className='text-orange-400 font-bold font-mono'> { car?.year}</p>
-
+                       <p className='  font-mono'> { car?.year}</p>
+                      
                     </div>
                 </div>
-                <p className='text-orange-400 font-bold font-mono'>{car?.carBrand}</p>
+                <p className='text-orange-400 opacity-65 font-mono -mt-3'>{car?.carBrand}</p>
 
                 <div className={`${variant === "allCars" && "flex md:flex-col"}`}>
                     <div className='-my-2  px-2 relative w-64 h[80px] flex justify-center'>
@@ -50,6 +76,7 @@ const Rent = ({ variant, car }) => {
                             <img src={`${car?.images ? car?.images[0]?.url : ""}`} alt="Car" fill
                                 className='object-contain h-[160px] mt-[10px]' />
                         }
+                       
                     </div>
                     <div className="mt-[10px]">
                     {/* className={`${variant === "own" ? "hidden" : "block"}`} */}

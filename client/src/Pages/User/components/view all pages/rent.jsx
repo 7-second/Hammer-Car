@@ -34,7 +34,7 @@ const Rent =() => {
 
     return (
         <>
-         <div className="flex flex-row">
+       
         {/* <div className="w-[400px]  shadow-lg mt-[10px]  ">
         <div className="">Rules to be follow</div>
             <div className="w-[400px] flex flex-wrap gap-1 z-0">
@@ -46,13 +46,15 @@ const Rent =() => {
             </div>
 
         </div> */}
-        <div className='flex flex-col gap-1  justify-center '>
-            <div className='flex justify-center mt-[5px]'>
-                <h2 className='text-sm font-medium w-fit bg-blue-400 px-[30px] py-[20] rounded'>Renting Cars</h2>
+          <div className="flex flex-row flex-wrap justify-center items-center ">
+
+        <div className='flex flex-col  gap-1 items-center  justify-center '>
+            <div className='flex justify-center items-center mt-[5px]'>
+                <h2 className='text-sm font-medium w-fit bg-blue-400   rounded'>Renting Cars</h2>
                 {/* <Link href={"/search"}
                     className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
             </div>
-            <div className='ml-[60px] gap-8 flex flex-wrap mb-1'>
+            <div className=' gap-8 flex flex-wrap mb-1'>
                 {cars?.length === 0 ? (
                     <div className='h-48 flex items-center justify-center w-full'>
                         No Car Found

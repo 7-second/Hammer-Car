@@ -2,9 +2,30 @@
 // import CarCard from '@/components/car-card'
 import { BiLoader } from 'react-icons/bi';
 
-const OwnCar = ({ getMyCars, cars }: any) => {
+const OwnCar = ({ getMyCars, cars }) => {
 
-    return (
+   
+    useEffect(() => {
+        const getcar = async () => {
+            try {
+                setLoading(true)
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}rent`)
+                setCars(response?.data)
+                // let getAllCars = response?.getAllCars
+            } catch (error) {
+                console.log(error);
+
+            }
+            finally { setLoading(false) }
+        }
+
+
+        getcar()
+    }, []) 
+
+    return ( 
+        <>
+        
         <div className='flex flex-col gap-1 mt-8 px-2'>
             <div className='flex justify-between'>
                 <h2 className='text-sm font-medium py-1'>My Cars for Rent</h2>
@@ -16,8 +37,10 @@ const OwnCar = ({ getMyCars, cars }: any) => {
                         No Car Found
                     </div>
                 ) :
-                    cars?.map((car: any) => (
+                
+                    cars?.map((car) => (
                         <CarCard
+                           
                             variant='own'
                             key={car._id}
                             car={car}
@@ -32,6 +55,8 @@ const OwnCar = ({ getMyCars, cars }: any) => {
                 }
             </div>
         </div>
+   
+   </>
     )
 }
 

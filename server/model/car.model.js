@@ -46,10 +46,11 @@ const Engine = {
 
 const carSchema = new mongoose.Schema(
   {
-    // owner: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User"
-    // },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     carBrand: {
       type: String,
       required: true,
@@ -77,7 +78,7 @@ const carSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    capacity: {
+    fuelCapacity: {
       type: Number,
       required: true,
     },

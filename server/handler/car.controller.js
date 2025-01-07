@@ -1,25 +1,53 @@
 import Car from "../model/car.model.js";
-import Image from "../model/image.model.js";
 import User from "../model/user.model.js";
+import Image from "../model/image.model.js"
+
+// export const cars = async (_, res, next) => {
+//   try {
+//     const cars = await Car.find()?.populate("images");
+//     res.status(200).json(cars);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+// export const getCar = async (req, res, next) => {
+//   const { id } = req.params;
+//   try {
+//     const cars = await Car.findById({ _id: id })?.populate("images");
+//     res.status(200).json(cars);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 
 export const cars = async (_, res, next) => {
+ 
   try {
-    const cars = await Car.find()?.populate("images");
-    res.status(200).json(cars);
+      const cars = await Car.find()?.populate("images");
+      res.status(200).json(cars)
   } catch (error) {
-    next(error);
+      next(error)
   }
-};
+}
 
 export const getCar = async (req, res, next) => {
   const { id } = req.params;
+
   try {
-    const cars = await Car.findById({ _id: id })?.populate("images");
-    res.status(200).json(cars);
+    const car = await Car.findById(id).populate("images"); // Use 'car' instead of 'cars'
+
+    if (!car) {
+      return res.status(404).json({ message: 'Car not found' }); 
+    }
+
+    res.status(200).json(car); 
   } catch (error) {
     next(error);
   }
 };
+
 
 export const updateCar = async (req, res, next) => {
   const { id, owner } = req.params;
@@ -46,66 +74,86 @@ export const updateCar = async (req, res, next) => {
     next(error);
   }
 };
-
 export const addCar = async (req, res, next) => {
   const {
-    CC,
-    carBrand,
+    owner,
     carModel,
     carType,
-    description,
+    price,
+    peopleCapacity,
+    transmission,
+    carBrand,
     engine,
     fuelCapacity,
-    images,
     location,
-    peopleCapacity,
-    price,
-    transmission,
+    description,
     year,
   } = req.body;
+  const images = req.files.map((file) => file.originalname);
 
-  if (req.files === undefined || req.files.length === 0) {
-    return res
-      .status(400)
-      .json({ message: "Failed to upload images try again" });
-  } else {
-    try {
-      const imageIds = [];
-      for (const file of req.files) {
-        const newImage = await Image.create({ url: file.path });
-        imageIds.push(newImage._id);
-      }
+  if (
+    !carModel ||
+    !carType ||
+    !price ||
+    !peopleCapacity ||
+    !transmission ||
+    !carBrand ||
+    !engine ||
+    !fuelCapacity ||
+    !location ||
+    !description ||
+    !images ||
+    !year
+  ) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
 
-      const newCar = await Car.create({
-        CC,
-        carBrand,
-        carModel,
-        type: carType,
-        description,
-        engine,
-        fuelCapacity,
-        location,
-        capacity: peopleCapacity,
-        price,
-        transmission,
-        year,
-        images: imageIds,
-      });
+  const imageIds = [];
+  for (const file of req.files) {
+    const newImage = await Image.create({ url: file.path });
+    imageIds.push(newImage._id);
+  }
 
-      
-    //   const user = await User.findById(owner);
+  try {
+    const newCar = new Car({
+      owner,
+      carModel,
+      carType,
+      price,
+      peopleCapacity,
+      transmission,
+      carBrand,
+      engine,
+      fuelCapacity,
+      location,
+      description,
+      images: imageIds, // Use imageIds instead of images
+      year,
+    });
 
-    //   if (!user) {
-    //     return next("Invalid owner");
-    //   }
+    await newCar.save();
 
-    //   user?.cars?.push(newCar._id);
-    //   await user.save();
+    const user = await User.findById(owner);
 
-      res.status(201).json({ message: "Car added successfully" });
-    } catch (error) {
-      console.log(error, "Error adding car..");
-      next(error);
+    if (!user) {
+      return next("Invalid owner");
     }
+
+    user.cars.push(newCar._id);
+    await user.save();
+
+    res.status(201).json({ message: "Car added successfully", car: newCar });
+  } catch (error) {
+    console.error(error, "Error adding car..");
+    res.status(500).json({ error: "Error adding car" });
   }
 };
+
+//   const user = await User.findById(owner);
+
+//   if (!user) {
+//     return next("Invalid owner");
+//   }
+
+//   user?.cars?.push(newCar._id);
+//   await user.save();
