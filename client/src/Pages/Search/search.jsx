@@ -68,7 +68,7 @@ function Search() {
         </div>
 
         <div className="w-full h-fit flex flex-row justify-center items-center  ">
-          <div className="flex justify-end mr-16 items-center h-12 relative rounded-md ">
+          <div className="flex justify-center items-center h-12 relative rounded-md ">
             <input
               type="text"
               name=""
