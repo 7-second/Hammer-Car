@@ -52,14 +52,14 @@ function Search() {
 
           {/* Type */}
           <div className="flex flex-col gap-2">
-            <p className="text__medium my-2">Type</p>
+            <p className="text-sm  my-2">Type</p>
             <Filter type={"Sale"} />
             <Filter type={"Rent"} />
           </div>
 
           {/* Brand */}
-          <div className="flex flex-col gap-2">
-            <p className="text__medium my-2">Brand</p>
+          <div className="flex flex-col gap-1">
+            <p className="text-sm my-2">Brand</p>
             <Filter type={"2 Person"} />
             <Filter type={"4 Person"} />
             <Filter type={"6 Person"} />
@@ -74,7 +74,7 @@ function Search() {
               name=""
               id=""
               placeholder="Search..."
-              className="h-7 rounded-sm w-56 px-3 outline-none cursor-pointer"
+              className="h-7 rounded-sm w-46 px-3 outline-none cursor-pointer"
             />
           </div>
           <div className="w-fit items-center absolute ml-48 ">
