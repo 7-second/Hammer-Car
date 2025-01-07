@@ -68,17 +68,17 @@ function Search() {
         </div>
 
         <div className="w-full h-fit flex flex-row justify-center items-center  ">
-          <div className="flex justify-center items-center h-12 relative  bg-blue-500 rounded-md ">
+          <div className="flex justify-end mr-16 items-center h-12 relative rounded-md ">
             <input
               type="text"
               name=""
               id=""
               placeholder="Search..."
-              className="h-7 rounded-sm w-46 px-3 outline-none cursor-pointer"
+              className="h-7 absolute -mt-20 bg-slate-100 rounded-sm w-46 px-3 outline-none cursor-pointer"
             />
           </div>
           <div className="w-fit items-center absolute ml-48 ">
-            <CiSearch className=" items-center flex justify-center text-2xl" />
+            {/* <CiSearch className=" items-center flex justify-center text-2xl" /> */}
           </div>
           <div className="hidden  justify-center items-center h-12 w-1/4 bg-purple-500 rounded-lg"></div>
         </div>
