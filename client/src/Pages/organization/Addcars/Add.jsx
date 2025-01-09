@@ -119,29 +119,34 @@ const AddCarForm = ({}) => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+  let currentUser;
+  const user = localStorage.getItem("organization_data");
+  if (user) {
+    currentUser = JSON.parse(user);
+  }
 
-    let currentUser;
-    const user = localStorage.getItem("organization_data");
-    if (user) {
-      currentUser = JSON.parse(user);
-    }
-
-    Object.keys(data).forEach((key) => formData.append(key, data[key]));
+ Object.keys(data).forEach((key) => formData.append(key, data[key]));
 
     selectedImages.forEach((image) => formData.append("images", image));
 
     formData.append("owner", currentUser._id);
 
+  
+    console.log("Data to be sent:", data);  // Log the JSON data for easier inspection
+    console.log("FormData contents:");
+    for (let [key, value] of formData.entries()) 
+      console.log(key, value);
+  
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}car/add-car`,
-        formData
-      );
+        `${import.meta.env.VITE_API_BASE_URL}car/add-car`, formData,);
+
       console.log("Form submitted successfully:", response.data);
       toast.success("Car registered successfully!");
       reset();
     } catch (error) {
       console.error("Error submitting form:", error);
+      
       if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx

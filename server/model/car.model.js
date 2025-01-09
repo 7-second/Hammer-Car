@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 
+// Enum definitions for clarity and reusability
 const Transmission = {
   Auto: "Auto",
   Manual: "Manual",
 };
 
-const CarType = {
+const carType = {
   Rent: "rent",
   Sell: "sell",
 };
+
+
 
 const CarModel = {
   Corolla: "Corolla",
@@ -37,19 +40,24 @@ const CarModel = {
   Golf: "Golf",
 };
 
-const Engine = {
+const engine = {
   Diesel: "Diesel",
   Petrol: "Petrol",
   Electric: "Electric",
   Gas: "Gas",
 };
 
+// Schema definition
 const carSchema = new mongoose.Schema(
   {
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    CC :{
+     type:Number ,
+     required:true
     },
     carBrand: {
       type: String,
@@ -60,15 +68,15 @@ const carSchema = new mongoose.Schema(
       required: true,
       enum: Object.values(CarModel),
     },
-    type: {
+    carType: {
       type: String,
       required: true,
-      enum: Object.values(CarType),
+      enum: Object.values(carType),
     },
     engine: {
       type: String,
       required: true,
-      enum: Object.values(Engine),
+      enum: Object.values(engine),
     },
     price: {
       type: Number,
@@ -89,13 +97,11 @@ const carSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-    },
-    fuelCapacity: {
-      type: Number,
       required: true,
     },
     description: {
       type: String,
+      required: true,
     },
     images: [
       {
@@ -107,6 +113,7 @@ const carSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Exporting the model
 const Car = mongoose.models.Car || mongoose.model("Car", carSchema);
 
 export default Car;
