@@ -26,7 +26,7 @@ const OrgHome = () => {
         }
 
         // Filter cars based on the organization ID
-        const orgCars = allCars.filter(car => car.owner === currentUser._id); // Assuming `owner` is the organization ID in the car data
+        const orgCars = allCars.filter(car => car.owner === currentUser._id ) // Assuming `owner` is the organization ID in the car data
         setCars(orgCars);
       } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@ const OrgHome = () => {
         setLoading(false);
       }
     };
-
+    console.log("Organization ID from localStorage:", organizationId);
     getCars();
   }, [organizationId]);
 

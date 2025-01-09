@@ -76,10 +76,9 @@ export const addCar = async (req, res, next) => {
     location,
     description,
     year,
-    images
   } = req.body;
 
-  // const images = req.files?.map((file) => file.originalname); // Handle cases where `req.files` might be undefined
+  const images = req.files?.map((file) => file.originalname); // Handle cases where `req.files` might be undefined
 
   // Validate required fields
   if (

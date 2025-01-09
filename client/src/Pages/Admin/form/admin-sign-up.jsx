@@ -91,6 +91,19 @@ function AdminForm() {
                     </div>
 
                     <div>
+                        <label>Organization Name/ Mechanic Id</label>
+                        <input
+                            {...register(" organizationId", {
+                                required: "Username is required"
+                            })}
+                            className="border text-sm w-full bg-slate-100 rounded-md p-1.5" />
+                        {errors.username && <p className="pt-1 text-xs text-red-500">{errors. organizationId.message}</p>}
+
+                    </div>
+
+                   
+
+                    <div>
                         <label>Password</label>
                         <input
                             {...register("password", {

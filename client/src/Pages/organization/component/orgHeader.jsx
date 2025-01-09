@@ -90,7 +90,7 @@ const OrgHeader = ({ currentUser }) => {
       </header>
 
       {/* Large Screen */}
-      <header className="hidden md:flex flex-col p-5 gap-1 bg-white justify-between sticky top-0 shadow-lg">
+      <header className="hidden md:flex flex-col p-5 gap-1 bg-white justify-between z-50 sticky top-0 shadow-lg">
         <div className="flex items-center justify-between">
           <div className="flex justify-center w-full">
             <div className="mt-[10px]">
