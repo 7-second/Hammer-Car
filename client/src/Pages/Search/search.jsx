@@ -1,89 +1,139 @@
+import React, { useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
-import Filter from "./filer";
+import axios from "axios";
+import { FaCar, FaGasPump } from "react-icons/fa";
+import { GiSteeringWheel } from "react-icons/gi";
+import { Link } from "react-router-dom";
+import Sell from "../User/components/Car card/sellcard";
+import { BiLoader } from "react-icons/bi"; // Import BiLoader
 
-function Search() {
+// CarSearch Component
+const Search = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [suggestions, setSuggestions] = useState([]); // Suggestions state
+  const [allCars, setAllCars] = useState([]); // Store all cars to restore when search term is cleared
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}car`
+        );
+        setAllCars(response.data); // Store all cars
+        setFilteredCars(response.data); // Initially show all cars
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to load cars data");
+        setLoading(false);
+      }
+    };
+    fetchCars();
+  }, []);
+
+  useEffect(() => {
+    const sanitizedSearchTerm = searchTerm.trim().toLowerCase(); // Trim spaces and convert to lowercase
+
+    // If search term is empty, restore the full list of cars
+    if (!sanitizedSearchTerm) {
+      setFilteredCars(allCars);
+      setSuggestions([]);
+    } else {
+      // Filter cars based on the search term (case-insensitive)
+      const result = allCars.filter(
+        (car) =>
+          car.carModel.toLowerCase().includes(sanitizedSearchTerm) || // Check by model
+          car.carBrand.toLowerCase().includes(sanitizedSearchTerm) // Check by brand
+      );
+      setFilteredCars(result);
+
+      // Get suggestions based on search term
+      const filteredSuggestions = allCars.filter(
+        (car) =>
+          car.carModel.toLowerCase().includes(sanitizedSearchTerm) || // Check by model
+          car.carBrand.toLowerCase().includes(sanitizedSearchTerm) // Check by brand
+      );
+      setSuggestions(filteredSuggestions); // Update suggestions based on search term
+    }
+  }, [searchTerm, allCars]); // Dependency array will update on `searchTerm` change
+
+  // Handle suggestion click and update search term to show only carBrand
+  const handleSuggestionClick = (car) => {
+    setSearchTerm(car.carModel); // Set only carBrand as the search term
+    setSuggestions([]); // Hide suggestions after selecting
+  };
+
+  // Prevent form submission reset on Enter key press
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the form from submitting
+  };
+
   return (
     <>
-      {/* for larger screen */}
-      <div className="hidden  md:flex w-full flex-row gap-5">
-        <div className="h-[calc(100%-50px)] -mt-6 pb-44 w-1/5 flex flex-col gap-3 pl-6 shadow-2xl p-4  rounded-md bg-white">
-          <h3 className="flex itmes-center font-sans font-bold uppercase bg-orange-400 rounded-lg justify-center">Filter</h3>
+      <div className="w-full flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-3xl font-semibold text-center mb-6">Car Search</h1>
 
-          {/* Type */}
-          <div className="flex flex-col gap-2">
-            <p className="text__medium my-2 text-blue-500">Type</p>
-            <Filter type={"Sale"} />
-            <Filter type={"Rent"} />
+          {/* Search Input with Form */}
+          <form onSubmit={handleSubmit}> {/* Prevent form submission */}
+            <div className="relative flex items-center w-full md:w-1/2 bg-slate-100 p-2 rounded-md shadow-md mb-6">
+              <input
+                type="text"
+                placeholder="Search by car brand"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full h-12 px-4 rounded-md outline-none"
+              />
+              <CiSearch className="text-2xl text-gray-500 ml-2" />
+
+              {/* Display Suggestions */}
+              {searchTerm && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 bg-white shadow-md rounded-md mt-2 z-10">
+                  {suggestions.slice(0, 5).map((car) => (
+                    <div
+                      key={car._id}
+                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={() => handleSuggestionClick(car)}
+                    >
+                      <p className="font-semibold">
+                        {car.carBrand} {car.carModel}
+                      </p>
+                      <p className="text-sm text-gray-500">Year: {car.year}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </form>
+
+          {/* Loading / Error State */}
+          {loading && <div className="text-center">Loading cars...</div>}
+          {error && <div className="text-center text-red-500">{error}</div>}
+
+          {/* Display filtered cars */}
+          <div className="flex flex-wrap gap-10 w-full">
+            {filteredCars.length === 0 ? (
+              <div className="h-48 flex items-center justify-center w-full">
+                No rented cars found
+              </div>
+            ) : (
+              filteredCars.map((car) => (
+                <Sell key={car._id} car={car} />
+              ))
+            )}
+
+            {loading && (
+              <div className="h-48 flex items-center justify-center w-full">
+                <BiLoader className="animate-spin" size={30} />
+              </div>
+            )}
           </div>
-
-          {/* Brand */}
-          <div className="flex flex-col gap-2">
-            <p className="text__medium my-2 text-blue-500">Brand</p>
-            <Filter type={"2 Person"} />
-            <Filter type={"4 Person"} />
-            <Filter type={"6 Person"} />
-            <Filter type={"8 or More"} />
-          </div>
-        </div>
-
-        <div className="w-full h-fit flex flex-row justify-center items-center  ">
-          <div className="flex justify-center items-center h-12 w-1/4 bg-blue-500 rounded-md ">
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="Search..."
-              className="h-7 rounded-sm w-56 px-3 outline-none cursor-pointer"
-            />
-          </div>
-          <div className="items-center ">
-            <CiSearch className="items-center flex justify-center text-2xl" />
-          </div>
-          <div className="flex justify-center items-center h-12 w-1/4 bg-purple-500 rounded-lg"></div>
-        </div>
-      </div>
-
-
-      {/* for mobile screen */}
-      <div className="md:hidden w-full flex flex-row gap-2">
-
-        <div className=" sticky h-fit pb-96 -mt-6  w-2/3 flex flex-col gap-3 pl-2 shadow-2xl p-4  rounded-md bg-white">
-          <h3 className="flex itmes-center justify-start uppercase">Filter</h3>
-
-          {/* Type */}
-          <div className="flex flex-col gap-2">
-            <p className="text-sm  my-2">Type</p>
-            <Filter type={"Sale"} />
-            <Filter type={"Rent"} />
-          </div>
-
-          {/* Brand */}
-          <div className="flex flex-col gap-1">
-            <p className="text-sm my-2">Brand</p>
-            <Filter type={"2 Person"} />
-            <Filter type={"4 Person"} />
-            <Filter type={"6 Person"} />
-            <Filter type={"8 or More"} />
-          </div>
-        </div>
-
-        <div className="w-full h-fit flex flex-row justify-center items-center  ">
-          <div className="flex justify-center items-center h-12 relative rounded-md ">
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="Search..."
-              className="h-7 absolute -mt-20 bg-slate-100 rounded-sm w-46 px-3 outline-none cursor-pointer"
-            />
-          </div>
-          <div className="w-fit items-center absolute ml-48 ">
-            {/* <CiSearch className=" items-center flex justify-center text-2xl" /> */}
-          </div>
-          <div className="hidden  justify-center items-center h-12 w-1/4 bg-purple-500 rounded-lg"></div>
         </div>
       </div>
     </>
   );
-}
+};
+
 export default Search;

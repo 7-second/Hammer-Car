@@ -14,15 +14,22 @@ const Rentedcars = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const RENT_ENDPOINT = "rent";
+
     useEffect(() => {
         const getcar = async () => {
             try {
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}rent`)
-                setCars(response?.data);
-            } catch (error) {
-                console.log(error);
+                // Fetch all cars
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
+                const allCars = response?.data;
+        
+                // Filter only rented cars
+                const rentedCars = allCars.filter(car => car.carType === "rent"); // Assuming `isRented` is the field tracking rental status
+                setCars(rentedCars);
+              } catch (error) {
+                console.error("Error fetching cars:", error);
                 setError(error);
-            } finally {
+              } finally {
                 setTimeout(() => {
                     setLoading(false);
                 }, 5000); // 5 seconds loading time

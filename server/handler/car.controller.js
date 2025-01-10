@@ -3,29 +3,41 @@ import User from "../model/user.model.js";
 import Image from "../model/image.model.js";
 
 // Get all cars
-export const cars = async (_, res, next) => {
+export const cars = async (req, res, next) => {
   try {
-    const cars = await Car.find().populate("images"); // Removed unnecessary "?" before `.populate`
+    // Fetch all cars and populate both the 'images' and 'owner' fields
+    const cars = await Car.find().populate('images').populate('owner'); // Populate the 'owner' field
+
+    // Check if cars exist
+    if (!cars || cars.length === 0) {
+      return res.status(404).json({ message: "No cars found" });
+    }
+
+    // Return the list of cars, now with owner and images populated
     res.status(200).json(cars);
   } catch (error) {
-    next(error);
+    console.error("Error fetching cars:", error.message); // Log error for debugging
+    next(error); // Pass error to the error-handling middleware
   }
 };
-
 // Get a car by ID
+
 export const getCar = async (req, res, next) => {
   const { id } = req.params;
 
-  try {
-    const car = await Car.findById(id).populate("images"); // Use consistent variable naming
+  // Validate the ID format
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid car ID" });
+  }
 
+  try {
+    const car = await Car.findById(id).populate('owner'); // Populate owner details for this specific car
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
-
     res.status(200).json(car);
   } catch (error) {
-    next(error);
+    next(error); // Pass errors to error handling middleware
   }
 };
 

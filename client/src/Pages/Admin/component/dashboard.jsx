@@ -20,53 +20,56 @@ const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   const getusers = async () => {
-    try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}user?role=user`
-      );
 
-      const org = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}user?role=organization`
-      );
+   try {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}user?role=user`
+  );
 
-      const mech = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}user?role=mechanic`
-      );
+  const org = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}user?role=organization`
+  );
 
-      const car = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}car`
-      );
+  const mech = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}user?role=mechanic`
+  );
 
-      const rent = await axios.get(
-       `${import.meta.env.VITE_API_BASE_URL}rent`
-      );
+  const car = await axios.get(
+    `${import.meta.env.VITE_API_BASE_URL}car`
+  );
 
-      const sell = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}sell`
-       );
+  // Assuming car?.data is an array of cars
+  const allCars = car?.data || []; // Ensure it has a fallback in case of undefined
 
-      setUsers(response?.data);
-      setOrgcount(org?.data);
-      setMechcount(mech?.data);
-      setCar(car?.data);
-      setRent(rent?.data);
-      setSell(sell?.data);
+  // Filter cars based on type
+  const sellcar = allCars.filter(car => car.carType === "sell"); 
+  const rentcar = allCars.filter(car => car.carType === "rent"); 
 
-      setUsercount(response?.data.length);
-      setOrgcount(org?.data.length);
-      setMechcount(mech?.data.length);
-      setCar(car?.data.length);
-      setRent(rent?.data.length);
-      setSell(rent?.data.length);
-      
-    } catch (error) {
-      console.log(error);
-      setError(error);
-    } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 5000); // 5 seconds loading time
-    }
+  // Set the filtered car data
+  setSell(sellcar);  // cars that are for sale
+  setRent(rentcar);  // cars that are for rent
+
+  // Set user data
+  setUsers(response?.data);
+  setOrgcount(org?.data);
+  setMechcount(mech?.data);
+
+  // Set counts for each category
+  setUsercount(response?.data.length);
+  setOrgcount(org?.data.length);
+  setMechcount(mech?.data.length);
+  setCar(allCars.length); // Assuming all cars length
+  setRent(rentcar.length); // Length of rented cars
+  setSell(sellcar.length); // Length of cars for sale
+
+} catch (error) {
+  console.log(error);
+  setError(error);
+} finally {
+  setTimeout(() => {
+    setLoading(false);
+  }, 5000); // 5 seconds loading time
+}
   };
 
   getusers();

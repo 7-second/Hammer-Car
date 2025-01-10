@@ -17,12 +17,17 @@ const Sellingcars = () => {
         useEffect(() => {
             const getcar = async () => {
                 try {
-              const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}sell`)
-                    setCars(response?.data);
-                } catch (error) {
-                    console.log(error);
+                    // Fetch all cars
+                    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
+                    const allCars = response?.data;
+            
+                    // Filter only rented cars
+                    const rentedCars = allCars.filter(car => car.carType === "sell"); 
+                    setCars(rentedCars);
+                  } catch (error) {
+                    console.error("Error fetching cars:", error);
                     setError(error);
-                } finally {
+                  }finally {
                     setTimeout(() => {
                         setLoading(false);
                     }, 5000); // 5 seconds loading time

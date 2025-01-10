@@ -45,6 +45,8 @@ app.get('/', (_, res) => {
     res.send('Hello, World! this is from Hammer cars...');
 });
 
+
+
 // Routes
 app.use('/auth', authRouter);
 app.use('/user', upload.fields([

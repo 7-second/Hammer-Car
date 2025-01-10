@@ -3,6 +3,8 @@ import User from "../model/user.model.js";
 export const users = async (req, res, next) => {
   const { role } = req.query;
 
+
+
   try {
     let users;
     if (role) {
@@ -48,6 +50,33 @@ export const showUserDetail = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const deleteUser = async (req, res, next) => {
+  const { id } = req.params; // "id" corresponds to _id in the database
+
+  try {
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const deletedUser = await User.findByIdAndDelete({ _id: id });
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully", deletedUser });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    next(error);
+  }
+};
+
+
+
+
+
 
 export const updateProfile = async (req, res, next) => {
   const { id } = req.params;
