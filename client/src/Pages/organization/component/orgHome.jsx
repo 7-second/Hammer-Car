@@ -8,34 +8,31 @@ const OrgHome = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Get current user and organization details from localStorage
-  const user = JSON.parse(localStorage.getItem("users_data"));
-  const organizationId = user?.organizationId; // Assuming 'organizationId' is stored in the user data
+  const user = JSON.parse(localStorage.getItem("organization_data"));
+  const organizationId = user?.organizationId || null;
 
   useEffect(() => {
+    if (!organizationId) {
+      console.error("Organization ID is undefined. Please check your localStorage setup.");
+      setLoading(false);
+      return;
+    }
+
     const getCars = async () => {
       try {
-        // Fetch all cars
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
-        const allCars = response?.data;
+        const allCars = response?.data || [];
 
-        let currentUser;
-        const user = localStorage.getItem("organization_data");
-        if (user) {
-          currentUser = JSON.parse(user);
-        }
-
-        // Filter cars based on the organization ID
-        const orgCars = allCars.filter(car => car.owner === currentUser._id ) // Assuming `owner` is the organization ID in the car data
+        const orgCars = allCars.filter(car => car.owner === organizationId);
         setCars(orgCars);
-      } catch (error) {
-        console.error(error);
-        setError(error);
+      } catch (err) {
+        console.error(err);
+        setError(err);
       } finally {
         setLoading(false);
       }
     };
-    console.log("Organization ID from localStorage:", organizationId);
+
     getCars();
   }, [organizationId]);
 
@@ -71,42 +68,36 @@ const OrgHome = () => {
 
       <h1 className="text-3xl font-bold text-center my-8">Organization Car Sales and Rentals</h1>
 
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">Error loading cars: {error.message}</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.length > 0 ? (
-            cars.map((car) => (
-              <div
-                key={car._id}
-                className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
-              >
-                <img
-                  src={car.images[0]?.url}
-                  alt={car.carModel}
-                  className="w-full h-72 object-cover"
-                />
-                <div className="p-4">
-                  <h2 className="text-xl font-bold text-gray-800">{car.carModel}</h2>
-                  <p className="text-gray-600">{car.carBrand}</p>
-                  <p className="text-gray-600">Price: {car.price}</p>
-                  <p className="text-gray-600">Location: {car.location}</p>
-                  <Link
-                    to={`/car/${car._id}`}
-                    className="text-blue-500 hover:underline mt-2 block"
-                  >
-                    View Details
-                  </Link>
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {cars.length > 0 ? (
+          cars.map((car) => (
+            <div
+              key={car._id}
+              className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
+            >
+              <img
+                src={car.images[0]?.url}
+                alt={car.carModel}
+                className="w-full h-72 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-bold text-gray-800">{car.carModel}</h2>
+                <p className="text-gray-600">{car.carBrand}</p>
+                <p className="text-gray-600">Price: {car.price}</p>
+                <p className="text-gray-600">Location: {car.location}</p>
+                <Link
+                  to={`/car/${car._id}`}
+                  className="text-blue-500 hover:underline mt-2 block"
+                >
+                  View Details
+                </Link>
               </div>
-            ))
-          ) : (
-            <p className="text-center col-span-3">No cars available for rent.</p>
-          )}
-        </div>
-      )}
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-3">No cars available for rent.</p>
+        )}
+      </div>
     </div>
   );
 };

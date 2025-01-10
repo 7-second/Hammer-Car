@@ -237,7 +237,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={usercount}
               />
               <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
                 All Users
@@ -255,7 +255,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={orgcount}
               />
               <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
                 Organizations
@@ -273,7 +273,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={mechcount}
               />
               <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
                 Mechanics
@@ -292,7 +292,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={car}
               />
               <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
                 All Cars
@@ -310,7 +310,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={rent}
               />
               <span className="bg-brown-500 text-blue-400 rounded-md text-sm font-bold">
                 cars For Rented
@@ -328,7 +328,7 @@ useEffect(() => {
               <CountUp
                 duration={5}
                 className="text-xl font-semibold ml-2"
-                end={500}
+                end={sell}
               />
               <span className="bg-brown-500 text-blue-400 p-1.5 rounded-md text-sm font-bold">
                 Car For Sales
