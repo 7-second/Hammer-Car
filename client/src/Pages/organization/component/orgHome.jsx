@@ -1,57 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const OrgHome = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  // Get current user and organization details from localStorage
+  // Retrieve the user data from localStorage
   const user = JSON.parse(localStorage.getItem("users_data"));
-  const organizationId = user?.organizationId; // Assuming 'organizationId' is stored in the user data
+  const organizationId = user?.organizationId;  // Assuming 'organizationId' is stored in the user data
 
   useEffect(() => {
     const getCars = async () => {
       try {
-        const apiUrl = `${import.meta.env.VITE_API_BASE_URL}car`;
-        console.log("Requesting URL:", apiUrl); // Log the URL for debugging
-        const response = await axios.get(apiUrl);
-        const allCars = response?.data;
-        console.log("All Cars Data:", allCars); // Log the full list of cars
-  
-        let currentUser;
-        const user = localStorage.getItem("organization_data");
-        if (user) {
-          currentUser = JSON.parse(user);
+        // Check if organizationId is present
+        if (!organizationId) {
+          throw new Error("Organization ID is required.");
         }
-  
-        // Log current user details
-        console.log("Current User:", currentUser);
-  
-        // Filter cars based on the organization ID
-        const orgCars = allCars.filter(car => car.owner === currentUser._id);
-        console.log("Filtered Cars:", orgCars); // Log filtered cars
-        setCars(orgCars);
+
+        // Fetch all cars
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
+        const allCars = response?.data;
+
+        // Filter cars owned by the organization based on organizationId
+        const orgCars = allCars.filter(car => car.owner === organizationId);
+        setCars(orgCars);  // Set the filtered cars to the state
       } catch (error) {
-        console.error("API request error:", error.response ? error.response.data : error.message);
-        setError(error);
+        console.error("Error fetching cars:", error);
+        setError(error);  // Set error state
       } finally {
-        setLoading(false);
+        setLoading(false);  // Set loading to false once the request is completed
       }
     };
-  
-    console.log("Organization ID from localStorage:", organizationId);
-    getCars();
-  }, [organizationId]);
-  
-  
 
+    getCars();
+  }, [organizationId]);  // Effect runs when organizationId changes
+
+  // Show loading message if data is being fetched
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  // Show error message if there was an issue fetching cars
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -112,7 +103,7 @@ const OrgHome = () => {
               </div>
             ))
           ) : (
-            <p className="text-center col-span-3">No cars available for rent.</p>
+            <p className="text-center col-span-3">No cars available for rent or sale by this organization.</p>
           )}
         </div>
       )}

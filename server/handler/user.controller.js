@@ -2,7 +2,10 @@ import User from "../model/user.model.js";
 
 export const users = async (req, res, next) => {
   const { role } = req.query;
-try {
+
+
+
+  try {
     let users;
     if (role) {
       users = await User.find({ role: role });
