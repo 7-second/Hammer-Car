@@ -118,51 +118,47 @@ const AddCarForm = ({}) => {
   };
 
   const onSubmit = async (data) => {
+    setIsLoading(true); // Set loading state to true
     const formData = new FormData();
-  let currentUser;
-  const user = localStorage.getItem("organization_data");
-  if (user) {
-    currentUser = JSON.parse(user);
-  }
-
- Object.keys(data).forEach((key) => formData.append(key, data[key]));
-
-    selectedImages.forEach((image) => formData.append("images", image));
-
-    formData.append("owner", currentUser._id);
-
   
-    console.log("Data to be sent:", data);  // Log the JSON data for easier inspection
+    // Get current user from localStorage
+    let currentUser;
+    const user = localStorage.getItem("organization_data");
+    if (user) {
+      currentUser = JSON.parse(user);
+    }
+  
+    // Check if currentUser is available
+    if (!currentUser || !currentUser._id) {
+      toast.error("User not logged in or invalid user data");
+      setIsLoading(false); // Reset loading state
+      return; // Stop form submission if user data is not valid
+    }
+  
+    // Append form data and selected images
+    Object.keys(data).forEach((key) => formData.append(key, data[key]));
+    selectedImages.forEach((image) => formData.append("images", image));
+  
+    // Append owner as the current user's _id
+    formData.append("owner", currentUser._id); 
+  
+    console.log("Data to be sent:", data); // Log the JSON data for easier inspection
     console.log("FormData contents:");
     for (let [key, value] of formData.entries()) 
       console.log(key, value);
   
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}car/add-car`, formData,);
-
+        `${import.meta.env.VITE_API_BASE_URL}car/add-car`, 
+        formData,
+      );
       console.log("Form submitted successfully:", response.data);
       toast.success("Car registered successfully!");
-      reset();
+      reset(); // Reset the form
     } catch (error) {
       console.error("Error submitting form:", error);
-      
-      if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.error("Server Response Data:", error.response.data); // Log the server's response
-          toast.error(error.response.data.error || "Failed to register car"); // Use the error message from the server
-      } else if (error.request) {
-          // The request was made but no response was received
-          console.error("No response received:", error.request);
-          toast.error("No response from server");
-      } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error("Error setting up the request:", error.message);
-          toast.error("Request setup error");
-      }
-  } finally {
-      setIsLoading(false);
+    } finally {
+      setIsLoading(false); // Set loading state to false after the request completes
     }
   };
 
@@ -447,15 +443,15 @@ const AddCarForm = ({}) => {
       </div>
 
       <div className="mt-6 flex flex-col gap-2 items-center">
-        <button
-          disabled={isLoading}
-          type="submit"
-          className={`flex items-center justify-center ${
-            isLoading ? "bg-gray-500" : "bg-blue-500"
-          } py-2 px-5 hover:bg-blue-700 text-xs font-medium text-white rounded-md min-w-32 max-w-32`}
-        >
-          {isLoading ? <VscLoading /> : "Register Car"}
-        </button>
+      <button
+  disabled={isLoading}
+  type="submit"
+  className={`flex items-center justify-center ${
+    isLoading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"
+  } py-2 px-5 text-xs font-medium text-white rounded-md min-w-32 max-w-32`}
+>
+  {isLoading ? <VscLoading className="animate-spin text-xl" /> : "Register Car"}
+</button>
       </div>
       <Toaster position="top-center" />
     </form>

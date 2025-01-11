@@ -7,15 +7,18 @@ const OrgHome = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null);
 
-  const user = localStorage.getItem("organization_data");
-  const currentUser = user ? JSON.parse(user) : null;
   useEffect(() => {
-    if (!currentUser) {
-      navigate('/login');
-      return;
+    const user = localStorage.getItem("organization_data");
+    if (user) {
+      setCurrentUser(JSON.parse(user));
     }
-  
+  }, []); // This runs only once when the component mounts
+
+  useEffect(() => {
+    if (!currentUser) return; // Prevent fetch if currentUser is not yet available
+    
     const getCars = async () => {
       try {
         const response = await axios.get(
@@ -37,64 +40,73 @@ const OrgHome = () => {
     };
   
     getCars();
-  }, [currentUser, navigate]);
-  
+  }, [currentUser]); // This will run only when `currentUser` changes
+
+  // Display a loading spinner or message while data is being fetched
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="container mx-auto p-4">
-      <div
-        className="relative bg-cover bg-center h-96"
-        style={{
-          backgroundImage: `url(${currentUser.coverPicture || '/path/to/default/image.jpg'})`
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
-          <h1 className="text-4xl font-bold mb-4">Welcome</h1>
-          <h2 className="text-2xl font-semibold">{currentUser.username}</h2>
-          <Link
-            to="/contact"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+      {currentUser && (
+        <>
+          <div
+            className="relative bg-cover bg-center h-96"
+            style={{
+              backgroundImage: `url(${currentUser.coverPicture})`
+            }}
           >
-            Contact Us
-          </Link>
-        </div>
-      </div>
-
-      <h1 className="text-3xl font-bold text-center my-8">Organization Car Sales and Rentals</h1>
-
-      {cars.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cars.map((car) => (
-            <div
-              key={car._id}
-              className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
-            >
-              <img
-                src={car.images[0]?.url || '/path/to/default-car.jpg'}
-                alt={car.carModel}
-                className="w-full h-72 object-cover"
-              />
-              <div className="p-4">
-                <h2 className="text-xl font-bold text-gray-800">{car.carModel}</h2>
-                <p className="text-gray-600">{car.carBrand}</p>
-                <p className="text-gray-600">Price: {car.price}</p>
-                <p className="text-gray-600">Location: {car.location}</p>
-                <Link
-                  to={`/car/${car._id}`}
-                  className="text-blue-500 hover:underline mt-2 block"
-                >
-                  View Details
-                </Link>
-              </div>
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+              <h1 className="text-4xl font-bold mb-4">Welcome</h1>
+              <h2 className="text-2xl font-semibold">{currentUser.username}</h2>
+              <Link
+                to="/contact"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+              >
+                Contact Us
+              </Link>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-gray-500">
-          No cars are currently listed for rent or sale. 
-          <Link to="/add-car" className="text-blue-500 underline">Add a car</Link>
-          to get started!
-        </p>
+          </div>
+
+          <h1 className="text-3xl font-bold text-center my-8">Organization Car Sales and Rentals</h1>
+
+          {cars.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {cars.map((car) => (
+                <div
+                  key={car._id}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-500 hover:scale-105"
+                >
+                  <img
+                    src={car.images[0]?.url || '/path/to/default-car.jpg'}
+                    alt={car.carModel}
+                    className="w-full h-72 object-cover"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-xl font-bold text-gray-800">{car.carModel}</h2>
+                    <p className="text-gray-600">{car.carBrand}</p>
+                    <p className="text-gray-600">Price: {car.price}</p>
+                    <p className="text-gray-600">Location: {car.location}</p>
+                    <Link
+                      to={`/car/${car._id}`}
+                      className="text-blue-500 hover:underline mt-2 block"
+                    >
+                      View Details
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500">
+              No cars are currently listed for rent or sale. 
+              <Link to="/add-car" className="text-blue-500 underline">Add a car</Link>
+              to get started!
+            </p>
+          )}
+        </>
       )}
     </div>
   );

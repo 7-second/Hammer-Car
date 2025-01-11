@@ -5,7 +5,6 @@ import Image from "../model/image.model.js";
 
 
 // Get all cars
-// Get all cars
 export const cars = async (req, res) => {
   try {
     const { userType, organizationId, carType } = req.query;
@@ -17,8 +16,8 @@ export const cars = async (req, res) => {
 
     let filter = {};
 
-    // Filter cars owned by the organization if userType is "organization"
-    if (userType === "organization" && organizationId) {
+    // Filter cars owned by the organization
+    if (userType === "organization") {
       filter.owner = organizationId; // Filter by organization ID
     }
 
@@ -40,7 +39,6 @@ export const cars = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch cars" });
   }
 };
-
 
 // Get a car by ID
 export const getCar = async (req, res, next) => {
@@ -144,6 +142,11 @@ export const addCar = async (req, res, next) => {
       return res.status(404).json({ error: "Owner not found" });
     }
 
+    // Ensure user.cars is initialized as an array before pushing the new car
+    if (!Array.isArray(user.cars)) {
+      user.cars = []; // Initialize if it's undefined or not an array
+    }
+
     user.cars.push(newCar._id);
     await user.save();
 
@@ -153,4 +156,5 @@ export const addCar = async (req, res, next) => {
     next(error); // Pass the error to the error handler
   }
 };
+
 
