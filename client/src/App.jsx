@@ -34,7 +34,7 @@ import OrganizationList from "./Pages/Admin/component/orglist.jsx";
 import OrgProfile from "./Pages/organization/component/orgProfile.jsx";
 import RentalList from "./Pages/organization/component/rental.jsx";
 import OrgSale from "./Pages/organization/component/sale.jsx";
-import OwnerProfile from "./Pages/User/components/view all pages/OwnerProfile.jsx";
+import OrgOwnProfile from "./Pages/User/components/view all pages/OwnerProfile.jsx";
 import OrgCarInfo from "./Pages/organization/component/carInfo.jsx";
 
 // import Organization from "./Pages/Organizations/organization"
@@ -72,7 +72,7 @@ function App() {
           <Route path="/orgdetail" element={<OrgDetail />} />
           <Route path="/search"  element={<Search />} />
           <Route path="/profile" element={<Profile />} />
-          <Route  path="/ownerprofile/:username"  element={<OwnerProfile />} />
+          <Route path="/orgownprofile/:username" element={<OrgOwnProfile />} />
 
         </Route>
 

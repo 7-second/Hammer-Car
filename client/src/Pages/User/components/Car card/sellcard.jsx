@@ -27,7 +27,7 @@ const Sell = ({ variant, car }) => {
           <hr />
           <Link
   to={{
-    pathname: `/ownerprofile/${car?.owner?.username}`, // Make sure this is the correct path
+    pathname: `/orgownprofile/${car?.owner?.username}`, // Make sure this is the correct path
     state: { owner: car?.owner }  // Pass the 'owner' data explicitly as state
   }}
 >
