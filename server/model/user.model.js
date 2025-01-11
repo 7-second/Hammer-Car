@@ -32,9 +32,6 @@ const userSchema = new mongoose.Schema(
     },
     organizationId: {
       type: String, // Define the type as String (or ObjectId if necessary)
-      required: function () {
-        return this.role !== "user"; // Conditionally required based on role
-      },
     },
   },
   { timestamps: true }

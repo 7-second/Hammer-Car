@@ -157,6 +157,16 @@ const AddCarForm = ({}) => {
       reset(); // Reset the form
     } catch (error) {
       console.error("Error submitting form:", error);
+      if (error.response) {
+        console.error("Server Response Data:", error.response.data); // Log the server's response
+        toast.error(error.response.data.error || "Failed to register car"); // Use the error message from the server
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+        toast.error("No response from server");
+      } else {
+        console.error("Error setting up the request:", error.message);
+        toast.error("Request setup error");
+      }
     } finally {
       setIsLoading(false); // Set loading state to false after the request completes
     }
