@@ -1,86 +1,106 @@
-
-import React, { useEffect, useState } from 'react'
-// import Link from 'next/link'
+import React, { useEffect, useState } from 'react';
 import { BiLoader } from 'react-icons/bi';
 import axios from 'axios';
-import Rentc from "../Car card/rentCard"
-// import { Cars } from '@/helper';
+import Rentc from '../Car card/rentCard';
 
+const Rent = () => {
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const carsPerPage = 12;
 
-const Rent =() => {
+  useEffect(() => {
+    const getCars = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
+        const allCars = response?.data || [];
 
-    // Get All cars
-    const [cars, setCars] = useState([])
-    const [loading, setLoading] = useState(false)
+        // Log carType to ensure it's as expected
+        allCars.forEach(car => console.log(car.carType));
 
+        const rentedCars = allCars.filter((car) => car.carType === "rent");
 
-    useEffect(() => {
-        const getcar = async () => {
-            try {
-                // Fetch all cars
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}car`);
-                const allCars = response?.data;
-        
-                // Filter only rented cars
-                const rentedCars = allCars.filter(car => car.carType === "rent"); // Assuming `isRented` is the field tracking rental status
-                setCars(rentedCars);
-              } catch (error) {
-                console.error("Error fetching cars:", error);
-                setError(error);
-              }
-            finally { setLoading(false) }
-        }
+        // Set totalPages based on rentedCars and carsPerPage
+        setTotalPages(Math.ceil(rentedCars.length / carsPerPage));
 
+        // Set the current list of cars for the current page
+        setCars(rentedCars.slice((currentPage - 1) * carsPerPage, currentPage * carsPerPage));
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        getcar()
-    }, [])
+    getCars();
+  }, [currentPage]); // Add currentPage as dependency to refetch when page changes
 
-    return (
-        <>
-       
-        {/* <div className="w-[400px]  shadow-lg mt-[10px]  ">
-        <div className="">Rules to be follow</div>
-            <div className="w-[400px] flex flex-wrap gap-1 z-0">
-                <div className="shadow-2xl w-[150px]  ">You must be at least 25 years old, and sometimes 21, depending on the rental company</div>
-                <div className="shadow-2xl w-[150px]">You must have a valid driver's license</div>
-                <div className="shadow-2xl w-[150px]">Most rental companies include basic insurance in their rates</div>
-                <div className="shadow-2xl w-[150px]">It's important to choose a vehicle suitable for the terrain you plan to cover</div>
-                 <div className="shadow-2xl w-[150px]">Be sure to familiarize yourself with local traffic laws and regulations</div>
-            </div>
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
-        </div> */}
-          <div className="flex flex-row flex-wrap justify-center items-center ">
+  return (
+    <div className="flex flex-col gap-4 items-center justify-center w-full ">
+      <div className="flex justify-center w-full items-center">
+        <h2 className="text-sm font-medium bg-orange-400 px-[30px] py-[20px] rounded">
+          Rented Cars
+        </h2>
+      </div>
 
-        <div className='flex flex-col  gap-1 items-center  justify-center '>
-            <div className='flex justify-center items-center mt-[5px]'>
-                <h2 className='text-sm font-medium w-fit bg-blue-400   rounded'>Renting Cars</h2>
-                {/* <Link href={"/search"}
-                    className='underline text-xs cursor-pointer hover:text-gray-500'>View All</Link> */}
-            </div>
-            <div className=' gap-8 flex flex-wrap mb-1'>
-                {cars?.length === 0 ? (
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        No Car Found
-                    </div>
-                ) :
-                    cars?.map((car) => (
-                        <Rentc
-                            key={car._id}
-                            car={car}
-                        />
-                    ))
-                }
-                {loading &&
+      {/* Cars List */}
+      <div className="flex flex-wrap gap-4 mb-1 justify-center md:gap-5">
+        {cars.length === 0 ? (
+          <div className="h-48 flex items-center justify-center w-full">
+            No rented cars found
+          </div>
+        ) : (
+          cars.map((car) => (
+            <Rentc key={car._id} car={car} />
+          ))
+        )}
 
-                    <div className='h-48 flex items-center justify-center w-full'>
-                        <BiLoader className='animate-spin' size={30} />
-                    </div>
-                }
+        {loading && (
+          <div className="h-48 flex items-center justify-center w-full">
+            <BiLoader className="animate-spin" size={30} />
+          </div>
+        )}
+      </div>
 
-            </div>
-        </div>
-        </div>
-        </> )
+      {/* Pagination Controls */}
+      <div className="flex gap-2 justify-center">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+        >
+          Previous
+        </button>
 
-}
-export default Rent
+        {/* Page Numbers */}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-md`}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Rent;

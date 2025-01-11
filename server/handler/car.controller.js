@@ -158,3 +158,23 @@ export const addCar = async (req, res, next) => {
 };
 
 
+export const deleteCar = async (req, res) => {
+  const carId = req.params.id; // Get car ID from request params
+
+  try {
+    // Try to find and delete the car by ID
+    const car = await Car.findByIdAndDelete(carId);
+
+    // If car not found, return a 404 response
+    if (!car) {
+      return res.status(404).json({ message: "Car not found." });
+    }
+
+    // Successfully deleted, return success message
+    res.status(200).json({ message: "Car deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting car:", error);
+    res.status(500).json({ message: "Failed to delete car." });
+  }
+};
+
