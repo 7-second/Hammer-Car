@@ -2,26 +2,47 @@ import Car from "../model/car.model.js";
 import User from "../model/user.model.js";
 import Image from "../model/image.model.js";
 
-// Get all cars
-export const cars = async (req, res, next) => {
-  try {
-    // Fetch all cars and populate both the 'images' and 'owner' fields
-    const cars = await Car.find().populate('images').populate('owner'); // Populate the 'owner' field
 
-    // Check if cars exist
-    if (!cars || cars.length === 0) {
-      return res.status(404).json({ message: "No cars found" });
+
+// Get all cars
+// Get all cars
+export const cars = async (req, res) => {
+  try {
+    const { userType, organizationId, carType } = req.query;
+
+    // Validate organizationId for organization requests
+    if (userType === "organization" && !organizationId) {
+      return res.status(400).json({ message: "Organization ID is missing" });
     }
 
-    // Return the list of cars, now with owner and images populated
+    let filter = {};
+
+    // Filter cars owned by the organization if userType is "organization"
+    if (userType === "organization" && organizationId) {
+      filter.owner = organizationId; // Filter by organization ID
+    }
+
+    // Filter by carType if specified (e.g., "sale" or "rent")
+    if (carType) {
+      filter.carType = carType;
+    }
+
+    // Populate owner details in cars
+    const cars = await Car.find(filter).populate('owner').populate("images"); // Populate owner details
+
+    if (!cars.length) {
+      return res.status(404).json({ message: "No cars found matching the criteria" });
+    }
+
     res.status(200).json(cars);
   } catch (error) {
-    console.error("Error fetching cars:", error.message); // Log error for debugging
-    next(error); // Pass error to the error-handling middleware
+    console.error("Error fetching cars:", error);
+    res.status(500).json({ message: "Failed to fetch cars" });
   }
 };
-// Get a car by ID
 
+
+// Get a car by ID
 export const getCar = async (req, res, next) => {
   const { id } = req.params;
 
@@ -31,7 +52,8 @@ export const getCar = async (req, res, next) => {
   }
 
   try {
-    const car = await Car.findById(id).populate('owner'); // Populate owner details for this specific car
+    // Populate the 'owner' field for this specific car
+    const car = await Car.findById(id).populate('owner');
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
@@ -75,38 +97,17 @@ export const updateCar = async (req, res, next) => {
 // Add a new car
 export const addCar = async (req, res, next) => {
   const {
-    owner ,
-    CC,
-    carModel,
-    carType,
-    price,
-    peopleCapacity,
-    transmission,
-    carBrand,
-    engine,
-    fuelCapacity,
-    location,
-    description,
-    year,
+    owner, CC, carModel, carType, price, peopleCapacity, transmission,
+    carBrand, engine, fuelCapacity, location, description, year,
   } = req.body;
 
   const images = req.files?.map((file) => file.originalname); // Handle cases where `req.files` might be undefined
 
   // Validate required fields
   if (
-    !CC,
-    !carModel ||
-    !carType ||
-    !price ||
-    !peopleCapacity ||
-    !transmission ||
-    !carBrand ||
-    !engine ||
-    !fuelCapacity ||
-    !location ||
-    !description ||
-    !images?.length || // Ensure images are provided
-    !year
+    !CC || !carModel || !carType || !price || !peopleCapacity || !transmission ||
+    !carBrand || !engine || !fuelCapacity || !location || !description ||
+    !images?.length || !year
   ) {
     return res.status(400).json({ error: "All fields are required" });
   }
@@ -119,20 +120,20 @@ export const addCar = async (req, res, next) => {
     }
 
     const newCar = new Car({
-      owner ,
-    CC,
-    carModel,
-    carType,
-    price,
-    peopleCapacity,
-    transmission,
-    carBrand,
-    engine,
-    fuelCapacity,
-    location,
-    description,
-    year,
-    images:imageIds
+      owner,
+      CC,
+      carModel,
+      carType,
+      price,
+      peopleCapacity,
+      transmission,
+      carBrand,
+      engine,
+      fuelCapacity,
+      location,
+      description,
+      year,
+      images: imageIds,
     });
 
     await newCar.save();
@@ -152,3 +153,4 @@ export const addCar = async (req, res, next) => {
     next(error); // Pass the error to the error handler
   }
 };
+

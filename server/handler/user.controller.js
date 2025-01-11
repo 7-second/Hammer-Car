@@ -1,20 +1,32 @@
 import User from "../model/user.model.js";
 
 export const users = async (req, res, next) => {
-  const { role } = req.query;
-
-
+  const { role, organizationId } = req.query; // Retrieve role and organizationId from query parameters
 
   try {
-    let users;
+    let filter = {};
+
+    // If 'role' is provided in the query, add to filter
     if (role) {
-      users = await User.find({ role: role });
-    } else {
-      users = await User.find();
+      filter.role = role;
     }
-    if (users) res.json(users);
+
+    // If 'organizationId' is provided in the query, add to filter
+    if (organizationId) {
+      filter.organizationId = organizationId;
+    }
+
+    // Find users based on the filter criteria
+    const users = await User.find(filter);
+
+    // Return the users if found
+    if (users) {
+      res.json(users);
+    } else {
+      res.status(404).json({ message: "No users found" });
+    }
   } catch (error) {
-    next(error);
+    next(error); // Pass errors to the error handler middleware
   }
 };
 

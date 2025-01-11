@@ -3,37 +3,38 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export const register = async (req, res, next) => {
-    const { email, username, password, organizationId, role } = req.body
+    const { username, password, email, organizationId } = req.body;
+  
     try {
-
-        const user = await User.findOne({ username: username.toLowerCase() })
-        if (user) {
-            return res.status(409).json("User Already Found")
-        }
-        // Encrypt Password
-        const hashedPassword = bcrypt.hashSync(password, 10)
-
-        // ======== Register
-        const createUser = new User({
-            email,
-            username: username.toLowerCase(),
-            password: hashedPassword,
-            organizationId,
-            role
-        })
-
-        await createUser.save()
-        res.status(201).json(createUser)
-
-
+      if (!organizationId) {
+        return res.status(400).json({ message: 'Organization ID is required' });
+      }
+  
+      // Check if the organization exists in the database
+      const organization = await Organization.findById(organizationId);
+      if (!organization) {
+        return res.status(404).json({ message: 'Organization not found' });
+      }
+  
+      // Create a new user and associate the organizationId
+      const user = new User({
+        username,
+        password,
+        email,
+        organizationId, // Store the organizationId in the user document
+      });
+  
+      // Save the user to the database
+      await user.save();
+      res.status(201).json(user); // Respond with the created user
     } catch (error) {
-        console.log(error, "Register Err")
-        next(error)
+      console.log(error, "Register Err");
+      next(error); // Handle errors
     }
-}
+  };
 
 export const login = async (req, res, next) => {
-    const { username, password, organizationId } = req.body
+    const { username, password,  } = req.body
 
     try {
         const user = await User.findOne({ username: username.toLowerCase() })
