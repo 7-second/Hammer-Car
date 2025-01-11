@@ -3,7 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export const register = async (req, res, next) => {
-  const { username, password, email, organizationId } = req.body;
+  const { username, password, email, organizationId, role } = req.body;
 
   try {
     // Check if the username already exists
@@ -18,29 +18,41 @@ export const register = async (req, res, next) => {
       return res.status(409).json({ message: "Email is already in use. Please use a different one." });
     }
 
+    // Conditional validation for organizationId
+    if ((role === "organization" || role === "mechanic") && !organizationId) {
+      return res.status(400).json({
+        message: "Organization ID is required for roles 'organization' and 'mechanic'.",
+      });
+    }
+
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with or without the organizationId
+    // Create a new user
     const user = new User({
       username,
       email,
-      password: hashedPassword,  // Save hashed password
-      organizationId: organizationId || undefined // Use undefined if not provided
+      password: hashedPassword, // Save hashed password
+      role,                     // Assign the provided role
+      organizationId: role === "user" ? undefined : organizationId, // Only set organizationId for specific roles
     });
 
     // Save the user to the database
     await user.save();
 
-    // Send the response with the created user
-    res.status(201).json(user);
+    // Send the response with the created user (omit sensitive info)
+    res.status(201).json({
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      organizationId: user.organizationId,
+    });
 
   } catch (error) {
-    console.log("Register Error: ", error);
-    next(error); // Handle errors
+    console.error("Register Error:", error);
+    next(error); // Pass error to the error handler
   }
 };
-
 
 
 

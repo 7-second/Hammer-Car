@@ -22,7 +22,6 @@ function AdminForm() {
         userData
       );
   
-      toast.success("Register Success");
       if (response.status === 201) {
         toast.success("Register Success");
       }
