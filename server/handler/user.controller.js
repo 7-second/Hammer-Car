@@ -5,22 +5,31 @@ export const users = async (req, res, next) => {
 
   try {
     let filter = {};
+    
+    // Log the incoming request query to check if role and organizationId are passed
+    console.log('Query Parameters:', req.query);
 
-    // If 'role' is provided in the query, add to filter
+    // If 'role' is provided in the query, add it to the filter
     if (role) {
       filter.role = role;
     }
 
-    // If 'organizationId' is provided in the query, add to filter
+    // If 'organizationId' is provided in the query, add it to the filter
     if (organizationId) {
       filter.organizationId = organizationId;
     }
 
+    // Log the filter object to check if it's being built correctly
+    console.log('Filter:', filter);
+
     // Find users based on the filter criteria
     const users = await User.find(filter);
 
+    // Log the found users to ensure they match the filter
+    console.log('Found Users:', users);
+
     // Return the users if found
-    if (users) {
+    if (users.length > 0) {
       res.json(users);
     } else {
       res.status(404).json({ message: "No users found" });
@@ -29,6 +38,8 @@ export const users = async (req, res, next) => {
     next(error); // Pass errors to the error handler middleware
   }
 };
+
+
 
 export const showUserDetail = async (req, res, next) => {
   const { id } = req.params;

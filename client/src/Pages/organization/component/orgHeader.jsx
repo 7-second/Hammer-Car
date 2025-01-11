@@ -60,6 +60,20 @@ const OrgHeader = ({ currentUser }) => {
                   >
                     Sale
                   </Link>
+
+
+                </li>
+          
+
+                <li>
+                  <Link
+                    to="/orgcarinfo"
+                    className="font-bold text-sm md:text-base"
+                  >
+                    Car Info
+                  </Link>
+
+
                 </li>
                 <li>
                   <Link to="/addcar" className="font-bold text-sm md:text-base">
@@ -133,6 +147,14 @@ const OrgHeader = ({ currentUser }) => {
                     Add Cars
                   </Link>
                 </li>
+
+                <li>
+                  <Link to="/orgcarinfo" className="font-bold text-sm md:text-base">
+                   Car Info
+                  </Link>
+                </li>
+
+               
               </ul>
             </div>
           </div>

@@ -3,35 +3,47 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export const register = async (req, res, next) => {
-    const { username, password, email, organizationId } = req.body;
-  
-    try {
-      if (!organizationId) {
-        return res.status(400).json({ message: 'Organization ID is required' });
-      }
-  
-      // Check if the organization exists in the database
-      const organization = await Organization.findById(organizationId);
-      if (!organization) {
-        return res.status(404).json({ message: 'Organization not found' });
-      }
-  
-      // Create a new user and associate the organizationId
-      const user = new User({
-        username,
-        password,
-        email,
-        organizationId, // Store the organizationId in the user document
-      });
-  
-      // Save the user to the database
-      await user.save();
-      res.status(201).json(user); // Respond with the created user
-    } catch (error) {
-      console.log(error, "Register Err");
-      next(error); // Handle errors
+  const { username, password, email, organizationId } = req.body;
+
+  try {
+    // Check if the username already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(409).json({ message: "Username already exists. Please choose a different one." });
     }
-  };
+
+    // Check if the email already exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(409).json({ message: "Email is already in use. Please use a different one." });
+    }
+
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user with or without the organizationId
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,  // Save hashed password
+      organizationId: organizationId || undefined // Use undefined if not provided
+    });
+
+    // Save the user to the database
+    await user.save();
+
+    // Send the response with the created user
+    res.status(201).json(user);
+
+  } catch (error) {
+    console.log("Register Error: ", error);
+    next(error); // Handle errors
+  }
+};
+
+
+
+
 
 export const login = async (req, res, next) => {
     const { username, password,  } = req.body

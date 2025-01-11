@@ -35,6 +35,7 @@ import OrgProfile from "./Pages/organization/component/orgProfile.jsx";
 import RentalList from "./Pages/organization/component/rental.jsx";
 import OrgSale from "./Pages/organization/component/sale.jsx";
 import OwnerProfile from "./Pages/User/components/view all pages/OwnerProfile.jsx";
+import OrgCarInfo from "./Pages/organization/component/carInfo.jsx";
 
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
@@ -82,6 +83,7 @@ function App() {
           <Route path="/orgprofile" element={<OrgProfile />} />
           <Route path="/rental-list" element={<RentalList />} />
           <Route path="/sale-list" element={<OrgSale />} />
+          <Route path="/orgcarinfo" element={<OrgCarInfo />} />
         </Route>
 
         <Route path="/" element={<AdminLayout />}>

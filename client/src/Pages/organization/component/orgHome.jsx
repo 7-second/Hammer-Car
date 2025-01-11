@@ -10,18 +10,12 @@ const OrgHome = () => {
 
   const user = localStorage.getItem("organization_data");
   const currentUser = user ? JSON.parse(user) : null;
-
-  // A flag to avoid multiple requests on rerenders
-  const [fetched, setFetched] = useState(false);
-
   useEffect(() => {
     if (!currentUser) {
       navigate('/login');
       return;
     }
-
-    if (fetched) return; // Prevent multiple fetches
-
+  
     const getCars = async () => {
       try {
         const response = await axios.get(
@@ -39,13 +33,12 @@ const OrgHome = () => {
         setError(err?.response?.data?.message || err?.message || "An unexpected error occurred");
       } finally {
         setLoading(false);
-        setFetched(true);  // Set fetched to true after the first fetch
       }
     };
-
+  
     getCars();
-  }, [currentUser, navigate, fetched]);  // Only run when currentUser changes
-
+  }, [currentUser, navigate]);
+  
   return (
     <div className="container mx-auto p-4">
       <div
