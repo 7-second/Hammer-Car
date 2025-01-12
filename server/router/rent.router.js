@@ -1,8 +1,10 @@
 import express from "express";
-import { rents } from "../handler/rent.controller.js";
+import { rentByCar, rents } from "../handler/rent.controller.js";
 
 const router = express.Router();
 
 router.get("/", rents);
+
+router.post("/rented-car", rentByCar)
 
 export default router;

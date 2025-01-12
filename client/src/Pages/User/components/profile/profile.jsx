@@ -1,82 +1,71 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function Profile({ currentUser }) {
+function Profile({ }) {
   const [followedOrganizations, setFollowedOrganizations] = useState([]);
+  const [carSelled, setCarSelled] = useState([]);
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);  // Track loading state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Initialize currentUser from localStorage if not passed as a prop
-  const user = localStorage.getItem('users_data');
-  const userParsed = user ? JSON.parse(user) : null;
-  const finalUser = currentUser || userParsed;
-
-  if (!finalUser) {
-    return <div>Loading or no user data available...</div>;  // Display loading or error if no user data is found
+  let currentUser
+  const user = localStorage.getItem("users_data")
+  if (user) {
+    currentUser = JSON.parse(user)
   }
 
   useEffect(() => {
-    const getusers = async () => {
+  
+    const getUserData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}show-details/${finalUser._id}`
+          `${import.meta.env.VITE_API_BASE_URL}user/show-details/${currentUser._id}`
         );
-        console.log(response.data);  // Log the entire response to check followedOrganizations
+
+        // Check and log the response for debugging
+        console.log('User Data:', response.data);
+
         setUserData(response.data);
+        setFollowedOrganizations(response.data.organizationDetails || []);
 
-        const followedOrgs = response.data.followedOrganizations || [];
-        console.log('Followed organizations:', followedOrgs); // Log the followed organizations
+        setCarSelled(response.data.sell || []);
 
-        // Fetch details of each followed organization
-        const orgDetails = await Promise.all(
-          followedOrgs.map(async (orgId) => {
-            const orgResponse = await axios.get(
-              `${import.meta.env.VITE_API_BASE_URL}organization/${orgId}`
-            );
-            return orgResponse.data;
-          })
-        );
 
-        // Log the organization names
-        orgDetails.forEach(org => {
-          console.log('Organization Name:', org.name);  // Log each organization's name
-        });
-
-        console.log('Organization details:', orgDetails); // Log the fetched organization details
-        setFollowedOrganizations(orgDetails);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching user data:', error);
+        setError('Failed to fetch user data. Please try again later.');
       } finally {
-        setLoading(false);  // Stop loading once data is fetched
+        setLoading(false);
       }
     };
 
-    if (finalUser) {
-      getusers();
-    }
-  }, [finalUser]);
+    getUserData();
+  }, []);
+
 
   return (
     <main className="w-full md:px-12 p-6 flex flex-col gap-3 bg-white">
       {loading ? (
-        <div>Loading...</div>  // Show loading state
+        <div>Loading...</div>
       ) : (
         <>
           <div className="relative w-full">
             <div className="relative w-full">
               {/* Cover Image */}
-              {finalUser?.coverPicture && (
+              {currentUser?.coverPicture && (
                 <img
-                  src={finalUser?.coverPicture}
-                  alt="profile Picture"
+                  src={currentUser.coverPicture}
+                  alt="Cover"
                   className="object-cover rounded-md"
                 />
               )}
               {/* Profile Picture */}
-              {finalUser?.profilePicture && (
+              {currentUser?.profilePicture && (
                 <img
-                  src={finalUser?.profilePicture}
-                  alt="profilePicture"
+                  src={currentUser.profilePicture}
+                  alt="Profile"
                   width={60}
                   height={60}
                   className="!w-16 !h-16 absolute -bottom-6 left-5 object-cover rounded-full shadow-2xl"
@@ -85,8 +74,8 @@ function Profile({ currentUser }) {
             </div>
             <div className="flex justify-between md:px-8 w-full mt-8">
               <div className="flex flex-col gap-1">
-                <h2 className="font-bold text-sm text-black">{finalUser?.username}</h2>
-                <p className="text__medium text-black">{finalUser?.email}</p>
+                <h2 className="font-bold text-sm text-black">{currentUser.username}</h2>
+                <p className="text__medium text-black">{currentUser.email}</p>
               </div>
             </div>
           </div>
@@ -102,9 +91,9 @@ function Profile({ currentUser }) {
                       <img
                         className="object-cover rounded-full w-10 h-10"
                         src={org.profilePicture || 'https://via.placeholder.com/150'}
-                        alt={`${org.name} logo`}
+                        alt={`${org.username || 'Organization'} logo`}
                       />
-                      <span>{org.name || 'No Name'}</span>  {/* Handle missing organization name */}
+                      <span>{org.username || 'No Name Available'}</span>
                     </div>
                   </li>
                 ))
@@ -113,6 +102,10 @@ function Profile({ currentUser }) {
               )}
             </ul>
           </div>
+
+
+          {/* Buy Cars  */}
+          {/* carSelled */}
         </>
       )}
     </main>

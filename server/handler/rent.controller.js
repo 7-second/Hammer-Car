@@ -19,8 +19,8 @@ export const rentByCar = async (req, res, next) => {
         const rent = await Rent.create({
             car,
             rentedBy,
-            pickUp,
-            dropOff,
+            // pickUp,
+            // dropOff,
             from,
             to
         });

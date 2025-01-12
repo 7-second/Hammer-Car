@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
-import toast, {  Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const ArrayStar = ({ rating }) => {
   return (
@@ -23,10 +24,22 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
   const user = localStorage.getItem("users_data");
   if (user) {
     currentUser = JSON.parse(user);
-    
   }
 
-  
+  const buyNowHandler = async () => {
+    console.log("click");
+    try {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}sell/car-sell`, {
+        carId: car._id,
+        buyerId: currentUser._id,
+      });
+      toast.success("Buy Car SuccessFully");
+
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [isRentOpen, setIsRentOpen] = useState(false);
 
@@ -149,21 +162,19 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
                           </p>
                         </div>
                         <div className="">
-                          {!currentUser ? 
+                          {!currentUser ? (
                             <Link to={"/signin"}>
                               <button
                                 type="button"
                                 className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                               >
                                 Rent Now
-                                
                               </button>
-                           
                             </Link>
-                           : (
+                          ) : (
                             <button
                               type="button"
-                              onClick={openRentModal}
+                              onClick={buyNowHandler}
                               className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
                             >
                               Buy Now
@@ -194,6 +205,8 @@ const CarDetailsale = ({ car, variant, isOpen, setIsOpen }) => {
           </div>
         </Dialog>
       </Transition>
+
+      <Toaster position="top-center"/>
     </>
   );
 };

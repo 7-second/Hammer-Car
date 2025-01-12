@@ -18,7 +18,7 @@ const Sell = ({ variant, car }) => {
   }
 
   const [heart, setHeart] = useState(false);
-  console.log(`Navigating to /ownerprofile/${car?.owner?._id}`);
+  // console.log(`Navigating to /ownerprofile/${car?.owner?._id}`);
 
   return (
     <main>

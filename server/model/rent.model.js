@@ -10,12 +10,12 @@ const rentSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        pickUp: {
-            type: String,
-        },
-        dropOff: {
-            type: String,
-        },
+        // pickUp: {
+        //     type: String,
+        // },
+        // dropOff: {
+        //     type: String,
+        // },
         from: {
             type: Date,
         },

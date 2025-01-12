@@ -1,9 +1,11 @@
-import express from "express"
-import { sells } from "../handler/sell.controller.js"
+import express from "express";
+import { sells, sellCar } from "../handler/sell.controller.js";
 
-const router = express.Router()
+const router = express.Router();
 
 // need user on params
-router.get("/", sells)
+router.get("/", sells);
 
-export default router
+router.post("/car-sell", sellCar);
+
+export default router;

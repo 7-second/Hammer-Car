@@ -72,7 +72,7 @@ function App() {
           <Route path="/orgdetail" element={<OrgDetail />} />
           <Route path="/search"  element={<Search />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/orgownprofile/:username" element={<OrgOwnProfile />} />
+          <Route path="/organization/:username" element={<OrgOwnProfile />} />
 
         </Route>
 

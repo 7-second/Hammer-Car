@@ -2,9 +2,8 @@ import Car from "../model/car.model.js";
 import User from "../model/user.model.js";
 import Image from "../model/image.model.js";
 
-
-
 // Get all cars
+
 export const cars = async (req, res) => {
   try {
     const { userType, organizationId, carType } = req.query;
@@ -26,11 +25,15 @@ export const cars = async (req, res) => {
       filter.carType = carType;
     }
 
-    // Populate owner details in cars
-    const cars = await Car.find(filter).populate('owner').populate("images"); // Populate owner details
+    // Populate owner and images with strictPopulate disabled
+    const cars = await Car.find(filter)
+      .populate("owner", null, null, { strictPopulate: false }) // Disable strict populate for owner
+      .populate("images", null, null, { strictPopulate: false }); // Disable strict populate for images
 
     if (!cars.length) {
-      return res.status(404).json({ message: "No cars found matching the criteria" });
+      return res
+        .status(404)
+        .json({ message: "No cars found matching the criteria" });
     }
 
     res.status(200).json(cars);
@@ -51,7 +54,7 @@ export const getCar = async (req, res, next) => {
 
   try {
     // Populate the 'owner' field for this specific car
-    const car = await Car.findById(id).populate('owner');
+    const car = await Car.findById(id).populate("owner");
     if (!car) {
       return res.status(404).json({ message: "Car not found" });
     }
@@ -95,17 +98,38 @@ export const updateCar = async (req, res, next) => {
 // Add a new car
 export const addCar = async (req, res, next) => {
   const {
-    owner, CC, carModel, carType, price, peopleCapacity, transmission,
-    carBrand, engine, fuelCapacity, location, description, year,
+    owner,
+    CC,
+    carModel,
+    carType,
+    price,
+    peopleCapacity,
+    transmission,
+    carBrand,
+    engine,
+    fuelCapacity,
+    location,
+    description,
+    year,
   } = req.body;
 
   const images = req.files?.map((file) => file.originalname); // Handle cases where `req.files` might be undefined
 
   // Validate required fields
   if (
-    !CC || !carModel || !carType || !price || !peopleCapacity || !transmission ||
-    !carBrand || !engine || !fuelCapacity || !location || !description ||
-    !images?.length || !year
+    !CC ||
+    !carModel ||
+    !carType ||
+    !price ||
+    !peopleCapacity ||
+    !transmission ||
+    !carBrand ||
+    !engine ||
+    !fuelCapacity ||
+    !location ||
+    !description ||
+    !images?.length ||
+    !year
   ) {
     return res.status(400).json({ error: "All fields are required" });
   }
@@ -157,7 +181,6 @@ export const addCar = async (req, res, next) => {
   }
 };
 
-
 export const deleteCar = async (req, res) => {
   const carId = req.params.id; // Get car ID from request params
 
@@ -177,4 +200,3 @@ export const deleteCar = async (req, res) => {
     res.status(500).json({ message: "Failed to delete car." });
   }
 };
-

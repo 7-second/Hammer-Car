@@ -46,6 +46,7 @@ export const register = async (req, res, next) => {
       email: user.email,
       role: user.role,
       organizationId: user.organizationId,
+      followedOrganizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }],
     });
 
   } catch (error) {
