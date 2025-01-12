@@ -13,7 +13,7 @@ const OrgCarInfo = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      navigate('/login');
+      navigate('/signin');
       return;
     }
 

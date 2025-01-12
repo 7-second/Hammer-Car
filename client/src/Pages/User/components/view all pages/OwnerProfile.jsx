@@ -56,44 +56,62 @@ const OrgProfile = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      {user ? (
-        <div>
-          <h1 className="text-4xl font-bold text-black">{user.usename}</h1>
-          {/* <p>{organization.description}</p> */}
-
-          <h2 className="text-3xl font-bold mt-6">
-            Cars Owned by {user.username}
-          </h2>
-          {cars.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cars.map((car) => (
-                <div
-                  key={car._id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden"
-                >
-                  <img
-                    src={car.images[0]?.url || "/path/to/default-car.jpg"}
-                    alt={car.carModel}
-                    className="w-full h-72 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-xl font-bold">{car.carModel}</h3>
-                    <p>{car.carBrand}</p>
-                    <p>Price: {car.price}</p>
-                    <p>Location: {car.location}</p>
-                  </div>
-                </div>
-              ))}
+    <>
+      <div className="container mx-auto p-4 rounded-lg">
+        {user ? (
+          <div className="rounded-2xl">
+            <div
+              className="relative bg-cover bg-center h-96 rounded-2xl"
+              style={{
+                backgroundImage: `url(${user.coverPicture})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+                <h1 className="text-4xl font-bold mb-4">Welcome To</h1>
+                <h2 className="text-2xl font-semibold bg-blue-800 px-10 py-3 rounded-xl">
+                  {user.username}
+                </h2>
+              
+              </div>
             </div>
-          ) : (
-            <p>No cars listed by this organization.</p>
-          )}
-        </div>
-      ) : (
-        <p className="text-center text-red-500">Organization not found.</p>
-      )}
-    </div>
+            
+            {/* <p>{organization.description}</p> */}
+
+            <h2 className="text-3xl font-bold mt-6">
+              Cars Owned by {user.username}
+            </h2>
+            {cars.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {cars.map((car) => (
+                  <div
+                    key={car._id}
+                    className="bg-white shadow-lg rounded-lg overflow-hidden"
+                  >
+                    <img
+                      src={car.images[0]?.url || "/path/to/default-car.jpg"}
+                      alt={car.carModel}
+                      className="w-full h-72 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl font-bold">{car.carModel}</h3>
+                      <p>{car.carBrand}</p>
+                      <p>Price: {car.price}</p>
+                      <p>Location: {car.location}</p>
+                      <p>For: {car.carType}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No cars listed by this organization.</p>
+            )}
+          </div>
+        ) : (
+          <p className="text-center text-red-500">Organization not found.</p>
+        )}
+      </div>
+    </>
   );
 };
 

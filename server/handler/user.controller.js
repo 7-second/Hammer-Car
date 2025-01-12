@@ -39,6 +39,10 @@ export const users = async (req, res, next) => {
   }
 };
 
+
+
+
+
 export const getUserByID = async (req, res, next) => {
   const { id } = req.params; // Retrieve the user ID from the request parameters
   // coverPicture,username,cars
@@ -63,6 +67,9 @@ export const getUserByID = async (req, res, next) => {
     next(error);
   }
 };
+
+
+
 
 // Show User Details Function
 export const showUserDetail = async (req, res, next) => {
@@ -103,6 +110,11 @@ export const showUserDetail = async (req, res, next) => {
   }
 };
 
+
+
+
+
+
 export const deleteUser = async (req, res, next) => {
   const { id } = req.params; // "id" corresponds to _id in the database
 
@@ -124,40 +136,63 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
+
+
+
+
 export const updateProfile = async (req, res, next) => {
   const { id } = req.params;
   const { email, username } = req.body;
 
-  let coverPicture, profilePicture;
+  // Initialize variables for file paths
+  let coverPicture ;
+  let profilePicture ;
 
+  // Extract file paths if files are provided
   if (req?.files?.coverPicture?.length > 0) {
-    coverPicture = req?.files?.coverPicture[0]?.path;
+    coverPicture = req.files.coverPicture[0].path;
   }
   if (req?.files?.profilePicture?.length > 0) {
-    profilePicture = req?.files?.profilePicture[0]?.path;
+    profilePicture = req.files.profilePicture[0].path;
   }
 
   try {
-    if (id === "undefined") {
-      next("Invalid ID for update profile");
-    } else {
-      await User.updateOne(
-        { _id: id },
-        {
-          username,
-          email,
-          profilePicture,
-          coverPicture,
-        }
-      );
-
-      res.status(200).json("Profile Update Successfully");
+    // Validate the ID
+    if (!id || id === "undefined") {
+      return res.status(400).json({ error: "Invalid or missing user ID." });
     }
+
+    // Fetch the user to ensure it exists
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    // Update user details
+    const updateData = {
+      username: username || user.username, // Keep existing username if not provided
+      email: email || user.email,         // Keep existing email if not provided
+    };
+
+    // Add file paths if provided
+    if (profilePicture) updateData.profilePicture = profilePicture;
+    if (coverPicture) updateData.coverPicture = coverPicture;
+
+    // Perform the update
+    await User.updateOne({ _id: id }, { $set: updateData });
+
+    return res.status(200).json({ message: "Profile updated successfully." });
   } catch (error) {
-    console.log(error, "User update error");
-    next(error);
+    console.error("Error updating profile:", error);
+    return next(error); // Pass the error to the error-handling middleware
   }
 };
+
+
+
+
+
+
 
 export const followOrganization = async (req, res, next) => {
   const { userId } = req.params; // Get userId from params
@@ -204,6 +239,10 @@ export const followOrganization = async (req, res, next) => {
     next(error); // Pass the error to the next middleware for error handling
   }
 };
+
+
+
+
 
 // Unfollow organization
 export const unfollowOrganization = async (req, res) => {

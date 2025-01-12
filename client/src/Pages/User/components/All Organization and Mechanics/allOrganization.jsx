@@ -53,7 +53,7 @@ function AllOrganization() {
   const toggleFollow = async (orgId, orgName, orgUsername, orgProfilePicture) => {
     if (!isLoggedIn) {
       // Redirect to login if not logged in
-      navigate("/login");
+      navigate("/signin");
       return;
     }
 

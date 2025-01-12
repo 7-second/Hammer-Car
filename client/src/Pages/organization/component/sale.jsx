@@ -16,7 +16,7 @@ const OrgSale = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      navigate('/login');
+      navigate('/signin');
       return;
     }
 

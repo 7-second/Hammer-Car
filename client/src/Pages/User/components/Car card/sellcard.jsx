@@ -25,25 +25,24 @@ const Sell = ({ variant, car }) => {
       <section className="w-full h-fit min-w-56 p-4 rounded-lg  bg-white shadow-2xl">
         <div className="flex flex-col">
           <hr />
-          <Link
-  to={{
-    pathname: `/orgownprofile/${car?.owner?.username}`, // Make sure this is the correct path
-    state: { owner: car?.owner }  // Pass the 'owner' data explicitly as state
-  }}
->
+          <hr />
+                           <Link to={`/organization/${car?.owner?._id}`}>
   <div className="w-50 h-50 object-contain flex flex-col justify-center items-center rounded-full mt-1">
+    {/* Displaying the owner's profile picture */}
     <img
-      src={car?.owner?.profilePicture || "https://via.placeholder.com/150"}
+      src={car?.owner?.profilePicture || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCiZD12EU_Zm57G1wc72AaNVHGoLhQBIHPcg&s"} // Fallback image in case owner doesn't have a profile picture
       width={50}
       height={50}
       className="rounded-full object-cover"
-      alt="Owner"
+      alt="Organization"
     />
+    {/* Displaying the owner's username */}
     <h3 className="text-black font-sans w-52 flex justify-center">
-      {car?.owner?.username || "Name of organization"}
+      {car?.owner?.username || "Name of organization"} {/* Fallback name if username is missing */}
     </h3>
   </div>
 </Link>
+            
 
 
 
