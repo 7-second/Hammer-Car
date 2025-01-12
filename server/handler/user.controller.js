@@ -141,52 +141,56 @@ export const deleteUser = async (req, res, next) => {
 
 
 export const updateProfile = async (req, res, next) => {
-  const { id } = req.params;
-  const { email, username } = req.body;
+  const { id } = req.params;  // Extract user ID from URL parameters
+  const { email, username: newUsername } = req.body;  // Extract email and newUsername from the request body
+  
+  // Initialize the update data with the provided fields
+  let updatedData = {};
 
-  // Initialize variables for file paths
-  let coverPicture ;
-  let profilePicture ;
+  // If new username is provided, add it to the update data
+  if (newUsername) {
+    updatedData.username = newUsername;
+  }
+  
+  // If new email is provided, add it to the update data
+  if (email) {
+    updatedData.email = email;
+  }
 
-  // Extract file paths if files are provided
+  // Handle file uploads if provided
+  let coverPicture;
+  let profilePicture;
   if (req?.files?.coverPicture?.length > 0) {
     coverPicture = req.files.coverPicture[0].path;
+    updatedData.coverPicture = coverPicture;
   }
   if (req?.files?.profilePicture?.length > 0) {
     profilePicture = req.files.profilePicture[0].path;
+    updatedData.profilePicture = profilePicture;
   }
 
   try {
-    // Validate the ID
+    // Validate the provided ID
     if (!id || id === "undefined") {
       return res.status(400).json({ error: "Invalid or missing user ID." });
     }
 
-    // Fetch the user to ensure it exists
+    // Find the user by _id
     const user = await User.findById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
 
-    // Update user details
-    const updateData = {
-      username: username || user.username, // Keep existing username if not provided
-      email: email || user.email,         // Keep existing email if not provided
-    };
-
-    // Add file paths if provided
-    if (profilePicture) updateData.profilePicture = profilePicture;
-    if (coverPicture) updateData.coverPicture = coverPicture;
-
-    // Perform the update
-    await User.updateOne({ _id: id }, { $set: updateData });
+    // Update the user with the new data
+    await User.updateOne({ _id: id }, { $set: updatedData });
 
     return res.status(200).json({ message: "Profile updated successfully." });
   } catch (error) {
     console.error("Error updating profile:", error);
-    return next(error); // Pass the error to the error-handling middleware
+    return next(error);  // Pass the error to the error-handling middleware
   }
 };
+
 
 
 

@@ -16,6 +16,7 @@ function OrgProfile(){
       currentUser = JSON.parse(user)
   }
   console.log(currentUser, "user")
+  
 
 
     useEffect(() => {

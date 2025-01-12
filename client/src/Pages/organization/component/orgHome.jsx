@@ -90,7 +90,7 @@ const OrgHome = () => {
                     <p className="text-gray-600">Price: {car.price}</p>
                     <p className="text-gray-600">Location: {car.location}</p>
                     <Link
-                      to={`/car/${car._id}`}
+                      to={""}
                       className="text-blue-500 hover:underline mt-2 block"
                     >
                       View Details

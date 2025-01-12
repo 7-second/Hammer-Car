@@ -1,15 +1,15 @@
 "use client";
-import axios from "axios";
-import { Fragment, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { Dialog, Transition } from "@headlessui/react";
-import { MdOutlineFileUpload } from "react-icons/md";
-import { VscLoading } from "react-icons/vsc";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { Fragment, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { Dialog, Transition } from '@headlessui/react';
+import { MdOutlineFileUpload } from 'react-icons/md';
+import { VscLoading } from 'react-icons/vsc';
+import { useNavigate } from 'react-router-dom';
 
 const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState(currentUser?.email || "");
+  const [email, setEmail] = useState(currentUser?.email || '');
   const [profileImage, setProfileImage] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
 
@@ -21,36 +21,35 @@ const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const userID = currentUser?.id;
     if (!userID) {
       toast.error("User ID is missing. Cannot update profile.");
       return;
     }
-  
+
     const formData = new FormData();
-    formData.append("username", currentUser.username);
-    formData.append("email", email);
-  
-    if (profileImage) formData.append("profilePicture", profileImage);
-    if (coverImage) formData.append("coverPicture", coverImage);
-  
+    formData.append('username', currentUser.username);
+    formData.append('email', email);
+
+    if (profileImage) formData.append('profilePicture', profileImage);
+    if (coverImage) formData.append('coverPicture', coverImage);
+
     try {
       setIsLoading(true);
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/user/update-profile/${userID}`,
         formData
       );
-      toast.success("Profile successfully updated!");
+      toast.success('Profile successfully updated!');
+      navigate(`/profile/${userID}`); // Redirect to the updated profile page
     } catch (error) {
-      console.error("Error updating profile:", error);
-      toast.error("Failed to update profile.");
+      console.error('Error updating profile:', error);
+      toast.error('Failed to update profile.');
     } finally {
       setIsLoading(false);
     }
   };
-  
-  
 
   const closeModal = () => setIsEditProOpen(false);
 
@@ -85,7 +84,7 @@ const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
                   <p className="text-md text-center mt-3">
                     Username: <span className="font-bold">{currentUser?.username}</span>
                   </p>
-                 
+
                   <form onSubmit={handleSubmit}>
                     <div className="grid md:grid-cols-2 gap-4 p-4 mt-4">
                       <div className="flex flex-col gap-4">
@@ -101,7 +100,10 @@ const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
                         />
                       </div>
                       <div className="flex flex-col gap-4">
-                        <label htmlFor="profile" className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer">
+                        <label
+                          htmlFor="profile"
+                          className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer"
+                        >
                           {profileImage ? (
                             <img
                               src={URL.createObjectURL(profileImage)}
@@ -124,7 +126,10 @@ const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
                         <input type="file" id="profile" accept="image/*" hidden onChange={handleProfileChange} />
                       </div>
                       <div className="flex flex-col gap-4">
-                        <label htmlFor="cover" className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer">
+                        <label
+                          htmlFor="cover"
+                          className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 cursor-pointer"
+                        >
                           {coverImage ? (
                             <img
                               src={URL.createObjectURL(coverImage)}
@@ -147,10 +152,7 @@ const EditOrgProfile = ({ currentUser, isEditPrOpen, setIsEditProOpen }) => {
                         <input type="file" id="cover" accept="image/*" hidden onChange={handleCoverChange} />
                       </div>
                     </div>
-                    <button
-                      type="submit"
-                      className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-md"
-                    >
+                    <button type="submit" className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-md">
                       {isLoading ? <VscLoading size={20} /> : "Update"}
                     </button>
                   </form>
