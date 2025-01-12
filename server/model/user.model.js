@@ -33,6 +33,19 @@ const userSchema = new mongoose.Schema(
     organizationId: {
       type: String, // Define the type as String (or ObjectId if necessary)
     },
+    followedOrganizations: [
+      { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Organization' 
+      }
+    ],
+    organizationDetails: [
+      {
+        name: String,
+        username: String,
+        profilePicture: String
+      }
+    ]
   },
   { timestamps: true }
 );

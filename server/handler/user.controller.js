@@ -41,38 +41,47 @@ export const users = async (req, res, next) => {
 
 
 
+
+// Show User Details Function
 export const showUserDetail = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.params; // Retrieve the user ID from the request parameters
   try {
-    if (id === "undefined") {
-      next("Invalid ID for show user details");
-      return;
+    console.log(`Request received for user ID: ${id}`); // Log the user ID
+    
+    if (!id || id === 'undefined') {
+      return res.status(400).json({ error: 'Invalid user ID' }); // Return error if no ID provided
+    }
+
+    // Find the user and populate cars, rent, and followedOrganizations
+    let user = await User.findById(id)
+      .populate({
+        path: 'cars',
+        populate: { path: 'images' }, // Populate car images
+      })
+      .populate({
+        path: 'rent',
+        populate: { path: 'car', populate: { path: 'images' } }, // Populate car images in rent
+      })
+      .populate('followedOrganizations'); // Populate the followedOrganizations field
+
+    console.log("User found: ", user);  // Log the user found
+
+    if (user) {
+      console.log("User data to send: ", user); // Log the final user data
+      return res.status(200).json(user); // Send user data as response
     } else {
-      let user;
-
-      user = await User.findById({ _id: id })?.populate({
-        path: "cars",
-        populate: { path: "images" },
-      });
-
-      if (user?.rent?.length > 0) {
-        user = await User.findById({ _id: id })
-          ?.populate({ path: "cars", populate: { path: "images" } })
-          ?.populate({
-            path: "rent",
-            populate: { path: "car", populate: { path: "images" } },
-          });
-      }
-
-      if (user) {
-        res.status(200).json(user);
-      }
+      console.log("User not found");
+      return res.status(404).json({ error: 'User not found' }); // Handle case where user is not found
     }
   } catch (error) {
-    console.log(error, "Show user details errro");
-    next(error);
+    console.error(error);
+    next(error); // Pass the error to the error handling middleware
   }
 };
+
+
+
+
 
 
 export const deleteUser = async (req, res, next) => {
@@ -133,5 +142,76 @@ export const updateProfile = async (req, res, next) => {
   } catch (error) {
     console.log(error, "User update error");
     next(error);
+  }
+};
+
+
+
+export const followOrganization = async (req, res, next) => {
+  const { userId } = req.params; // Get userId from params
+  const { organizationId, organizationName, organizationUsername, organizationProfilePicture } = req.body; // Get the organization data from the request body
+  
+  try {
+    // Find the user in the database
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Check if the organization is already followed
+    if (user.followedOrganizations.includes(organizationId)) {
+      return res.status(400).json({ message: 'Already following this organization' });
+    }
+
+    // Add the organization to the followedOrganizations array
+    user.followedOrganizations.push(organizationId);
+
+    // Optionally, add the organization details
+    user.organizationDetails.push({
+      name: organizationName,
+      username: organizationUsername,
+      profilePicture: organizationProfilePicture
+    });
+
+    // Save the updated user document
+    await user.save();
+
+    return res.status(200).json({ message: 'Organization followed successfully' });
+
+  } catch (error) {
+    console.error(error);
+    next(error);  // Pass the error to the next middleware for error handling
+  }
+};
+
+
+
+
+// Unfollow organization
+export const unfollowOrganization = async (req, res) => {
+  const { userId } = req.params;
+  const { organizationId } = req.body;
+
+  try {
+    // Find the user by userId
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Remove the organization from the followed list
+    const updatedFollowedOrganizations = user.followedOrganizations.filter(
+      (org) => org.organizationId.toString() !== organizationId
+    );
+
+    user.followedOrganizations = updatedFollowedOrganizations;
+
+    // Save the updated user document
+    await user.save();
+    res.status(200).json({ message: "Organization unfollowed successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
