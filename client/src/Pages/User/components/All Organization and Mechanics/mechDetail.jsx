@@ -1,120 +1,169 @@
-import React, { useEffect, useState } from 'react';
-import { FaInstagram, FaTelegram } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaTelegram } from "react-icons/fa";
+import { BsFillGearFill } from "react-icons/bs";
 
 const MechDetail = () => {
-  const { username } = useParams(); // Get the mechanic's username from the URL
-  const [mechanicInfo, setMechanicInfo] = useState(null); // State for mechanic data
+  const { id } = useParams();
+  const [mechanicInfo, setMechanicInfo] = useState(null);
 
-  // Fetch mechanic data on component mount
   useEffect(() => {
+    if (!id) {
+      console.error("ID is not defined!");
+      return;
+    }
+
     const fetchMechanicInfo = async () => {
       try {
-        // Corrected the API URL structure
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}user/${username}?role=mechanic`); 
-        setMechanicInfo(response.data); // Set the fetched data to state
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}user?role=mechanic&id=${id}`
+        );
+        console.log("Mechanic Data:", response.data);
+
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setMechanicInfo(response.data[0]);
+        } else {
+          setMechanicInfo(null);
+        }
       } catch (error) {
-        console.error('Error fetching mechanic data:', error);
+        console.error("Error fetching mechanic data:", error);
       }
     };
 
     fetchMechanicInfo();
-  }, [username]); // Re-fetch when the mechanic's username changes
+  }, [id]);
 
-  if (!mechanicInfo) {
-    return <div>Loading...</div>; // Show loading state while data is being fetched
-  }
+  if (!mechanicInfo) return <p className="text-center text-gray-500">Loading...</p>;
+
+  const {
+    name,
+    experience,
+    telegram,
+    instagram,
+    branches = [],
+    openingDays = [],
+    services = [],
+    phone,
+    email,
+  } = mechanicInfo;
 
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col items-center py-12">
-      {/* Mechanic Profile Section */}
-      <div className="w-full max-w-7xl px-6">
-        <div className="relative bg-white rounded-xl shadow-lg overflow-hidden mb-12">
+    <div className="max-w-4xl mx-auto p-8 bg-gradient-to-r from-teal-500 to-blue-600 text-white shadow-xl rounded-xl space-y-6">
+      {/* Hero Section */}
+      <div className="relative">
+        <img
+          className="w-full h-64 object-cover rounded-lg shadow-lg"
+          src={mechanicInfo.coverPicture || "https://via.placeholder.com/600x200"}
+          alt="Cover"
+        />
+        <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-black opacity-40"></div>
+        <div className="absolute top-20 left-6">
           <img
-            src="https://www.checkatrade.com/blog/wp-content/uploads/2021/07/Feature-mechanic-hourly-rate-uk.jpg"
-            alt="Mechanic Image"
-            className="w-full h-80 object-cover"
+            className="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg"
+            src={mechanicInfo.profilePicture || "https://via.placeholder.com/150"}
+            alt={name}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
-        </div>
-
-        {/* Mechanic Info Card */}
-        <div className="relative bg-white rounded-xl shadow-xl p-8 -mt-24 z-10 max-w-4xl mx-auto">
-          <div className="flex flex-col items-center text-center">
-            <h1 className="text-3xl font-semibold text-gray-900 mb-4">{mechanicInfo.name}</h1>
-            <p className="text-lg text-gray-600 mb-4">{mechanicInfo.experience}</p>
-
-            <div className="flex gap-6 justify-center text-gray-500">
-              {mechanicInfo.telegram && (
-                <div className="flex items-center gap-2">
-                  <FaTelegram className="text-blue-500" />
-                  <p>@{mechanicInfo.telegram}</p>
-                </div>
-              )}
-              {mechanicInfo.instagram && (
-                <div className="flex items-center gap-2">
-                  <FaInstagram className="text-pink-500" />
-                  <p>@{mechanicInfo.instagram}</p>
-                </div>
-              )}
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Branches & Services Section */}
-      <div className="w-full max-w-7xl px-6">
-        {/* Branches */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Branches</h2>
-          <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            {mechanicInfo.branches.map((branch) => (
-              <li key={branch} className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
-                {branch}
-              </li>
-            ))}
-          </ul>
+      {/* Mechanic Info Section */}
+      <div className="mt-10 flex flex-col gap-4">
+        <h1 className="text-3xl font-semibold">{name}</h1>
+        <p className="text-lg">Experience: {experience} years</p>
+        <div className="flex gap-6 items-center text-xl text-gray-200">
+          {phone && (
+            <div className="flex items-center gap-2">
+              <FaPhoneAlt className="text-2xl" />
+              <p>{phone}</p>
+            </div>
+          )}
+          {email && (
+            <div className="flex items-center gap-2">
+              <FaEnvelope className="text-2xl" />
+              <p>{email}</p>
+            </div>
+          )}
         </div>
-
-        {/* Opening Days */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Opening Days</h2>
-          <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            {mechanicInfo.openingDays.map((day) => (
-              <li key={day} className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
-                {day}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Contact */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Contact Us</h2>
-          <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
-              {mechanicInfo.phone || 'Phone not available'}
-            </li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
-              {mechanicInfo.email || 'Email not available'}
-            </li>
-          </ul>
+        <div className="flex gap-6 mt-4">
+          {telegram && (
+            <a
+              href={`https://t.me/${telegram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:underline flex items-center gap-2"
+            >
+              <FaTelegram className="text-2xl" />
+              Telegram: @{telegram}
+            </a>
+          )}
+          {instagram && (
+            <a
+              href={`https://instagram.com/${instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-500 hover:underline flex items-center gap-2"
+            >
+              <FaInstagram className="text-2xl" />
+              Instagram: @{instagram}
+            </a>
+          )}
         </div>
       </div>
 
-      {/* Vehicle Repair Services */}
-      <div className="w-full max-w-7xl px-6 mt-12">
-        <h2 className="text-3xl font-semibold text-gray-900 mb-8 text-center">Vehicle Repair Services</h2>
+      {/* Branches Section */}
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-4">Branches</h2>
+        {branches.length > 0 ? (
+          <ul className="list-disc pl-6 space-y-2">
+            {branches.map((branch, index) => (
+              <li key={index} className="text-gray-100">{branch}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-100">No branches available</p>
+        )}
+      </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
-          {mechanicInfo.services.map((service) => (
-            <div key={service} className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition duration-300 ease-in-out">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">{service}</h3>
-              <p className="text-gray-600">Service description goes here.</p>
-            </div>
-          ))}
-        </div>
+      {/* Opening Days Section */}
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-4">Opening Days</h2>
+        {openingDays.length > 0 ? (
+          <ul className="list-disc pl-6 space-y-2">
+            {openingDays.map((day, index) => (
+              <li key={index} className="text-gray-100">{day}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-100">No opening days available</p>
+        )}
+      </div>
+
+      {/* Services Section */}
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-200 mb-4">Services</h2>
+        {services.length > 0 ? (
+          <ul className="list-disc pl-6 space-y-2">
+            {services.map((service, index) => (
+              <li key={index} className="flex items-center gap-2 text-gray-100">
+                <BsFillGearFill className="text-xl text-gray-300" />
+                {service}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-100">No services available</p>
+        )}
+      </div>
+
+      {/* Action Buttons */}
+      <div className="mt-6 flex justify-center gap-4">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
+          Contact Now
+        </button>
+        <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
+          Get Directions
+        </button>
       </div>
     </div>
   );

@@ -98,8 +98,7 @@ function AllOrganization() {
                 />
                 <h3 className="font-sans font-medium">{org.username}</h3>
               </div>
-            </Link>
-            <Link to={`/organization/${org._id}`}>
+            
               <div className="rounded-lg">
                 <img
                   src={org.coverPicture || "https://via.placeholder.com/300"}

@@ -5,6 +5,23 @@ import toast, { Toaster } from "react-hot-toast";
 
 const ArrayStar = ({ rating }) => {
 
+
+  const buyNowHandler = async () => {
+    console.log("click");
+    try {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}rent/car-rent`, {
+        carId: car._id,
+        buyerId: currentUser._id,
+      });
+      toast.success("Buy Car SuccessFully");
+
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const CarDetailsModal = ({
     isOpen,
     closeModal,

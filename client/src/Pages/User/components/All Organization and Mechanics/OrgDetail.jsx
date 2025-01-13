@@ -1,15 +1,119 @@
-import React from 'react';
-import OrgCard from './orgCard';
-import Rent from '../Car card/rentCard';
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
 
-const OrgDetail = () => {
-    return ( 
+const OrgProfile = () => {
+  const { username } = useParams(); // Get the username from the URL parameter
+  const location = useLocation(); // Use useLocation to access state passed via the Link
+  // const [organization, setOrganization] = useState(null);
+  const [cars, setCars] = useState([]);
+  const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Retrieve the owner data passed through state (if available)
+  const owner = location.state?.owner;
+
+  useEffect(() => {
+    const getCars = async () => {
+      try {
+        const getInfo = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}user/${username}`
+        );
+        setUser(getInfo.data);
+
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}car`,
+          {
+            params: {
+              userType: "organization", // Specify the user type
+              organizationId: username, // Pass the organization ID
+            },
+          }
+        );
+        setCars(response.data);
+      } catch (err) {
+        console.error(err);
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            "An unexpected error occurred"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getCars();
+  }, [username]); // Only depend on username as the organization is fetched based on that
+
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  return (
     <>
-       
-      
-        
+      <div className="container mx-auto p-4 rounded-lg">
+     
+        {user ? (
+          <div className="rounded-2xl">
+            <div
+              className="relative bg-cover bg-center h-96 rounded-2xl"
+              style={{
+                backgroundImage: `url(${user.coverPicture})`,
+              }}
+            >
+              <div className="absolute inset-0 bg-black opacity-50"></div>
+              <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
+                <h1 className="text-4xl font-bold mb-4">Welcome To</h1>
+                <h2 className="text-2xl font-semibold bg-blue-800 px-10 py-3 rounded-xl">
+                  {user.username}
+                </h2>
+              
+              </div>
+            </div>
+            
+            {/* <p>{organization.description}</p> */}
+
+            <h2 className="text-3xl font-bold mt-6">
+              Cars Owned by {user.username}
+            </h2>
+            {cars.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {cars.map((car) => (
+                  <div
+                    key={car._id}
+                    className="bg-white shadow-lg rounded-lg overflow-hidden"
+                  >
+                    <img
+                      src={car.images[0]?.url || "/path/to/default-car.jpg"}
+                      alt={car.carModel}
+                      className="w-full h-72 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl font-bold">{car.carModel}</h3>
+                      <p>{car.carBrand}</p>
+                      <p>Price: {car.price}</p>
+                      <p>Location: {car.location}</p>
+                      <p>For: {car.carType}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No cars listed by this organization.</p>
+            )}
+          </div>
+        ) : (
+          <p className="text-center text-red-500">Organization not found.</p>
+        )}
+      </div>
     </>
-    );
+  );
 };
 
-export default OrgDetail;
+export default OrgProfile;

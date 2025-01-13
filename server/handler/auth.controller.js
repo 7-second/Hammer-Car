@@ -16,6 +16,7 @@ export const register = async (req, res, next) => {
     organizationId,
     services,
     role,
+    name,
     
   } = req.body; // Make sure to include `phone`
 
@@ -66,6 +67,7 @@ export const register = async (req, res, next) => {
       experience,
       telegram,
       email,
+      name,
       password: hashedPassword,
       role, // Only set phone for other roles
       organizationId: role === "user" ? undefined : organizationId, // Only set organizationId for roles that require it

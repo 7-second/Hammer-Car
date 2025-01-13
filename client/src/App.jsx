@@ -78,6 +78,7 @@ function App() {
           <Route path="/allmechanic" element={<AllMechanics />} />
           <Route path="/allorganization" element={<AllOrganization />} />
           <Route path="/mechdetail/:id" element={<MechDetail />} />
+
           <Route path="/orgdetail" element={<OrgDetail />} />
           <Route path="/search"  element={<Search />} />
           <Route path="/profile" element={<Profile />} />
