@@ -141,6 +141,11 @@ export const deleteUser = async (req, res, next) => {
 
 
 
+
+
+
+
+
 export const updateProfile = async (req, res, next) => {
   const { id } = req.params;  // Extract user ID from URL parameters
   const { email, username: newUsername } = req.body;  // Extract email and newUsername from the request body

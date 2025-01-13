@@ -51,12 +51,13 @@ const MechanicHome = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/save-mechanic', mechanicInfo);
-      console.log(response.data); // Successful submission
-      alert('Mechanic profile saved!');
+      const response =await axios.post(`${import.meta.env.VITE_API_BASE_URL}add-mechanic`, mechanicInfo);
+
+      console.log(response.data);
+      alert("Mechanic added successfully!");
     } catch (err) {
-      console.error(err);
-      alert('Error saving mechanic profile');
+      console.error("Error adding mechanic:", err);
+      alert('Error saving mechanic profile.');
     }
   };
 
