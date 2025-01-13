@@ -6,6 +6,7 @@ export const register = async (req, res, next) => {
   const {
     openingDays,
     branches,
+    experience,
     telegram,
     username,
     password,
@@ -15,6 +16,7 @@ export const register = async (req, res, next) => {
     organizationId,
     services,
     role,
+    
   } = req.body; // Make sure to include `phone`
 
   try {
@@ -61,6 +63,7 @@ export const register = async (req, res, next) => {
       services,
       openingDays,
       branches,
+      experience,
       telegram,
       email,
       password: hashedPassword,

@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaInstagram, FaTelegram } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const MechDetail = () => {
+  const { username } = useParams(); // Get the mechanic's username from the URL
+  const [mechanicInfo, setMechanicInfo] = useState(null); // State for mechanic data
+
+  // Fetch mechanic data on component mount
+  useEffect(() => {
+    const fetchMechanicInfo = async () => {
+      try {
+        // Corrected the API URL structure
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}user/${username}?role=mechanic`); 
+        setMechanicInfo(response.data); // Set the fetched data to state
+      } catch (error) {
+        console.error('Error fetching mechanic data:', error);
+      }
+    };
+
+    fetchMechanicInfo();
+  }, [username]); // Re-fetch when the mechanic's username changes
+
+  if (!mechanicInfo) {
+    return <div>Loading...</div>; // Show loading state while data is being fetched
+  }
+
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col items-center py-12">
       {/* Mechanic Profile Section */}
@@ -18,18 +42,22 @@ const MechDetail = () => {
         {/* Mechanic Info Card */}
         <div className="relative bg-white rounded-xl shadow-xl p-8 -mt-24 z-10 max-w-4xl mx-auto">
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-3xl font-semibold text-gray-900 mb-4">John Doe</h1>
-            <p className="text-lg text-gray-600 mb-4">Expert Mechanic | 10+ Years of Experience</p>
+            <h1 className="text-3xl font-semibold text-gray-900 mb-4">{mechanicInfo.name}</h1>
+            <p className="text-lg text-gray-600 mb-4">{mechanicInfo.experience}</p>
 
             <div className="flex gap-6 justify-center text-gray-500">
-              <div className="flex items-center gap-2">
-                <FaTelegram className="text-blue-500" />
-                <p>@johnMechanic</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <FaInstagram className="text-pink-500" />
-                <p>@johnDoeMechanic</p>
-              </div>
+              {mechanicInfo.telegram && (
+                <div className="flex items-center gap-2">
+                  <FaTelegram className="text-blue-500" />
+                  <p>@{mechanicInfo.telegram}</p>
+                </div>
+              )}
+              {mechanicInfo.instagram && (
+                <div className="flex items-center gap-2">
+                  <FaInstagram className="text-pink-500" />
+                  <p>@{mechanicInfo.instagram}</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -41,10 +69,11 @@ const MechDetail = () => {
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Branches</h2>
           <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Lafto</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Megenagna</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Saris</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Jemo</li>
+            {mechanicInfo.branches.map((branch) => (
+              <li key={branch} className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
+                {branch}
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -52,9 +81,11 @@ const MechDetail = () => {
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Opening Days</h2>
           <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Monday</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Tuesday</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Friday</li>
+            {mechanicInfo.openingDays.map((day) => (
+              <li key={day} className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
+                {day}
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -62,9 +93,12 @@ const MechDetail = () => {
         <div className="bg-white rounded-xl shadow-lg p-8 mb-12">
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Contact Us</h2>
           <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">985434363</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">Example@gmail.com</li>
-            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">+123456789</li>
+            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
+              {mechanicInfo.phone || 'Phone not available'}
+            </li>
+            <li className="bg-gray-200 p-4 rounded-lg text-center font-medium text-gray-700 hover:bg-gray-300 transition-all duration-300">
+              {mechanicInfo.email || 'Email not available'}
+            </li>
           </ul>
         </div>
       </div>
@@ -74,23 +108,12 @@ const MechDetail = () => {
         <h2 className="text-3xl font-semibold text-gray-900 mb-8 text-center">Vehicle Repair Services</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
-          {/* Service 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition duration-300 ease-in-out">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Air Filter</h3>
-            <p className="text-gray-600">Replace or repair your vehicle's air filter for optimal performance.</p>
-          </div>
-
-          {/* Service 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition duration-300 ease-in-out">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Engine Repair</h3>
-            <p className="text-gray-600">Comprehensive engine repair services to keep your engine running smoothly.</p>
-          </div>
-
-          {/* Service 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition duration-300 ease-in-out">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">Brake Services</h3>
-            <p className="text-gray-600">Ensure your safety with our top-notch brake services and repairs.</p>
-          </div>
+          {mechanicInfo.services.map((service) => (
+            <div key={service} className="bg-white p-6 rounded-lg shadow-lg hover:scale-105 transition duration-300 ease-in-out">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">{service}</h3>
+              <p className="text-gray-600">Service description goes here.</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

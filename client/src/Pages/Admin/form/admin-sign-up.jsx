@@ -15,6 +15,7 @@ function AdminForm() {
     branches: [],
     openingDays: [],
     services: [],
+    experience:""
   });
 
   const [serviceOptions] = useState([
@@ -194,6 +195,18 @@ function AdminForm() {
                 type="text"
                 name="telegram"
                 value={mechanicInfo.telegram}
+                onChange={handleInputChange}
+                placeholder="Enter Telegram handle"
+                className="w-full p-3 border border-gray-300 rounded-md mt-2"
+              />
+            </div>
+
+            <div>
+              <label>Year of experience</label>
+              <input
+                type="text"
+                name="experience"
+                value={mechanicInfo.experience}
                 onChange={handleInputChange}
                 placeholder="Enter Telegram handle"
                 className="w-full p-3 border border-gray-300 rounded-md mt-2"
