@@ -12,6 +12,45 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    branches: [
+      {
+        type: String,
+        enum: ["Lafto", "Megenagna", "Saris", "Jemo" , "Meksico", "Bole" , "Ayertena" , "Bole" ], // Example list of branches
+      },
+    ],
+    openingDays: [
+      {
+        type: String,
+        enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ,"Sunday"], // Days of the week
+      },
+    ],
+
+    services: [
+      {
+        type: String,
+        enum: [
+          "Air Filter",
+          "Engine Repair",
+          "Brake Services",
+          "Oil Change",
+          "Battery Replacement",
+          "Other"
+        ], // Example services
+      },
+    ],
+
+    instagram: [
+      {
+        type:String,
+      }
+    ],
+    telegram:[
+{
+  type:String,
+}
+    ] ,
+
     email: {
       type: String,
       required: true,

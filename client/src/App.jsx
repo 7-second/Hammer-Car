@@ -23,7 +23,6 @@ import AllMechanics from "./Pages/User/components/All Organization and Mechanics
 import AllOrganization from "./Pages/User/components/All Organization and Mechanics/allOrganization";
 import MechDetail from "./Pages/User/components/All Organization and Mechanics/mechDetail";
 import OrgDetail from "./Pages/User/components/All Organization and Mechanics/OrgDetail";
-import { ThemeProvider } from './context/ThemeContext.jsx';
 import LogHeader from "./logHeader.jsx";
 import Footer from "./Pages/User/components/Footer/Footer.jsx";
 import Search from "./Pages/Search/search.jsx";
@@ -36,6 +35,13 @@ import RentalList from "./Pages/organization/component/rental.jsx";
 import OrgSale from "./Pages/organization/component/sale.jsx";
 import OrgOwnProfile from "./Pages/User/components/view all pages/OwnerProfile.jsx";
 import OrgCarInfo from "./Pages/organization/component/carInfo.jsx";
+import MechanicHome from "./Pages/Mechanic/mechaniHome.jsx";
+import MechanicProfile from "./Pages/Mechanic/mechanic.jsx";
+
+
+
+
+
 
 // import Organization from "./Pages/Organizations/organization"
 // import UserProfile from "./Pages/profile_page/profile"
@@ -52,7 +58,10 @@ function App() {
 
 
       <Routes>
-  
+       
+       
+
+
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         
@@ -68,13 +77,16 @@ function App() {
           <Route path="/View-all-sell" element={<Sellall />} />
           <Route path="/allmechanic" element={<AllMechanics />} />
           <Route path="/allorganization" element={<AllOrganization />} />
-          <Route path="/mechdetail" element={<MechDetail />} />
+          <Route path="/mechdetail/:id" element={<MechDetail />} />
           <Route path="/orgdetail" element={<OrgDetail />} />
           <Route path="/search"  element={<Search />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/organization/:username" element={<OrgOwnProfile />} />
 
         </Route>
+
+        <Route path="/mechanichome" element={<MechanicHome />} />
+        <Route path="/mechanicprofile" element={<MechanicProfile />} />
 
         <Route path="/" element={<OrganizationLayout />}>
           
@@ -86,6 +98,8 @@ function App() {
           <Route path="/orgcarinfo" element={<OrgCarInfo />} />
         </Route>
 
+     
+
         <Route path="/" element={<AdminLayout />}>
            <Route path="/adminhome" element={<AdminHome />} />
            <Route path="/adminform" element={<AdminForm />} />
@@ -96,6 +110,9 @@ function App() {
           
         </Route >
 
+   
+
+
         <Route path="superhome" element={<SuperHome />} />
         <Route path="/superform" element={<SuperForm/>} />
 
@@ -105,7 +122,7 @@ function App() {
 
     //  {/* <AddCarForm />   */ }
 
-
+    
 
   )
 }
@@ -142,6 +159,17 @@ function UserLayout() {
       </main>
     </div>
   );
+}
+
+function MechanicLayout(){
+
+  <div className="">
+    {/* <mechHeader /> */}
+  
+  <main>
+   <Outlet /> 
+  </main>
+  </div>
 }
 
 function OrganizationLayout() {

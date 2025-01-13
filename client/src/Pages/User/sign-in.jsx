@@ -26,7 +26,7 @@ const SignIn = () => {
                 navigate("/orghome");
                 localStorage.setItem("organization_data", JSON.stringify(response?.data));
             } else if (response?.data?.role === "mechanic") {
-                navigate("/");
+                navigate("/mechanicprofile");
                 localStorage.setItem("mechanic_data", JSON.stringify(response?.data));
             } else if (response?.data?.role === "admin") {
                 navigate("/adminhome");

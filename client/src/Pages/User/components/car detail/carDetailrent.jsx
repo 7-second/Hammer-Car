@@ -4,6 +4,31 @@ import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 const ArrayStar = ({ rating }) => {
+
+  const CarDetailsModal = ({
+    isOpen,
+    closeModal,
+    car,
+    currentUser,
+    isRentOpen,
+    setIsRentOpen,
+    openRentModal,
+  }) => {
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+    const nextImage = () => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === (car?.images?.length || 1) - 1 ? 0 : prevIndex + 1
+      );
+    };
+  
+    const prevImage = () => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? (car?.images?.length || 1) - 1 : prevIndex - 1
+      );
+    }
+  }
+  
   return (
     <div className="flex">
       {Array.from({ length: 5 }, (_, i) => (
@@ -131,99 +156,137 @@ const CarDetailrent = ({ car, isOpen, setIsOpen }) => {
 
   return (
     <>
-     <Transition appear show={isOpen} as={Fragment}>
-  <Dialog as="div" className="relative z-30" onClose={closeModal}>
-    <div className="fixed inset-0 bg-black/25" />
-    <div className="fixed inset-0 overflow-y-auto">
-      <div className="flex min-h-full items-center justify-center p-4 text-center">
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Dialog.Panel className="relative w-full max-w-2xl transform overflow-hidden rounded-md bg-white p-4 text-left align-middle shadow-xl transition-all">
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-3 right-3 bg-red-500 text-white rounded-full px-3 py-1.5 font-bold"
+ 
+    <Transition appear show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-30" onClose={closeModal}>
+        {/* Overlay */}
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
+
+        {/* Modal Content */}
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
             >
-              X
-            </button>
-
-            {/* Car Details Layout */}
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Image Section */}
-              <div className="relative w-full h-60 md:h-72">
-                <img
-                  src={car?.images?.[0]?.url || "cover.jpg"}
-                  alt="Car"
-                  className="w-full h-full object-cover rounded-md"
-                />
-              </div>
-
-              {/* Details Section */}
-              <div className="flex flex-col gap-3">
-                <h2 className="text-2xl font-bold">{car?.carModel}</h2>
-                <p className="text-gray-500 text-sm">
-                  {car?.year} | {car?.carType} | {car?.carBrand}
-                </p>
-                <div className="flex items-center text-sm gap-1">
-                  <ArrayStar rating={Math.floor(Math.random() * 5) + 1} />
-                  <span>{Math.floor(Math.random() * 1000) + 50} Reviews</span>
-                </div>
-                <p className="text-gray-600 text-sm">{car?.description}</p>
-              </div>
-            </div>
-
-            {/* Specifications */}
-            <div className="mt-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-3 text-sm text-gray-600">
-  <p><span className="font-semibold">Owner:</span> {car?.owner?.username || "N/A"}</p>
-  <p><span className="font-semibold">Engine:</span> {car?.engine || "N/A"}</p>
-  <p><span className="font-semibold">CC:</span> {car?.CC || "N/A"}</p>
-  <p><span className="font-semibold">Fuel Capacity:</span> {car?.fuelCapacity} L</p>
-  <p><span className="font-semibold">Transmission:</span> {car?.transmission || "N/A"}</p>
-  <p><span className="font-semibold">People Capacity:</span> {car?.peopleCapacity || "N/A"}</p>
-  <p><span className="font-semibold">Location:</span> {car?.location || "N/A"}</p>
-  <p><span className="font-semibold">Price:</span> ETB {car?.price || "N/A"} /day</p>
-</div>
-
-            </div>
-
-            {/* Rent Button */}
-            <div className="mt-6 flex justify-center">
-              {!currentUser ? (
-                <Link to="/signin">
-                  <button className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm">
-                    Rent Now
-                  </button>
-                </Link>
-              ) : (
+              <Dialog.Panel className="relative w-full max-w-2xl transform overflow-hidden rounded-lg bg-white shadow-lg p-6 text-left align-middle transition-all">
+                {/* Close Button */}
                 <button
-                  className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm"
-                  onClick={openRentModal}
+                  onClick={closeModal}
+                  className="absolute top-3 right-3 bg-red-500 text-white rounded-full px-3 py-1.5 font-bold hover:bg-red-600 focus:outline-none"
                 >
-                  Rent Now
+                  X
                 </button>
-              )}
-            </div>
-          </Dialog.Panel>
-        </Transition.Child>
-      </div>
-    </div>
-  </Dialog>
 
-  {/* Rent Modal */}
-  <RentModal
-    isRentOpen={isRentOpen}
-    setIsRentOpen={setIsRentOpen}
-    carId={car?._id}
-  />
-</Transition>
+                {/* Car Details Layout */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Images Section */}
+                  <div className="flex flex-wrap gap-2">
+                    {car?.images?.slice(0, 5).map((image, index) => (
+                      <img
+                        key={index}
+                        src={image?.url || "cover.jpg"}
+                        alt={`Car Image ${index + 1}`}
+                        className="w-full h-32 object-cover rounded-md"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Details Section */}
+                  <div className="flex flex-col gap-3">
+                    <h2 className="text-2xl font-bold text-gray-800">
+                      {car?.carModel}
+                    </h2>
+                    <p className="text-gray-500 text-sm">
+                      {car?.year} | {car?.carType} | {car?.carBrand}
+                    </p>
+                    <div className="flex items-center text-sm gap-2">
+                      <ArrayStar rating={Math.floor(Math.random() * 5) + 1} />
+                      <span>
+                        {Math.floor(Math.random() * 1000) + 50} Reviews
+                      </span>
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      {car?.description || "No description available."}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Specifications */}
+                <div className="mt-6">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-600">
+                    <p>
+                      <span className="font-semibold">Owner:</span>{" "}
+                      {car?.owner?.username || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Engine:</span>{" "}
+                      {car?.engine || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">CC:</span>{" "}
+                      {car?.CC || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Fuel Capacity:</span>{" "}
+                      {car?.fuelCapacity} L
+                    </p>
+                    <p>
+                      <span className="font-semibold">Transmission:</span>{" "}
+                      {car?.transmission || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">People Capacity:</span>{" "}
+                      {car?.peopleCapacity || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Location:</span>{" "}
+                      {car?.location || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Price:</span> ETB{" "}
+                      {car?.price || "N/A"} /day
+                    </p>
+                  </div>
+                </div>
+
+                {/* Rent Button */}
+                <div className="mt-6 flex justify-center">
+                  {!currentUser ? (
+                    <Link to="/signin">
+                      <button className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm hover:bg-yellow-600">
+                        Rent Now
+                      </button>
+                    </Link>
+                  ) : (
+                    <button
+                      className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm hover:bg-yellow-600"
+                      onClick={openRentModal}
+                    >
+                      Rent Now
+                    </button>
+                  )}
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+
+      {/* Rent Modal */}
+      <RentModal
+        isRentOpen={isRentOpen}
+        setIsRentOpen={setIsRentOpen}
+        carId={car?._id}
+      />
+    </Transition>
+
+
 
     </>
   );

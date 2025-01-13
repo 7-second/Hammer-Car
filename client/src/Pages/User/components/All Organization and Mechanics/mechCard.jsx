@@ -1,48 +1,56 @@
-import React from "react";
-import { Rating } from "@mui/material";
-import { Card, CardContent, Typography, CardMedia, Grid } from "@mui/material";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const MechanicCard = ({ mechanics }) => {
-  const randomRating = Math.floor(Math.random() * 5) + 1;
+
+const MechanicCard = () => {
+
+  const [name, setName] = useState("John Doe");
+  const [email, setEmail] = useState("johndoe@example.com");
+  const [phone, setPhone] = useState("123-456-7890");
+  const [experience, setExperience] = useState("5");
+  const [specialties, setSpecialties] = useState("Engine Repair, Brake Services");
+  const [profilePicture, setProfilePicture] = useState(null);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [errors, setErrors] = useState({});
+  
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+
+    // Validate form data
+    const newErrors = {};
+    if (!name) newErrors.name = "Name is required.";
+    if (!email) newErrors.email = "Email is required.";
+    if (!phone) newErrors.phone = "Phone number is required.";
+    if (!experience) newErrors.experience = "Experience is required.";
+    if (!specialties) newErrors.specialties = "Specialties are required.";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      // Save the updated profile data (e.g., send to server)
+      console.log("Profile updated:", { name, email, phone, experience, specialties, profilePicture });
+      setIsEditing(false);
+    }
+  };
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePicture(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <>
-      <div className="shadow-lg">
-        <div className="rounded-lg">
-          <img
-            src="https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg"
-            alt=""
-            className=" w-full px-3 pt-3  h-40 overflow-hidden   object-cover"
-          />
-        </div>
-        <div className="px-3 py-2 flex flex-col gap-2">
-          <h2 className="font-serif">biniyam</h2>
-          <h3 >
-            <Rating
-            className=""
-             size="small"
-            name="read-only" value={randomRating} readOnly />             
-          </h3>
-            <p className="text-sm w-[300px]">Addis Ababa, Ethiopia dajbajbdjabajbjaabcna
-                acjabckabckasnckanckac
-                axkanckanckancaknckan
-            </p>
-            <h1 className="font-sans bg-slate-300 rounded-md w-fit px-2"> Avaliable Time               
-            </h1>
-            <ul className="flex flex-row gap-3 opacity-80 font-bold text-sm">
-                    <li>2:10pm</li>
-                    <li>2:10pm</li>
-                    <li>2:10pm</li>
-                </ul>
-        </div>
-        <div className="py-1 px-2 flex justify-end">
-            <button className="bg-blue-600 hover:bg-purple-600 focus:bg-slate-400 rounded-md px-2 text-white font-sans">
-                <Link to="/mechdetail">More</Link>
-                </button>
-        </div>
-      </div>
-    </>
+
+  
+
+     </>
   );
 };
 
