@@ -47,7 +47,7 @@ function App() {
   //           <img src={bg} className="z-10"> </img>    /</div>
 
   return (
-    <ThemeProvider >
+ 
     <BrowserRouter>
 
 
@@ -101,7 +101,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
-    </ThemeProvider>
+
 
     //  {/* <AddCarForm />   */ }
 
