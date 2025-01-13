@@ -5,10 +5,13 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 function AdminForm() {
-  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+
+  // Watch role change for conditional validation
+  const role = watch("role");
 
   const onSubmit = async (userData) => {
     console.log("Form Data:", userData); // Add this log to check the data being sent
@@ -35,14 +38,14 @@ function AdminForm() {
       } else {
         toast.error(error.message);
       }
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <article className="w-full h-[70vh] flex items-center justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-2 p-8 bg-white">
+    <article className="w-full h-full flex items-center justify-center px-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4 p-8 bg-white rounded-md shadow-lg w-full max-w-xl">
         <p className="text-center font-bold text-lg uppercase">Registration</p>
 
         {/* Email */}
@@ -73,14 +76,36 @@ function AdminForm() {
         </div>
 
         {/* Organization ID */}
-        <div>
-          <label>Organization ID</label>
-          <input
-            {...register("organizationId", { required: "Organization ID is required" })}
-            className="border text-sm w-full bg-slate-100 rounded-md p-1.5"
-          />
-          {errors.organizationId && <p className="pt-1 text-xs text-red-500">{errors.organizationId.message}</p>}
-        </div>
+        {role && (role === "organization" || role === "mechanic") && (
+          <div>
+            <label>Organization ID</label>
+            <input
+              {...register("organizationId", { required: "Organization ID is required" })}
+              className="border text-sm w-full bg-slate-100 rounded-md p-1.5"
+            />
+            {errors.organizationId && <p className="pt-1 text-xs text-red-500">{errors.organizationId.message}</p>}
+          </div>
+        )}
+
+        {/* Phone Number */}
+      
+          <div>
+            <label>Phone Number</label>
+            <input
+              {...register("phone", {
+               
+                pattern: {
+                  value: /^\+251[0-9]{9}$/,
+                  message: "Please enter a valid Ethiopian phone number starting with +251",
+                },
+              })}
+              type="tel"
+              className="border text-sm w-full bg-slate-100 rounded-md p-1.5"
+              placeholder="e.g. +251985434363"
+            />
+            {errors.phone && <p className="pt-1 text-xs text-red-500">{errors.phone.message}</p>}
+          </div>
+      
 
         {/* Password */}
         <div>
@@ -102,6 +127,7 @@ function AdminForm() {
           >
             <option value="organization">Organization</option>
             <option value="mechanic">Mechanic</option>
+            <option value="user">User</option>
           </select>
           {errors.role && <p className="text-red-500 text-xs">{errors.role.message}</p>}
         </div>
@@ -112,7 +138,7 @@ function AdminForm() {
             disabled={isLoading}
             type="submit"
             value={"ADD USER"}
-            className="btn__bg px-6 py-1 bg-blue-500 uppercase rounded-md text-orangered-500 disabled:bg-white hover:bg-sky-700 active:bg-violet-700"
+            className="btn__bg px-6 py-2 bg-blue-500 uppercase rounded-md text-white disabled:bg-white hover:bg-sky-700 active:bg-violet-700"
           />
         </div>
         <Toaster position="top-center" />

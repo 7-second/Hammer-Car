@@ -3,7 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export const register = async (req, res, next) => {
-  const { username, password, email, organizationId, role } = req.body;
+  const { username, password, email, phone, organizationId, role } = req.body; // Make sure to include `phone`
 
   try {
     // Check if the username already exists
@@ -17,6 +17,14 @@ export const register = async (req, res, next) => {
     if (existingEmail) {
       return res.status(409).json({ message: "Email is already in use. Please use a different one." });
     }
+
+    // Validate phone number for roles other than "user"
+    // if (role !== "user") {
+    //   const phoneRegex = /^\+251\d{9}$/; // Example for Ethiopian phone number format
+    //   if (!phone || !phoneRegex.test(phone)) {
+    //     return res.status(400).json({ message: "Invalid phone number format. Please use the correct format." });
+    //   }
+    // }
 
     // Conditional validation for organizationId
     if ((role === "organization" || role === "mechanic") && !organizationId) {
@@ -32,9 +40,9 @@ export const register = async (req, res, next) => {
     const user = new User({
       username,
       email,
-      password: hashedPassword, // Save hashed password
-      role,                     // Assign the provided role
-      organizationId: role === "user" ? undefined : organizationId, // Only set organizationId for specific roles
+      password: hashedPassword,
+      role,// Only set phone for other roles
+      organizationId: role === "user" ? undefined : organizationId, // Only set organizationId for roles that require it
     });
 
     // Save the user to the database
@@ -45,8 +53,7 @@ export const register = async (req, res, next) => {
       username: user.username,
       email: user.email,
       role: user.role,
-      organizationId: user.organizationId,
-      followedOrganizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }],
+      organizationId: user.organizationId, // Only send organizationId if it's available
     });
 
   } catch (error) {
@@ -54,6 +61,7 @@ export const register = async (req, res, next) => {
     next(error); // Pass error to the error handler
   }
 };
+
 
 
 

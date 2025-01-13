@@ -131,90 +131,100 @@ const CarDetailrent = ({ car, isOpen, setIsOpen }) => {
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-30" onClose={closeModal}>
-          <div className="fixed inset-0 bg-black/25" />
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="relative w-full max-w-2xl transform overflow-hidden rounded-md bg-white p-2 text-left align-middle shadow-xl transition-all">
-                  <div className="grid md:grid-cols-2 gap-3">
-                    <section className="grid grid-rows-3 gap-3 h-52 md:h-full">
-                      <div className="relative w-full h-full row-span-2">
-                        {car?.images && (
-                          <img
-                            src={car?.images[0]?.url || "cover.jpg"}
-                            alt="Car"
-                            className="w-full h-full object-cover rounded-md"
-                          />
-                        )}
-                      </div>
-                    </section>
+     <Transition appear show={isOpen} as={Fragment}>
+  <Dialog as="div" className="relative z-30" onClose={closeModal}>
+    <div className="fixed inset-0 bg-black/25" />
+    <div className="fixed inset-0 overflow-y-auto">
+      <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
+        >
+          <Dialog.Panel className="relative w-full max-w-2xl transform overflow-hidden rounded-md bg-white p-4 text-left align-middle shadow-xl transition-all">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-3 right-3 bg-red-500 text-white rounded-full px-3 py-1.5 font-bold"
+            >
+              X
+            </button>
 
-                    <section className="flex flex-col gap-3 p-2">
-                      <h2 className="text-xl font-semibold">{car?.carType}</h2>
-                      <div className="flex items-center text-xs gap-1">
-                        <ArrayStar rating={Math.floor(Math.random() * 5) + 1} />
-                        <span>{Math.floor(Math.random() * 1000) + 50} Reviews</span>
-                      </div>
-                      <p className="text-xs font-serif leading-5">{car?.description}</p>
+            {/* Car Details Layout */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* Image Section */}
+              <div className="relative w-full h-60 md:h-72">
+                <img
+                  src={car?.images?.[0]?.url || "cover.jpg"}
+                  alt="Car"
+                  className="w-full h-full object-cover rounded-md"
+                />
+              </div>
 
-                      <div className="flex justify-between mt-2">
-                        <div>
-                          <p className="text-md">
-                            ETB {car?.price} <sub className="text-xs">/day</sub>
-                          </p>
-                        </div>
-                        <div>
-                          {!currentUser ? (
-                            <Link to={"/signin"}>
-                              <button
-                                type="button"
-                                className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
-                              >
-                                Rent Now
-                              </button>
-                            </Link>
-                          ) : (
-                            <button
-                              type="button"
-                              onClick={openRentModal}
-                              className="bg-yellow-500 text-white py-1 px-3 text-xs rounded-md"
-                            >
-                              Rent Now
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                  <button
-                    onClick={closeModal}
-                    className="absolute bg-red-500 rounded-full px-3 py-1.5 font-bold text-sm top-3 right-3"
-                  >
-                    X
-                  </button>
-                </Dialog.Panel>
-              </Transition.Child>
+              {/* Details Section */}
+              <div className="flex flex-col gap-3">
+                <h2 className="text-2xl font-bold">{car?.carModel}</h2>
+                <p className="text-gray-500 text-sm">
+                  {car?.year} | {car?.carType} | {car?.carBrand}
+                </p>
+                <div className="flex items-center text-sm gap-1">
+                  <ArrayStar rating={Math.floor(Math.random() * 5) + 1} />
+                  <span>{Math.floor(Math.random() * 1000) + 50} Reviews</span>
+                </div>
+                <p className="text-gray-600 text-sm">{car?.description}</p>
+              </div>
             </div>
-          </div>
-        </Dialog>
-      </Transition>
 
-      {/* Rent Modal */}
-      <RentModal
-        isRentOpen={isRentOpen}
-        setIsRentOpen={setIsRentOpen}
-        carId={car?._id}
-      />
+            {/* Specifications */}
+            <div className="mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-3 text-sm text-gray-600">
+  <p><span className="font-semibold">Owner:</span> {car?.owner?.username || "N/A"}</p>
+  <p><span className="font-semibold">Engine:</span> {car?.engine || "N/A"}</p>
+  <p><span className="font-semibold">CC:</span> {car?.CC || "N/A"}</p>
+  <p><span className="font-semibold">Fuel Capacity:</span> {car?.fuelCapacity} L</p>
+  <p><span className="font-semibold">Transmission:</span> {car?.transmission || "N/A"}</p>
+  <p><span className="font-semibold">People Capacity:</span> {car?.peopleCapacity || "N/A"}</p>
+  <p><span className="font-semibold">Location:</span> {car?.location || "N/A"}</p>
+  <p><span className="font-semibold">Price:</span> ETB {car?.price || "N/A"} /day</p>
+</div>
+
+            </div>
+
+            {/* Rent Button */}
+            <div className="mt-6 flex justify-center">
+              {!currentUser ? (
+                <Link to="/signin">
+                  <button className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm">
+                    Rent Now
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  className="bg-yellow-500 text-white py-2 px-6 rounded-md text-sm"
+                  onClick={openRentModal}
+                >
+                  Rent Now
+                </button>
+              )}
+            </div>
+          </Dialog.Panel>
+        </Transition.Child>
+      </div>
+    </div>
+  </Dialog>
+
+  {/* Rent Modal */}
+  <RentModal
+    isRentOpen={isRentOpen}
+    setIsRentOpen={setIsRentOpen}
+    carId={car?._id}
+  />
+</Transition>
+
     </>
   );
 };

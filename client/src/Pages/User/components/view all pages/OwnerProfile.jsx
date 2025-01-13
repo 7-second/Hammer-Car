@@ -58,6 +58,7 @@ const OrgProfile = () => {
   return (
     <>
       <div className="container mx-auto p-4 rounded-lg">
+     
         {user ? (
           <div className="rounded-2xl">
             <div

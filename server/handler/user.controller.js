@@ -88,10 +88,10 @@ export const showUserDetail = async (req, res, next) => {
         path: "cars",
         populate: { path: "images" }, // Populate car images
       })
-      .populate({
-        path: "rent",
-        populate: { path: "car", populate: { path: "images" } }, // Populate car images in rent
-      })
+      // .populate({
+      //   path: "rent",
+      //   populate: { path: "car", populate: { path: "images" } }, // Populate car images in rent
+      // })
       .populate({
         path: "sell",
         populate: { path: "car", populate: { path: "images" } }, // Populate car images in rent
@@ -116,14 +116,15 @@ export const showUserDetail = async (req, res, next) => {
 
 
 export const deleteUser = async (req, res, next) => {
-  const { id } = req.params; // "id" corresponds to _id in the database
+  const { id } = req.params;  // "id" corresponds to _id in the database
 
   try {
     if (!id) {
       return res.status(400).json({ message: "User ID is required" });
     }
 
-    const deletedUser = await User.findByIdAndDelete({ _id: id });
+    // Correct usage of findByIdAndDelete without the curly braces
+    const deletedUser = await User.findByIdAndDelete(id);
 
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
@@ -132,7 +133,7 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json({ message: "User deleted successfully", deletedUser });
   } catch (error) {
     console.error("Error deleting user:", error);
-    next(error);
+    next(error);  // Pass error to the error handler
   }
 };
 

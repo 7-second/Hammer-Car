@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Rating } from "@mui/material"; // Ensure Rating is imported
-import { useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AllOrganization() {
@@ -8,12 +8,10 @@ function AllOrganization() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [followedOrganizations, setFollowedOrganizations] = useState({});
-  const navigate = useNavigate(); // Used for navigation
+  const navigate = useNavigate();
 
-  // Check if the user is logged in (Example: You can check a token in localStorage or state)
-  const isLoggedIn = localStorage.getItem("users_data");  // Assuming user data is stored in localStorage
+  const isLoggedIn = localStorage.getItem("users_data");
 
-  // Fetch organizations with their cars
   useEffect(() => {
     const fetchOrganizationsWithCars = async () => {
       try {
@@ -36,7 +34,6 @@ function AllOrganization() {
           })
         );
 
-        // Filter organizations with cars and set the state
         setOrganizations(orgsWithCars.filter(org => org.cars.length > 0));
       } catch (err) {
         console.error(err);
@@ -49,19 +46,16 @@ function AllOrganization() {
     fetchOrganizationsWithCars();
   }, []);
 
-  // Handle follow/unfollow action
   const toggleFollow = async (orgId, orgName, orgUsername, orgProfilePicture) => {
     if (!isLoggedIn) {
-      // Redirect to login if not logged in
       navigate("/signin");
       return;
     }
 
-    const userId = JSON.parse(localStorage.getItem("users_data"))._id;  // Assuming user data is stored in localStorage
+    const userId = JSON.parse(localStorage.getItem("users_data"))._id;
 
     try {
       if (followedOrganizations[orgId]) {
-        // Unfollow the organization
         await axios.post(`${import.meta.env.VITE_API_BASE_URL}user/unfollow/${userId}`, {
           organizationId: orgId
         });
@@ -71,7 +65,6 @@ function AllOrganization() {
           return updated;
         });
       } else {
-        // Follow the organization
         await axios.post(`${import.meta.env.VITE_API_BASE_URL}user/follow/${userId}`, {
           organizationId: orgId,
           organizationName: orgName,
@@ -95,21 +88,26 @@ function AllOrganization() {
 
         return (
           <div key={org._id} className="shadow-lg">
-            <div className="px-3 flex gap-3 items-center">
-              <img
-                className="object-cover rounded-full w-10 h-10"
-                src={org.profilePicture || "https://via.placeholder.com/150"}
-                alt={`${org.name} logo`}
-              />
-              <h3 className="font-sans font-medium">{org.username}</h3>
-            </div>
-            <div className="rounded-lg">
-              <img
-                src={org.coverPicture || "https://via.placeholder.com/300"}
-                alt={org.name}
-                className="w-full px-3 pt-3 h-40 object-cover"
-              />
-            </div>
+            {/* Link entire header (image and username) to the organization's page */}
+            <Link to={`/organization/${org._id}`}>
+              <div className="px-3 flex gap-3 items-center">
+                <img
+                  className="object-cover rounded-full w-10 h-10"
+                  src={org.profilePicture || "https://via.placeholder.com/150"}
+                  alt={`${org.name} logo`}
+                />
+                <h3 className="font-sans font-medium">{org.username}</h3>
+              </div>
+            </Link>
+            <Link to={`/organization/${org._id}`}>
+              <div className="rounded-lg">
+                <img
+                  src={org.coverPicture || "https://via.placeholder.com/300"}
+                  alt={org.name}
+                  className="w-full px-3 pt-3 h-40 object-cover"
+                />
+              </div>
+            </Link>
             <div className="px-3 py-2 flex flex-col gap-2">
               <h2 className="font-serif">{org.name}</h2>
               <h3>
